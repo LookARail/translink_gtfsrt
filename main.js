@@ -64,6 +64,20 @@
   };
 
   // ---------------------------------------------------------------------------
+  // DOM elements and UI helpers (must be declared before loadGTFSData)
+  // ---------------------------------------------------------------------------
+  
+  // Status UI helpers
+  const statusEl = document.getElementById('status');
+  const statusTextEl = document.getElementById('statusText');
+  function setStatus(text, mode) {
+    statusTextEl.textContent = text;
+    statusEl.classList.remove('error', 'stale');
+    if (mode === 'error') statusEl.classList.add('error');
+    if (mode === 'stale') statusEl.classList.add('stale');
+  }
+
+  // ---------------------------------------------------------------------------
   // Load GTFS Static Data from GitHub processed files
   // ---------------------------------------------------------------------------
   
@@ -96,23 +110,14 @@
       console.log(`  Shapes: ${Object.keys(shapes).length}`);
       console.log(`  Stop-times files available: ${metadata.stats.stop_times_route_files} (loaded on-demand)`);
       
-      // Log first 10 trip IDs for verification
-      const tripIds = Object.keys(gtfsData.trips).slice(0, 10);
-      console.groupCollapsed('%c[GTFS] First 10 trip IDs from static data', 'color:#27ae60;font-weight:bold');
-      tripIds.forEach((tid, idx) => {
-        const trip = gtfsData.trips[tid];
-        console.log(`  ${idx + 1}. ${tid} → route_id: ${trip.route_id}, headsign: ${trip.trip_headsign}`);
-      });
-      console.groupEnd();
-      
       setStatus('GTFS data loaded', null);
       
       // Clear cache so all vehicles re-link to static data on next poll
       staticLinkCache.clear();
       populateFilterPanel();
       
-      // Plot all shapes for context
-      plotAllShapesUnfiltered();
+      // Plot shapes with filtering support (now that we have shape-route-map)
+      plotShapes();
       
       // Fetch vehicles to enrich with static data
       fetchVehicles();
@@ -141,10 +146,10 @@
   };
 
   /**
-   * Plot ALL shapes without filtering (called once on initial load)
-   * Shapes provide context and remain visible regardless of filter
+   * Plot shapes with filtering support
+   * Uses pre-computed shape-route-map from GitHub Actions
    */
-  function plotAllShapesUnfiltered() {
+  function plotShapes() {
     if (shapesLayer) {
       map.removeLayer(shapesLayer);
       shapesLayer = null;
@@ -181,7 +186,8 @@
         if (route.route_type === 0) { weight = 3; opacity = 0.65; }
       }
 
-      // No filtering - plot ALL shapes for context
+      // Apply filter - only plot shapes for matching routes
+      if (!passesFilter(routeId)) continue;
 
       const polyline = L.polyline(
         points.map(p => [p.lat, p.lon]),
@@ -205,8 +211,6 @@
     shapesLayer.addTo(map);
     // Ensure shapes stay behind vehicle markers by moving their SVG to the back
     shapesLayer.eachLayer(l => { if (l.bringToBack) l.bringToBack(); });
-    
-    console.log(`Plotted ${Object.keys(shapes).length} shapes (all routes)`);
   }
   
   // Plot stops layer
@@ -387,6 +391,9 @@
     // Only set routeIds to null if both type and route filters are unfiltered
     activeFilter.routeIds   = (allTypes && allRoutes) ? null : new Set(selRouteIds);
 
+    // Re-plot shapes with new filter
+    plotShapes();
+    
     // Request new stop_times for the updated filter (unless too many routes)
     // Don't show stops if more than 10 routes are selected
     if (selRouteIds.length > 10) {
@@ -397,7 +404,7 @@
       requestStopTimesForCurrentFilter();
     }
 
-    // Show/hide existing vehicle markers (shapes and stops will be replotted when stop_times arrive)
+    // Show/hide existing vehicle markers
     for (const [id, m] of markers) {
       const vis = passesFilter(m._routeId);
       if (vis && !m._visible)  { 
@@ -426,16 +433,6 @@
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
-
-  // Status UI helpers
-  const statusEl = document.getElementById('status');
-  const statusTextEl = document.getElementById('statusText');
-  function setStatus(text, mode) {
-    statusTextEl.textContent = text;
-    statusEl.classList.remove('error', 'stale');
-    if (mode === 'error') statusEl.classList.add('error');
-    if (mode === 'stale') statusEl.classList.add('stale');
-  }
 
   // Marker cache keyed by vehicle id
   const markers = new Map();
