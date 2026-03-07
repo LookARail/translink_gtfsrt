@@ -246,21 +246,25 @@ function processStopTimesIndex(gtfsDir) {
       index[tripId] = [];
     }
     
-    index[tripId].push({
-      trip_id: st.trip_id,
-      arrival_time: st.arrival_time || '',
-      departure_time: st.departure_time || '',
-      stop_id: st.stop_id || '',
-      stop_sequence: parseInt(st.stop_sequence) || 0,
-      stop_headsign: st.stop_headsign || '',
-      pickup_type: parseInt(st.pickup_type) || 0,
-      drop_off_type: parseInt(st.drop_off_type) || 0
-    });
+    // Optimize: Remove redundant trip_id, use short field names, omit defaults
+    const stopTime = {
+      sid: st.stop_id || '',  // stop_id
+      seq: parseInt(st.stop_sequence) || 0,  // stop_sequence
+      arr: st.arrival_time || '',  // arrival_time
+      dep: st.departure_time || ''  // departure_time
+    };
+    
+    // Only include optional fields if they have non-default values
+    if (st.stop_headsign) stopTime.hs = st.stop_headsign;
+    if (st.pickup_type && st.pickup_type !== '0') stopTime.pu = parseInt(st.pickup_type);
+    if (st.drop_off_type && st.drop_off_type !== '0') stopTime.do = parseInt(st.drop_off_type);
+    
+    index[tripId].push(stopTime);
   });
   
   // Sort each trip's stop_times by stop_sequence
   Object.keys(index).forEach(tripId => {
-    index[tripId].sort((a, b) => a.stop_sequence - b.stop_sequence);
+    index[tripId].sort((a, b) => a.seq - b.seq);
   });
   
   console.log(`✓ Indexed stop_times for ${Object.keys(index).length} trips`);
@@ -270,9 +274,11 @@ function processStopTimesIndex(gtfsDir) {
 /**
  * Write JSON file
  */
-function writeJsonFile(filename, data) {
+function writeJsonFile(filename, data, minify = false) {
   const outputPath = path.join(OUTPUT_DIR, filename);
-  fs.writeFileSync(outputPath, JSON.stringify(data, null, 2));
+  // Use minified JSON for large files, pretty JSON for others
+  const jsonString = minify ? JSON.stringify(data) : JSON.stringify(data, null, 2);
+  fs.writeFileSync(outputPath, jsonString);
   
   const sizeKB = (fs.statSync(outputPath).size / 1024).toFixed(2);
   console.log(`✓ Written ${filename} (${sizeKB} KB)`);
@@ -313,11 +319,11 @@ async function processGTFS() {
     // Step 4: Write output files
     console.log('Writing output files...');
     writeJsonFile('routes.json', routes);
-    writeJsonFile('trips.json', trips);
+    writeJsonFile('trips.json', trips, true);  // Minify large file
     writeJsonFile('stops.json', stops);
-    writeJsonFile('shapes.json', shapes);
+    writeJsonFile('shapes.json', shapes, true);  // Minify large file
     writeJsonFile('shape-route-map.json', shapeRouteMap);
-    writeJsonFile('stop-times-index.json', stopTimesIndex);
+    writeJsonFile('stop-times-index.json', stopTimesIndex, true);  // Minify large file
     
     // Write metadata
     const metadata = {

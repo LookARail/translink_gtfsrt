@@ -20,11 +20,13 @@
     stops: {},
     shapes: {},
     shapeRouteMap: {}, // shape_id -> route_id
-    stopTimesIndex: {}, // trip_id -> array of stop_time records
+    stopTimesIndex: {}, // trip_id -> array of stop_time records (fields: sid, seq, arr, dep, hs?, pu?, do?)
     isLoaded: false
   };
   
   // Stop times data (loaded selectively on-demand)
+  // Field mappings: sid=stop_id, seq=stop_sequence, arr=arrival_time, dep=departure_time
+  //                 hs=stop_headsign, pu=pickup_type, do=drop_off_type
   let stopTimes = [];  // Array of stop_time records for currently filtered trips
 
   // Leaflet layer for static shapes and stops
@@ -222,8 +224,8 @@
     // Build set of stop_ids that are used by currently filtered trips
     const usedStopIds = new Set();
     for (const st of stopTimes) {
-      if (st.stop_id) {
-        usedStopIds.add(st.stop_id);
+      if (st.sid) {  // 'sid' is the abbreviated field name for stop_id
+        usedStopIds.add(st.sid);
       }
     }
     
