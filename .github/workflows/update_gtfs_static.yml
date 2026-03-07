@@ -37,17 +37,21 @@ jobs:
       - name: Check for changes
         id: check_changes
         run: |
-          git diff --quiet data/ || echo "changes=true" >> $GITHUB_OUTPUT
+          git add data/
+          if git diff --staged --quiet; then
+            echo "changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "changes=true" >> $GITHUB_OUTPUT
+          fi
       
       - name: Commit and push processed data
         if: steps.check_changes.outputs.changes == 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add data/
           git commit -m "chore: update GTFS static data [automated]"
           git push
       
       - name: No changes detected
-        if: steps.check_changes.outputs.changes != 'true'
+        if: steps.check_changes.outputs.changes == 'false'
         run: echo "No changes in GTFS data, skipping commit"
