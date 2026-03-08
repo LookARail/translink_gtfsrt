@@ -1,9 +1,9 @@
 name: Update GTFS Static Data
 
 on:
-  # Run daily at 2 AM UTC (9 PM Toronto time, accounting for EST/EDT)
+  # Run daily at 8 AM UTC (3 AM EST Toronto time, accounting for EST/EDT)
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '0 8 * * *'
   
   # Allow manual triggering from Actions tab
   workflow_dispatch:

@@ -1,0 +1,23 @@
+name: Keep Render Server Awake
+
+on:
+  # Ping every 10 minutes to prevent spin-down
+  schedule:
+    - cron: '*/10 * * * *'
+  
+  # Allow manual triggering
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Ping Render server
+        run: |
+          echo "Pinging server at $(date -u)"
+          curl -f --max-time 10 https://ttc-gtfsrt.onrender.com/vehicles || echo "⚠️ Ping failed (server may be starting)"
+      
+      - name: Ping status
+        if: success()
+        run: echo "✓ Server is awake"
