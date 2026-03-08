@@ -12,6 +12,11 @@ let cachedFeed = null;
 let lastFetch = 0;
 const CACHE_TTL_MS = 10_000; // 10 seconds
 
+// Cache for GTFS-RT trip updates
+let cachedTripUpdates = null;
+let lastTripUpdatesFetch = 0;
+const TRIP_UPDATES_CACHE_TTL_MS = 60_000; // 60 seconds
+
 // Retry configuration
 const MAX_RETRIES = 3;
 const INITIAL_RETRY_DELAY_MS = 500;
@@ -54,6 +59,44 @@ async function fetchGtfsRtData() {
   throw lastError;
 }
 
+// Fetch GTFS-RT trip updates with retry logic
+async function fetchTripUpdates() {
+  let lastError;
+  
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      // Add 5-second timeout to fetch
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 5000);
+      
+      const response = await fetch("https://bustime.ttc.ca/gtfsrt/trips", {
+        signal: controller.signal
+      });
+      clearTimeout(timeout);
+      
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      
+      const buffer = await response.arrayBuffer();
+      const uint8Array = new Uint8Array(buffer);
+      const feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(uint8Array);
+      
+      return feed;
+    } catch (err) {
+      lastError = err;
+      console.warn(`Trip updates attempt ${attempt}/${MAX_RETRIES} failed:`, err.message);
+      
+      if (attempt < MAX_RETRIES) {
+        // Exponential backoff: 500ms, 1000ms, 2000ms
+        const delayMs = INITIAL_RETRY_DELAY_MS * Math.pow(2, attempt - 1);
+        console.log(`Retrying in ${delayMs}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delayMs));
+      }
+    }
+  }
+  
+  throw lastError;
+}
+
 app.get("/vehicles", async (req, res) => {
   try {
     const now = Date.now();
@@ -73,6 +116,28 @@ app.get("/vehicles", async (req, res) => {
   } catch (err) {
     console.error("Failed to fetch GTFS-RT data:", err);
     res.status(500).send("Error fetching TTC feed");
+  }
+});
+
+app.get("/trip-updates", async (req, res) => {
+  try {
+    const now = Date.now();
+    
+    // Return cached data if still fresh
+    if (cachedTripUpdates && (now - lastTripUpdatesFetch) < TRIP_UPDATES_CACHE_TTL_MS) {
+      res.setHeader("Content-Type", "application/json");
+      return res.json(cachedTripUpdates);
+    }
+    
+    // Fetch fresh data from TTC with retry logic
+    cachedTripUpdates = await fetchTripUpdates();
+    lastTripUpdatesFetch = now;
+    
+    res.setHeader("Content-Type", "application/json");
+    res.json(cachedTripUpdates);
+  } catch (err) {
+    console.error("Failed to fetch GTFS-RT trip updates:", err);
+    res.status(500).send("Error fetching TTC trip updates");
   }
 });
 

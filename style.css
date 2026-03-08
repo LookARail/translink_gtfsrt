@@ -195,3 +195,165 @@ select.filter-select {
   font-family: inherit;
 }
 .filter-apply:hover { background: #1565c0; }
+
+/* ── RT Data Recorder panel ─────────────────────────────────────── */
+#recorderPanel {
+  position: absolute;
+  bottom: 48px;
+  left: 12px;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 10px;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.18);
+  padding: 12px 14px 14px;
+  z-index: 1001;
+  font-size: 12px;
+  font-family: inherit;
+  width: 700px;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.recorder-title {
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.recorder-controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.recorder-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #bbb;
+  background: #f5f5f5;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.recorder-btn:hover:not(:disabled) {
+  background: #e0e0e0;
+}
+
+.recorder-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#startRecordBtn {
+  background: #2ecc71;
+  color: white;
+  border-color: #27ae60;
+}
+
+#startRecordBtn:hover:not(:disabled) {
+  background: #27ae60;
+}
+
+#stopRecordBtn {
+  background: #e74c3c;
+  color: white;
+  border-color: #c0392b;
+}
+
+#stopRecordBtn:hover:not(:disabled) {
+  background: #c0392b;
+}
+
+.recorder-status {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 10px;
+  padding: 4px 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+.recorder-content {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+.recorder-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.recorder-details {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.recorder-list-title,
+.recorder-details-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.trip-list {
+  flex: 1;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 4px;
+  background: #fafafa;
+  min-height: 0;
+}
+
+.trip-item {
+  padding: 6px 8px;
+  margin-bottom: 2px;
+  background: white;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 11px;
+  border: 1px solid transparent;
+}
+
+.trip-item:hover {
+  background: #e3f2fd;
+}
+
+.trip-item.selected {
+  background: #1976d2;
+  color: white;
+  border-color: #1565c0;
+}
+
+.trip-details {
+  flex: 1;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+  background: #fafafa;
+  font-size: 11px;
+  min-height: 0;
+}
+
+.trip-details-empty {
+  color: #999;
+  text-align: center;
+  padding: 20px;
+}
+
+.stop-record {
+  padding: 4px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.stop-record:last-child {
+  border-bottom: none;
+}

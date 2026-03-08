@@ -902,4 +902,252 @@
       unhighlightAllShapes();
     }
   });
+  
+  // ---------------------------------------------------------------------------
+  // RT Data Recorder: Collect trip update data for performance analysis
+  // ---------------------------------------------------------------------------
+  
+  const TRIP_UPDATE_URL = "https://ttc-gtfsrt.onrender.com/trip-updates";
+  const TRIP_UPDATE_INTERVAL_MS = 60_000; // 60 seconds
+  
+  // Recording state
+  let isRecording = false;
+  let recordingIntervalId = null;
+  let recordedData = {}; // { tripId: { rid, stops: { stopSeq: { sid, seq, arr } } } }
+  let selectedTripId = null;
+  
+  // DOM elements
+  const startRecordBtn = document.getElementById('startRecordBtn');
+  const stopRecordBtn = document.getElementById('stopRecordBtn');
+  const downloadRecordBtn = document.getElementById('downloadRecordBtn');
+  const recorderStatus = document.getElementById('recorderStatus');
+  const tripListEl = document.getElementById('tripList');
+  const tripDetailsEl = document.getElementById('tripDetails');
+  
+  // Fetch trip updates from server
+  async function fetchTripUpdates() {
+    try {
+      const resp = await fetch(TRIP_UPDATE_URL, { cache: 'no-store' });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+      return data;
+    } catch (err) {
+      console.warn('Failed to fetch trip updates:', err);
+      return null;
+    }
+  }
+  
+  // Process trip updates and record stop arrivals
+  function processTripUpdates(data) {
+    if (!data || !data.entity) return;
+    
+    const now = Date.now();
+    let newStopsRecorded = 0;
+    
+    for (const entity of data.entity) {
+      const tripUpdate = entity.tripUpdate || entity.trip_update;
+      if (!tripUpdate) continue;
+      
+      const trip = tripUpdate.trip;
+      const tripId = trip?.tripId || trip?.trip_id;
+      const routeId = trip?.routeId || trip?.route_id;
+      const vehicleId = tripUpdate.vehicle?.id;
+      const stopTimeUpdates = tripUpdate.stopTimeUpdate || tripUpdate.stop_time_update || [];
+      
+      if (!tripId) continue;
+      
+      // Get vehicle's current stop sequence from vehicle position feed
+      let currentStopSeq = null;
+      for (const [vId, marker] of markers) {
+        const raw = marker._rtEntity;
+        const vTripId = raw?.vehicle?.trip?.tripId || raw?.vehicle?.trip?.trip_id || raw?.trip?.tripId || raw?.trip?.trip_id;
+        if (vTripId === tripId) {
+          currentStopSeq = raw?.vehicle?.currentStopSequence || raw?.vehicle?.current_stop_sequence;
+          break;
+        }
+      }
+      
+      // Initialize trip record if needed
+      if (!recordedData[tripId]) {
+        recordedData[tripId] = {
+          rid: routeId,
+          vid: vehicleId,
+          stops: {}
+        };
+      }
+      
+      // Record all stop_time_updates up to and including current stop sequence
+      for (const stu of stopTimeUpdates) {
+        const stopSeq = stu.stopSequence || stu.stop_sequence;
+        const stopId = stu.stopId || stu.stop_id;
+        const arrivalTime = stu.arrival?.time;
+        
+        if (!stopSeq || !stopId || !arrivalTime) continue;
+        
+        // If we know current stop, only record stops up to current
+        // If we don't know, record all (fallback)
+        if (currentStopSeq === null || stopSeq <= currentStopSeq) {
+          // Record or update this stop
+          if (!recordedData[tripId].stops[stopSeq]) {
+            newStopsRecorded++;
+          }
+          recordedData[tripId].stops[stopSeq] = {
+            sid: stopId,
+            seq: stopSeq,
+            arr: arrivalTime
+          };
+        }
+      }
+    }
+    
+    console.log(`[RT Recorder] Processed ${data.entity.length} trip updates, recorded ${newStopsRecorded} new stops`);
+    updateRecorderUI();
+  }
+  
+  // Update recorder UI
+  function updateRecorderUI() {
+    // Update trip list
+    const tripIds = Object.keys(recordedData).sort();
+    tripListEl.innerHTML = '';
+    
+    if (tripIds.length === 0) {
+      tripListEl.innerHTML = '<div style="padding:8px;color:#999;">No trips recorded yet</div>';
+    } else {
+      for (const tripId of tripIds) {
+        const trip = recordedData[tripId];
+        const route = gtfsData.routes[trip.rid];
+        const routeDisplay = route 
+          ? `${route.route_short_name || trip.rid}`
+          : trip.rid;
+        
+        const div = document.createElement('div');
+        div.className = 'trip-item';
+        if (tripId === selectedTripId) div.classList.add('selected');
+        div.textContent = `${tripId} (Route ${routeDisplay})`;
+        div.addEventListener('click', () => selectTrip(tripId));
+        tripListEl.appendChild(div);
+      }
+    }
+    
+    // Update trip details if a trip is selected
+    if (selectedTripId && recordedData[selectedTripId]) {
+      showTripDetails(selectedTripId);
+    }
+    
+    // Update status
+    const tripCount = tripIds.length;
+    const totalStops = Object.values(recordedData).reduce((sum, trip) => sum + Object.keys(trip.stops).length, 0);
+    recorderStatus.textContent = isRecording 
+      ? `Recording: ${tripCount} trips, ${totalStops} stops recorded`
+      : `Not collecting (${tripCount} trips, ${totalStops} stops in memory)`;
+  }
+  
+  // Select a trip to view details
+  function selectTrip(tripId) {
+    selectedTripId = tripId;
+    updateRecorderUI();
+  }
+  
+  // Show details for selected trip
+  function showTripDetails(tripId) {
+    const trip = recordedData[tripId];
+    if (!trip) {
+      tripDetailsEl.innerHTML = '<div class="trip-details-empty">Trip not found</div>';
+      return;
+    }
+    
+    const route = gtfsData.routes[trip.rid];
+    const routeDisplay = route 
+      ? `${route.route_short_name || ''} – ${route.route_long_name || trip.rid}`
+      : trip.rid;
+    
+    const stopSeqs = Object.keys(trip.stops).map(Number).sort((a, b) => a - b);
+    
+    let html = `<div style="margin-bottom:8px;font-weight:600;">Trip ${tripId}</div>`;
+    html += `<div style="margin-bottom:8px;color:#666;">Route: ${escapeHtml(routeDisplay)}</div>`;
+    html += `<div style="margin-bottom:8px;color:#666;">Stops recorded: ${stopSeqs.length}</div>`;
+    html += '<div style="margin-top:12px;">';
+    
+    for (const seq of stopSeqs) {
+      const stop = trip.stops[seq];
+      const stopData = gtfsData.stops[stop.sid];
+      const stopName = stopData?.stop_name || stop.sid;
+      const arrTime = new Date(stop.arr * 1000).toLocaleTimeString('en-US', {
+        timeZone: TORONTO_TZ,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      
+      html += `<div class="stop-record">Stop #${stop.seq} (${escapeHtml(stop.sid)}): ${arrTime}<br><span style="color:#666;font-size:10px;">${escapeHtml(stopName)}</span></div>`;
+    }
+    
+    html += '</div>';
+    tripDetailsEl.innerHTML = html;
+  }
+  
+  // Start recording
+  function startRecording() {
+    if (isRecording) return;
+    
+    isRecording = true;
+    startRecordBtn.disabled = true;
+    stopRecordBtn.disabled = false;
+    
+    // Fetch immediately
+    fetchTripUpdates().then(data => {
+      if (data) processTripUpdates(data);
+    });
+    
+    // Then fetch every 60 seconds
+    recordingIntervalId = setInterval(async () => {
+      const data = await fetchTripUpdates();
+      if (data) processTripUpdates(data);
+    }, TRIP_UPDATE_INTERVAL_MS);
+    
+    updateRecorderUI();
+    console.log('[RT Recorder] Started collecting trip data');
+  }
+  
+  // Stop recording
+  function stopRecording() {
+    if (!isRecording) return;
+    
+    isRecording = false;
+    startRecordBtn.disabled = false;
+    stopRecordBtn.disabled = true;
+    
+    if (recordingIntervalId) {
+      clearInterval(recordingIntervalId);
+      recordingIntervalId = null;
+    }
+    
+    updateRecorderUI();
+    console.log('[RT Recorder] Stopped collecting trip data');
+  }
+  
+  // Download recorded data as JSON
+  function downloadRecordedData() {
+    const dataStr = JSON.stringify(recordedData, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ttc-rt-data-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    console.log('[RT Recorder] Downloaded recorded data');
+  }
+  
+  // Event listeners
+  startRecordBtn.addEventListener('click', startRecording);
+  stopRecordBtn.addEventListener('click', stopRecording);
+  downloadRecordBtn.addEventListener('click', downloadRecordedData);
+  
+  // Initialize UI
+  updateRecorderUI();
 })();

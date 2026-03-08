@@ -48,6 +48,27 @@
     <button class="filter-apply" id="applyFilterBtn">Apply Filter</button>
   </div>
 
+  <!-- RT Data Recorder Panel -->
+  <div id="recorderPanel">
+    <div class="recorder-title">RT Data Recorder</div>
+    <div class="recorder-controls">
+      <button class="recorder-btn" id="startRecordBtn">Start Collecting Trip Data</button>
+      <button class="recorder-btn" id="stopRecordBtn" disabled>Stop</button>
+      <button class="recorder-btn" id="downloadRecordBtn">Download Data</button>
+    </div>
+    <div class="recorder-status" id="recorderStatus">Not collecting</div>
+    <div class="recorder-content">
+      <div class="recorder-list">
+        <div class="recorder-list-title">Trips Being Tracked:</div>
+        <div id="tripList" class="trip-list"></div>
+      </div>
+      <div class="recorder-details">
+        <div class="recorder-details-title">Trip Details:</div>
+        <div id="tripDetails" class="trip-details">Select a trip to view details</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Leaflet JS -->
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
