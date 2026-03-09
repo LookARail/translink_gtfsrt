@@ -1362,6 +1362,18 @@
   toggleRecorderBtn.addEventListener('click', toggleRecorderPanel);
   closeRecorderBtn.addEventListener('click', toggleRecorderPanel);
   
+  // View Recordings button
+  const viewRecordingsBtn = document.getElementById('viewRecordingsBtn');
+  if (viewRecordingsBtn) {
+    viewRecordingsBtn.addEventListener('click', () => {
+      if (typeof RTRecordingViewer !== 'undefined') {
+        RTRecordingViewer.open();
+      } else {
+        console.error('RTRecordingViewer not loaded');
+      }
+    });
+  }
+  
   // Initialize UI
   updateRecorderUI();
 })();
