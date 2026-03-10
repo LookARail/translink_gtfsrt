@@ -374,7 +374,6 @@ app.get("/trip-updates", async (req, res) => {
 app.get("/export-trip-data", (req, res) => {
   const exportData = {
     recordedData,
-    scheduledTimesCache,
     exportedAt: Date.now(),
     stats: {
       totalTrips: Object.keys(recordedData).length,

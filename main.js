@@ -1345,7 +1345,6 @@
     // Match server export format exactly
     const exportData = {
       recordedData,
-      scheduledTimesCache,
       exportedAt: Date.now(),
       stats: {
         totalTrips: Object.keys(recordedData).length,
