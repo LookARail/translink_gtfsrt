@@ -1,9 +1,9 @@
 name: Update GTFS Static Data
 
 on:
-  # Run daily at 8 AM UTC (3 AM EST Toronto time, accounting for EST/EDT)
+  # Run daily at 8:30 AM UTC (3:30 AM EST Toronto time, 30 min after export-trip-recordings)
   schedule:
-    - cron: '0 8 * * *'
+    - cron: '30 8 * * *'
   
   # Allow manual triggering from Actions tab
   workflow_dispatch:

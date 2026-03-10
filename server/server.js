@@ -7,14 +7,10 @@ app.use(cors()); // allow your frontend to call this server
 app.use(express.json()); // parse JSON request bodies
 
 const PORT = process.env.PORT || 3000;
-const GITHUB_REPO = process.env.GITHUB_REPO;
 
-// Validate required environment variables
-if (!GITHUB_REPO) {
-  console.warn("⚠️  GITHUB_REPO environment variable not set!");
-  console.warn("   Set it to 'username/GTFSRT' in Render Dashboard → Environment");
-  console.warn("   Trip recording will work but scheduled times won't load.");
-}
+// GitHub repository for processed GTFS data (hardcoded for reliability)
+const GITHUB_REPO = "LookArail/ttc_gtfsrt";
+const GITHUB_BRANCH = "main";
 
 // Cache for GTFS-RT data (realtime vehicle positions)
 let cachedFeed = null;
@@ -117,17 +113,11 @@ async function fetchTripUpdates() {
 async function loadAndExtractScheduledTimes(routeId) {
   if (loadingRoutes.has(routeId)) return;
   
-  if (!GITHUB_REPO) {
-    console.warn(`[RT Recorder] Cannot load route ${routeId}: GITHUB_REPO not set`);
-    pendingRoutesToLoad.delete(routeId);
-    return;
-  }
-  
   loadingRoutes.add(routeId);
   console.log(`[RT Recorder] Loading route ${routeId}...`);
   
   try {
-    const response = await fetch(`https://raw.githubusercontent.com/${GITHUB_REPO}/main/data/stop_times_${routeId}.json`);
+    const response = await fetch(`https://raw.githubusercontent.com/${GITHUB_REPO}/${GITHUB_BRANCH}/data/stop_times_${routeId}.json`);
     if (!response.ok) {
       console.warn(`[RT Recorder] Failed to load route ${routeId}: HTTP ${response.status}`);
       pendingRoutesToLoad.delete(routeId);
@@ -198,12 +188,15 @@ async function loadAndExtractScheduledTimes(routeId) {
 }
 
 // Process trip updates and record stop arrivals
-async function processTripUpdates(tripUpdatesFeed) {
+async function processTripUpdates(tripUpdatesFeed, vehiclePositionsFeed) {
   if (!tripUpdatesFeed || !tripUpdatesFeed.entity) return;
   
   // Normalize protobuf objects (Long, etc.) to primitives for JSON compatibility
   // This ensures server output matches local recording format
   const normalizedFeed = JSON.parse(JSON.stringify(tripUpdatesFeed));
+  const normalizedVehicles = vehiclePositionsFeed ? JSON.parse(JSON.stringify(vehiclePositionsFeed)) : null;
+  
+  let newStopsRecorded = 0;
   
   // Phase 1: Identify new trips and queue routes for loading
   for (const entity of normalizedFeed.entity) {
@@ -211,7 +204,6 @@ async function processTripUpdates(tripUpdatesFeed) {
     
     const tripId = entity.tripUpdate.trip?.tripId;
     const routeId = entity.tripUpdate.trip?.routeId;
-    const vehicleId = entity.tripUpdate.vehicle?.id;
     
     if (!tripId || !routeId) continue;
     
@@ -238,28 +230,56 @@ async function processTripUpdates(tripUpdatesFeed) {
     const tripId = entity.tripUpdate.trip?.tripId;
     const routeId = entity.tripUpdate.trip?.routeId;
     const vehicleId = entity.tripUpdate.vehicle?.id;
+    const stopTimeUpdates = entity.tripUpdate.stopTimeUpdate || [];
     
-    if (!tripId || !routeId) continue;
+    if (!tripId) continue;
+    
+    // Get vehicle's current stop sequence from vehicle position feed
+    let currentStopSeq = null;
+    let vehicleFound = false;
+    if (normalizedVehicles && normalizedVehicles.entity) {
+      for (const vEntity of normalizedVehicles.entity) {
+        if (!vEntity.vehicle) continue;
+        const vTripId = vEntity.vehicle.trip?.tripId;
+        if (vTripId === tripId) {
+          currentStopSeq = vEntity.vehicle.currentStopSequence;
+          vehicleFound = true;
+          break;
+        }
+      }
+    }
+    
+    // Skip this trip if no matching vehicle found in vehicle position feed
+    if (!vehicleFound) {
+      continue;
+    }
     
     // Initialize trip record if needed
     if (!recordedData[tripId]) {
       recordedData[tripId] = {
         rid: routeId,
-        vid: vehicleId || null,
+        vid: vehicleId,
         stops: {}
       };
     }
     
-    // Record stop arrivals
-    for (const stu of entity.tripUpdate.stopTimeUpdate || []) {
+    // Record all stop_time_updates up to and including current stop sequence
+    for (const stu of stopTimeUpdates) {
       const stopSeq = stu.stopSequence;
       const stopId = stu.stopId;
       const arrivalTime = stu.arrival?.time || stu.departure?.time;
       
-      if (!stopSeq || !arrivalTime) continue;
+      if (!stopSeq || !stopId || !arrivalTime) continue;
       
-      if (!recordedData[tripId].stops[stopSeq]) {
+      // Only record stops up to and including current stop
+      if (currentStopSeq !== null && stopSeq <= currentStopSeq) {
+        // Lookup scheduled times from cache
         const scheduled = scheduledTimesCache[tripId]?.[stopSeq];
+        
+        // Record or update this stop
+        if (!recordedData[tripId].stops[stopSeq]) {
+          newStopsRecorded++;
+        }
         
         const stopData = {
           sid: stopId,
@@ -268,7 +288,7 @@ async function processTripUpdates(tripUpdatesFeed) {
           sch_arr: scheduled?.sch_arr || null
         };
         
-        // Only include sch_dep if it exists and is different from sch_arr
+        // Only include sch_dep if it exists
         if (scheduled?.sch_dep) {
           stopData.sch_dep = scheduled.sch_dep;
         }
@@ -277,6 +297,8 @@ async function processTripUpdates(tripUpdatesFeed) {
       }
     }
   }
+  
+  console.log(`[RT Recorder] Processed ${normalizedFeed.entity.length} trip updates, recorded ${newStopsRecorded} new stops`);
 }
 
 app.get("/vehicles", async (req, res) => {
@@ -315,8 +337,8 @@ app.get("/trip-updates", async (req, res) => {
     cachedTripUpdates = await fetchTripUpdates();
     lastTripUpdatesFetch = now;
     
-    // Process for recording (non-blocking)
-    processTripUpdates(cachedTripUpdates).catch(err => {
+    // Process for recording with current vehicle positions (non-blocking)
+    processTripUpdates(cachedTripUpdates, cachedFeed).catch(err => {
       console.error("[RT Recorder] Error processing trip updates:", err);
     });
     
@@ -397,8 +419,12 @@ async function main() {
   // Background trip recording - fetch and process every 60 seconds
   setInterval(async () => {
     try {
-      const tripUpdates = await fetchTripUpdates();
-      await processTripUpdates(tripUpdates);
+      // Fetch both vehicle positions and trip updates
+      const [vehiclePositions, tripUpdates] = await Promise.all([
+        fetchGtfsRtData(),
+        fetchTripUpdates()
+      ]);
+      await processTripUpdates(tripUpdates, vehiclePositions);
     } catch (err) {
       console.error("[RT Recorder] Background processing error:", err.message);
     }

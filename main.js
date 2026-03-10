@@ -1342,7 +1342,20 @@
   
   // Download recorded data as JSON
   function downloadRecordedData() {
-    const dataStr = JSON.stringify(recordedData, null, 2);
+    // Match server export format exactly
+    const exportData = {
+      recordedData,
+      scheduledTimesCache,
+      exportedAt: Date.now(),
+      stats: {
+        totalTrips: Object.keys(recordedData).length,
+        totalStops: Object.values(recordedData).reduce((sum, trip) => sum + Object.keys(trip.stops).length, 0),
+        seenTrips: seenTripIds.size,
+        cachedRoutes: new Set(Object.values(recordedData).map(t => t.rid)).size
+      }
+    };
+    
+    const dataStr = JSON.stringify(exportData, null, 2);
     const blob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     
