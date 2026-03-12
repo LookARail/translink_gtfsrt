@@ -15,6 +15,8 @@
   let stopsData = null;
   let routesData = null;
   let selectedRouteIds = new Set();
+  let timeFilterStart = null;
+  let timeFilterEnd = null;
   let processedData = {
     tripSummaries: [],
     stopDeltas: [],
@@ -27,7 +29,12 @@
   // ============================================================================
 
   let routeChart = null;
+  let busiestRoutesChart = null;
   let stopChart = null;
+  let heatmapLayer = null;
+  let leafletMap = null;
+  let mapInitialized = false;
+  let cachedHeatmapPoints = null;
 
   // ============================================================================
   // TIMEZONE & FORMATTING UTILITIES
@@ -252,6 +259,7 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
     for (const tripId in recordedData) {
       const trip = recordedData[tripId];
       let maxDelay = null;
+      const tripStopDeltas = []; // Store stops for this trip to compute incremental delays
       
       // Process each stop in the trip
       for (const stopSeq in trip.stops) {
@@ -263,13 +271,16 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
         // Get scheduled time (prefer arrival, fallback to departure)
         const scheduledTimeStr = stop.sch_arr || stop.sch_dep;
         if (!scheduledTimeStr) {
-          stopDeltas.push({
+          const stopDelta = {
             tripId,
             routeId: trip.rid,
             stopId: stop.sid,
             stopSeq: stop.seq,
-            delta: null // No scheduled data
-          });
+            delta: null, // No scheduled data
+            incrementalDelay: null
+          };
+          stopDeltas.push(stopDelta);
+          tripStopDeltas.push(stopDelta);
           continue;
         }
         
@@ -289,30 +300,107 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
         // Convert scheduled time to epoch
         const scheduledEpoch = scheduledTimeToEpoch(scheduledTimeStr, stop.arr);
         if (scheduledEpoch === null) {
-          stopDeltas.push({
+          const stopDelta = {
             tripId,
             routeId: trip.rid,
             stopId: stop.sid,
             stopSeq: stop.seq,
-            delta: null
-          });
+            delta: null,
+            incrementalDelay: null
+          };
+          stopDeltas.push(stopDelta);
+          tripStopDeltas.push(stopDelta);
           continue;
         }
         
         // Calculate delta (positive = late, negative = early)
         const delta = stop.arr - scheduledEpoch;
         
-        stopDeltas.push({
+        const stopDelta = {
           tripId,
           routeId: trip.rid,
           stopId: stop.sid,
           stopSeq: stop.seq,
-          delta
-        });
+          delta,
+          incrementalDelay: null // Will be computed after all stops are processed
+        };
+        stopDeltas.push(stopDelta);
+        tripStopDeltas.push(stopDelta);
         
         // Track max delay for this trip
         if (maxDelay === null || delta > maxDelay) {
           maxDelay = delta;
+        }
+      }
+      
+      // Compute incremental delays for this trip
+      // Sort tripStopDeltas by stopSeq to ensure proper order
+      tripStopDeltas.sort((a, b) => {
+        const seqA = parseInt(a.stopSeq) || 0;
+        const seqB = parseInt(b.stopSeq) || 0;
+        return seqA - seqB;
+      });
+      
+      let previousValidDelta = null;
+      for (const stopDelta of tripStopDeltas) {
+        if (stopDelta.delta !== null) {
+          // Found a valid delta
+          if (previousValidDelta !== null) {
+            stopDelta.incrementalDelay = stopDelta.delta - previousValidDelta;
+          } else {
+            stopDelta.incrementalDelay = stopDelta.delta;
+          }
+          previousValidDelta = stopDelta.delta;
+        } else {
+          // No valid delta at this stop
+          stopDelta.incrementalDelay = null;
+        }
+      }
+      
+      // Calculate scheduled duration for this trip
+      let scheduledDuration = null;
+      let firstScheduledTime = null;
+      let lastScheduledTime = null;
+      
+      // Get stops sorted by sequence
+      const sortedStopSeqs = Object.keys(trip.stops).sort((a, b) => {
+        const seqA = parseInt(trip.stops[a].seq) || 0;
+        const seqB = parseInt(trip.stops[b].seq) || 0;
+        return seqA - seqB;
+      });
+      
+      if (sortedStopSeqs.length > 0) {
+        // Get first stop's scheduled time (prefer departure, fallback to arrival)
+        const firstStop = trip.stops[sortedStopSeqs[0]];
+        firstScheduledTime = firstStop.sch_dep || firstStop.sch_arr;
+        
+        // Get last stop's scheduled time (prefer arrival, fallback to departure)
+        const lastStop = trip.stops[sortedStopSeqs[sortedStopSeqs.length - 1]];
+        lastScheduledTime = lastStop.sch_arr || lastStop.sch_dep;
+        
+        if (firstScheduledTime && lastScheduledTime) {
+          // Parse HH:MM:SS format (hours can be >= 24)
+          const parseScheduledTime = (timeStr) => {
+            const parts = timeStr.split(':');
+            if (parts.length !== 3) return null;
+            const hours = parseInt(parts[0]);
+            const minutes = parseInt(parts[1]);
+            const seconds = parseInt(parts[2]);
+            if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) return null;
+            return hours * 3600 + minutes * 60 + seconds;
+          };
+          
+          const firstSeconds = parseScheduledTime(firstScheduledTime);
+          const lastSeconds = parseScheduledTime(lastScheduledTime);
+          
+          if (firstSeconds !== null && lastSeconds !== null) {
+            scheduledDuration = lastSeconds - firstSeconds;
+            // Ensure non-negative duration
+            if (scheduledDuration < 0) {
+              // This might happen if there's wrapping issues, add 24 hours
+              scheduledDuration += 86400;
+            }
+          }
         }
       }
       
@@ -322,7 +410,10 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
         routeId: trip.rid,
         vehicleId: trip.vid,
         maxDelay: maxDelay !== null ? maxDelay : null,
-        stopCount: Object.keys(trip.stops).length
+        stopCount: Object.keys(trip.stops).length,
+        scheduledDuration,
+        firstScheduledTime,
+        lastScheduledTime
       });
     }
     
@@ -330,6 +421,7 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
       tripSummaries: tripSummaries.length,
       stopDeltas: stopDeltas.length,
       deltasWithValues: stopDeltas.filter(d => d.delta !== null).length,
+      deltasWithIncrementalDelay: stopDeltas.filter(d => d.incrementalDelay !== null).length,
       tripsWithMaxDelay: tripSummaries.filter(t => t.maxDelay !== null).length,
       sampleTripsWithDelay: tripSummaries.filter(t => t.maxDelay !== null).slice(0, 3).map(t => ({ 
         routeId: t.routeId, 
@@ -407,35 +499,35 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
     
     for (const stop of stopDeltas) {
       if (selectedRoutes.size > 0 && !selectedRoutes.has(stop.routeId)) continue;
-      if (stop.delta === null) continue;
+      if (stop.incrementalDelay === null) continue;
       
       if (!stopMap[stop.stopId]) {
         stopMap[stop.stopId] = {
           stopId: stop.stopId,
           stopName: stopsData[stop.stopId]?.stop_name || stop.stopId,
-          deltas: []
+          incrementalDelays: []
         };
       }
       
-      stopMap[stop.stopId].deltas.push(stop.delta);
+      stopMap[stop.stopId].incrementalDelays.push(stop.incrementalDelay);
     }
     
     // Calculate averages
     const aggregations = [];
     for (const stopId in stopMap) {
       const stop = stopMap[stopId];
-      const avgDelay = stop.deltas.reduce((sum, d) => sum + d, 0) / stop.deltas.length;
+      const avgIncrementalDelay = stop.incrementalDelays.reduce((sum, d) => sum + d, 0) / stop.incrementalDelays.length;
       
       aggregations.push({
         stopId,
         stopName: stop.stopName,
-        avgDelay,
-        recordCount: stop.deltas.length
+        avgIncrementalDelay,
+        recordCount: stop.incrementalDelays.length
       });
     }
     
-    // Sort by avgDelay descending, take top 20
-    aggregations.sort((a, b) => b.avgDelay - a.avgDelay);
+    // Sort by avgIncrementalDelay descending, take top 20
+    aggregations.sort((a, b) => b.avgIncrementalDelay - a.avgIncrementalDelay);
     const topStops = aggregations.slice(0, 20);
     
     console.log('[Viewer] Stop aggregation result:', {
@@ -444,6 +536,74 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
     });
     
     return topStops;
+  }
+
+  function aggregateByBusiestRoutes(tripSummaries, selectedRoutes, stopDeltas) {
+    console.log('[Viewer] Aggregating busiest routes:', {
+      totalTrips: tripSummaries.length,
+      selectedRoutes: Array.from(selectedRoutes)
+    });
+    
+    const routeMap = {};
+    
+    for (const trip of tripSummaries) {
+      if (selectedRoutes.size > 0 && !selectedRoutes.has(trip.routeId)) continue;
+      if (trip.scheduledDuration === null) continue;
+      
+      if (!routeMap[trip.routeId]) {
+        routeMap[trip.routeId] = {
+          routeId: trip.routeId,
+          tripHours: 0,
+          tripCount: 0,
+          delays: []
+        };
+      }
+      
+      // Add trip-hours (scheduled duration in hours)
+      routeMap[trip.routeId].tripHours += trip.scheduledDuration / 3600;
+      routeMap[trip.routeId].tripCount++;
+      
+      // Collect delays from all stops for this trip
+      const tripDelays = stopDeltas.filter(d => d.tripId === trip.tripId && d.delta !== null);
+      for (const stopDelta of tripDelays) {
+        routeMap[trip.routeId].delays.push(stopDelta.delta);
+      }
+    }
+    
+    // Calculate averages
+    const aggregations = [];
+    for (const routeId in routeMap) {
+      const route = routeMap[routeId];
+      
+      let avgDelay = 0;
+      if (route.delays.length > 0) {
+        avgDelay = route.delays.reduce((sum, d) => sum + d, 0) / route.delays.length;
+      }
+      
+      aggregations.push({
+        routeId,
+        tripHours: route.tripHours,
+        tripCount: route.tripCount,
+        avgDelay,
+        delayCount: route.delays.length
+      });
+    }
+    
+    // Sort by tripHours descending, take top 10
+    aggregations.sort((a, b) => b.tripHours - a.tripHours);
+    const topRoutes = aggregations.slice(0, 10);
+    
+    console.log('[Viewer] Busiest routes aggregation result:', {
+      totalRoutes: aggregations.length,
+      top10Count: topRoutes.length,
+      top10: topRoutes.map(r => ({ 
+        route: r.routeId, 
+        tripHours: r.tripHours.toFixed(2), 
+        avgDelay: r.avgDelay.toFixed(0) 
+      }))
+    });
+    
+    return topRoutes;
   }
 
   // ============================================================================
@@ -483,6 +643,8 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
       console.error('[Viewer] Failed to initialize charts');
       // Continue anyway so user can see the error message
     }
+    
+    // Note: Map is initialized lazily when user first switches to Map View tab
     
     // Get elements
     const dataSourceSelect = doc.getElementById('dataSource');
@@ -580,6 +742,12 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
         // Initialize route filter
         initializeRouteFilter(doc, processed.tripSummaries);
         
+        // Setup tab switching
+        setupTabSwitching(doc);
+        
+        // Update time filter range (initially all routes are selected)
+        updateTimeFilterRangeFromRouteSelection(doc);
+        
         // Render charts with all routes selected
         renderCharts(doc);
         
@@ -596,11 +764,25 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
     selectAllBtn.addEventListener('click', () => {
       const checkboxes = doc.querySelectorAll('.route-filter input[type="checkbox"]');
       checkboxes.forEach(cb => cb.checked = true);
+      console.log('[Viewer] Select All clicked');
+      // Update time filter range based on new selection
+      updateTimeFilterRangeFromRouteSelection(doc);
     });
     
     deselectAllBtn.addEventListener('click', () => {
       const checkboxes = doc.querySelectorAll('.route-filter input[type="checkbox"]');
       checkboxes.forEach(cb => cb.checked = false);
+      console.log('[Viewer] Deselect All clicked');
+      // Update time filter range based on new selection
+      updateTimeFilterRangeFromRouteSelection(doc);
+    });
+    
+    // Update time filter when individual checkboxes change
+    routeFilter.addEventListener('change', (e) => {
+      if (e.target.type === 'checkbox') {
+        console.log('[Viewer] Route checkbox changed:', e.target.value, 'checked:', e.target.checked);
+        updateTimeFilterRangeFromRouteSelection(doc);
+      }
     });
     
     applyFilterBtn.addEventListener('click', () => {
@@ -608,10 +790,26 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
       selectedRouteIds.clear();
       checkboxes.forEach(cb => selectedRouteIds.add(cb.value));
       
+      // Read time filter values
+      const timeStartInput = doc.getElementById('timeStart');
+      const timeEndInput = doc.getElementById('timeEnd');
+      
+      if (timeStartInput.value && timeEndInput.value) {
+        timeFilterStart = convertTimeInputToScheduled(timeStartInput.value);
+        timeFilterEnd = convertTimeInputToScheduled(timeEndInput.value);
+      } else {
+        timeFilterStart = null;
+        timeFilterEnd = null;
+      }
+      
       console.log('[Viewer] Apply filter clicked:', {
         selectedCount: selectedRouteIds.size,
-        selectedRoutes: Array.from(selectedRouteIds)
+        selectedRoutes: Array.from(selectedRouteIds),
+        timeFilter: { start: timeFilterStart, end: timeFilterEnd }
       });
+      
+      // Update time filter range based on current dataset
+      updateTimeFilterRange(doc);
       
       // Debug: Show detailed stop-level data for up to 20 random trips
       const filteredTrips = processedData.tripSummaries.filter(t => 
@@ -671,6 +869,417 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
   function showError(errorEl, message) {
     errorEl.textContent = message;
     errorEl.style.display = 'block';
+  }
+
+  // Helper function to convert HTML time input (HH:MM) to scheduled time format (HH:MM:SS)
+  function convertTimeInputToScheduled(timeInput) {
+    return `${timeInput}:00`;
+  }
+  
+  // Helper function to convert scheduled time format (HH:MM:SS) to HTML time input (HH:MM)
+  function convertScheduledToTimeInput(scheduledTime) {
+    if (!scheduledTime) return '';
+    const parts = scheduledTime.split(':');
+    if (parts.length < 2) return '';
+    let hours = parseInt(parts[0]);
+    // Handle hours >= 24 by wrapping
+    if (hours >= 24) hours = hours % 24;
+    return `${hours.toString().padStart(2, '0')}:${parts[1]}`;
+  }
+  
+  // Update time filter range based on currently checked routes (not selectedRouteIds)
+  function updateTimeFilterRangeFromRouteSelection(doc) {
+    const timeStartInput = doc.getElementById('timeStart');
+    const timeEndInput = doc.getElementById('timeEnd');
+    const timeRangeInfo = doc.getElementById('timeRangeInfo');
+    
+    if (!processedData.tripSummaries || processedData.tripSummaries.length === 0) {
+      timeStartInput.disabled = true;
+      timeEndInput.disabled = true;
+      timeRangeInfo.innerHTML = 'No trips available';
+      return;
+    }
+    
+    // Get currently checked routes (not yet applied)
+    const checkedRoutes = new Set();
+    const checkboxes = doc.querySelectorAll('.route-filter input[type="checkbox"]:checked');
+    checkboxes.forEach(cb => checkedRoutes.add(cb.value));
+    
+    // Find min and max scheduled times across checked routes
+    let minTime = null;
+    let maxTime = null;
+    
+    for (const trip of processedData.tripSummaries) {
+      if (checkedRoutes.size > 0 && !checkedRoutes.has(trip.routeId)) continue;
+      
+      if (trip.firstScheduledTime) {
+        const firstSeconds = parseScheduledTime(trip.firstScheduledTime);
+        if (firstSeconds !== null && (minTime === null || firstSeconds < minTime)) {
+          minTime = firstSeconds;
+        }
+      }
+      
+      if (trip.lastScheduledTime) {
+        const lastSeconds = parseScheduledTime(trip.lastScheduledTime);
+        if (lastSeconds !== null && (maxTime === null || lastSeconds > maxTime)) {
+          maxTime = lastSeconds;
+        }
+      }
+    }
+    
+    if (minTime !== null && maxTime !== null) {
+      const formatTimeFromSeconds = (seconds) => {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      };
+      
+      const minTimeStr = formatTimeFromSeconds(minTime);
+      const maxTimeStr = formatTimeFromSeconds(maxTime);
+      
+      timeStartInput.disabled = false;
+      timeEndInput.disabled = false;
+      
+      // Always update the values to reflect the new range
+      timeStartInput.value = convertScheduledToTimeInput(minTimeStr);
+      timeEndInput.value = convertScheduledToTimeInput(maxTimeStr);
+      
+      timeRangeInfo.innerHTML = `Available range: ${minTimeStr} to ${maxTimeStr}`;
+    } else {
+      timeStartInput.disabled = true;
+      timeEndInput.disabled = true;
+      timeRangeInfo.innerHTML = 'No valid scheduled times found';
+    }
+  }
+  
+  // Update time filter range based on applied selectedRouteIds
+  function updateTimeFilterRange(doc) {
+    const timeStartInput = doc.getElementById('timeStart');
+    const timeEndInput = doc.getElementById('timeEnd');
+    const timeRangeInfo = doc.getElementById('timeRangeInfo');
+    
+    if (!processedData.tripSummaries || processedData.tripSummaries.length === 0) {
+      timeStartInput.disabled = true;
+      timeEndInput.disabled = true;
+      timeRangeInfo.innerHTML = 'No trips available';
+      return;
+    }
+    
+    // Find min and max scheduled times across selected trips
+    let minTime = null;
+    let maxTime = null;
+    
+    for (const trip of processedData.tripSummaries) {
+      if (selectedRouteIds.size > 0 && !selectedRouteIds.has(trip.routeId)) continue;
+      
+      if (trip.firstScheduledTime) {
+        const firstSeconds = parseScheduledTime(trip.firstScheduledTime);
+        if (firstSeconds !== null && (minTime === null || firstSeconds < minTime)) {
+          minTime = firstSeconds;
+        }
+      }
+      
+      if (trip.lastScheduledTime) {
+        const lastSeconds = parseScheduledTime(trip.lastScheduledTime);
+        if (lastSeconds !== null && (maxTime === null || lastSeconds > maxTime)) {
+          maxTime = lastSeconds;
+        }
+      }
+    }
+    
+    if (minTime !== null && maxTime !== null) {
+      const formatTimeFromSeconds = (seconds) => {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      };
+      
+      const minTimeStr = formatTimeFromSeconds(minTime);
+      const maxTimeStr = formatTimeFromSeconds(maxTime);
+      
+      timeStartInput.disabled = false;
+      timeEndInput.disabled = false;
+      
+      // Set default values if not already set
+      if (!timeStartInput.value) {
+        timeStartInput.value = convertScheduledToTimeInput(minTimeStr);
+      }
+      if (!timeEndInput.value) {
+        timeEndInput.value = convertScheduledToTimeInput(maxTimeStr);
+      }
+      
+      timeRangeInfo.innerHTML = `Available range: ${minTimeStr} to ${maxTimeStr}`;
+    } else {
+      timeStartInput.disabled = true;
+      timeEndInput.disabled = true;
+      timeRangeInfo.innerHTML = 'No valid scheduled times found';
+    }
+  }
+  
+  function setupTabSwitching(doc) {
+    const tabs = doc.querySelectorAll('.tab');
+    const tabContents = doc.querySelectorAll('.tab-content');
+    
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetTab = tab.getAttribute('data-tab');
+        
+        // Update tab buttons
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        // Update tab contents
+        tabContents.forEach(content => {
+          if (content.id === `${targetTab}Tab`) {
+            content.classList.add('active');
+          } else {
+            content.classList.remove('active');
+          }
+        });
+        
+        // If switching to map tab, initialize or refresh map
+        if (targetTab === 'map') {
+          if (!mapInitialized) {
+            const mapReady = initializeMap(doc);
+            if (mapReady) {
+              mapInitialized = true;
+              // If we have data, render the heatmap
+              if (processedData.stopDeltas.length > 0) {
+                // Re-render with current filters
+                renderCharts(doc);
+              }
+            }
+          } else if (leafletMap) {
+            setTimeout(() => {
+              leafletMap.invalidateSize();
+            }, 100);
+          }
+        }
+      });
+    });
+  }
+
+  function clamp(number, min, max) {
+    return Math.min(max, Math.max(min, number));
+  }
+
+  function getHeatLayerOptionsForZoom(zoom) {
+    // TUNING GUIDE: Adjust radius/blur vs. zoom here
+    const radius = clamp(Math.round(10 + Math.pow(zoom-10, 1.5) * 2.0), 10, 55);
+    const blur = clamp(Math.round(radius * 0.85), 8, 45);
+
+    console.log(`[Viewer] Heatmap options for zoom ${zoom}: radius=${radius}px, blur=${blur}px, minOpacity=${zoom >= 16 ? 0.25 : (zoom >= 14 ? 0.35 : 0.5)}`);
+
+    // Slightly reduce opacity at high zoom to avoid full-map saturation.
+    const minOpacity = zoom >= 16 ? 0.25 : (zoom >= 14 ? 0.35 : 0.5);
+
+    return {
+      radius,
+      blur,
+      maxZoom: 18,
+      max: 1.0,
+      minOpacity,
+      gradient: {
+        0.0: 'blue',
+        0.2: 'lime',
+        0.4: 'yellow',
+        0.6: 'orange',
+        0.8: 'red',
+        1.0: 'darkred'
+      }
+    };
+  }
+
+  function rebuildHeatLayer() {
+    if (!leafletMap || !cachedHeatmapPoints || cachedHeatmapPoints.length === 0) return;
+    if (typeof L === 'undefined' || typeof L.heatLayer === 'undefined') return;
+
+    if (heatmapLayer) {
+      leafletMap.removeLayer(heatmapLayer);
+      heatmapLayer = null;
+    }
+
+    heatmapLayer = L.heatLayer(
+      cachedHeatmapPoints,
+      getHeatLayerOptionsForZoom(leafletMap.getZoom())
+    ).addTo(leafletMap);
+  }
+  
+  function initializeMap(doc) {
+    const mapContainer = doc.getElementById('heatmapContainer');
+    if (!mapContainer) {
+      console.error('[Viewer] Map container not found!');
+      return false;
+    }
+    
+    // Check if Leaflet is loaded
+    if (typeof L === 'undefined') {
+      console.error('[Viewer] Leaflet library not loaded!');
+      mapContainer.innerHTML = '<div class="no-data">Error: Leaflet library failed to load. Please refresh the page.</div>';
+      return false;
+    }
+    
+    try {
+      // Ensure the container is empty (Leaflet will populate it)
+      mapContainer.innerHTML = '';
+
+      // Initialize Leaflet map centered on Toronto
+      leafletMap = L.map(mapContainer, {
+        center: [43.65, -79.38],
+        zoom: 11,
+        preferCanvas: true
+      });
+      
+      // Add OpenStreetMap tile layer
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 18
+      }).addTo(leafletMap);
+
+      // Rebuild heat when zoom changes to keep it readable at high zoom.
+      leafletMap.on('zoomend', () => {
+        rebuildHeatLayer();
+      });
+      
+      // Defer a size invalidation to the next tick in case layout just changed (tab switched)
+      setTimeout(() => {
+        try {
+          leafletMap.invalidateSize();
+        } catch (e) {
+        }
+      }, 0);
+      return true;
+    } catch (err) {
+      console.error('[Viewer] Error initializing map:', err);
+      return false;
+    }
+  }
+  
+  function updateHeatmap(stopDeltas) {
+    if (!leafletMap) {
+      return;
+    }
+    
+    if (stopDeltas.length === 0) {
+      return;
+    }
+    
+    if (!stopsData) {
+      return;
+    }
+    
+    // Check if Leaflet.heat is loaded
+    if (typeof L.heatLayer === 'undefined') {
+      return;
+    }
+    
+    // Aggregate incremental delays by stop
+    const stopMap = {};
+    
+    for (const stop of stopDeltas) {
+      if (stop.incrementalDelay === null) continue;
+      
+      if (!stopMap[stop.stopId]) {
+        stopMap[stop.stopId] = {
+          stopId: stop.stopId,
+          delays: []
+        };
+      }
+      
+      stopMap[stop.stopId].delays.push(stop.incrementalDelay);
+    }
+    
+    // Calculate average incremental delay per stop
+    const stopAggregations = [];
+    for (const stopId in stopMap) {
+      const stop = stopMap[stopId];
+      const avgDelay = stop.delays.reduce((sum, d) => sum + d, 0) / stop.delays.length;
+      
+      stopAggregations.push({
+        stopId,
+        avgIncrementalDelay: avgDelay,
+        recordCount: stop.delays.length
+      });
+    }
+    
+    if (stopAggregations.length === 0) {
+      return;
+    }
+    
+    // Prepare heatmap data points
+    const heatmapPoints = [];
+    
+    // COLOR GRADIENT MECHANISM:
+    // ------------------------------------------------------------------------
+    // Uses PERCENTILE-based normalization to spread colors meaningfully.
+    // This avoids "all red" when most stops have similar delays.
+    //
+    // Current mapping:
+    //   - 10th percentile delay → intensity 0.0 (blue)
+    //   - 50th percentile (median) → intensity 0.5 (yellow)
+    //   - 90th percentile delay → intensity 1.0 (dark red)
+    //
+    // Stops below 10th %ile are clamped to blue; above 90th to dark red.
+    // This ensures a visible gradient even when delays cluster together.
+    
+    const delays = stopAggregations.map(s => s.avgIncrementalDelay).sort((a, b) => a - b);
+    const p10 = delays[Math.floor(delays.length * 0.10)] || 0;
+    const p90 = delays[Math.floor(delays.length * 0.90)] || 0;
+    const delayRange = p90 - p10;
+    
+    for (const stop of stopAggregations) {
+      const stopInfo = stopsData[stop.stopId];
+      if (!stopInfo || !stopInfo.stop_lat || !stopInfo.stop_lon) {
+        continue;
+      }
+      
+      const lat = parseFloat(stopInfo.stop_lat);
+      const lon = parseFloat(stopInfo.stop_lon);
+      
+      if (isNaN(lat) || isNaN(lon)) {
+        continue;
+      }
+      
+      // Map delay to intensity using 10th-90th percentile range
+      let intensity = 0.5; // default to mid-range
+      if (delayRange > 0) {
+        intensity = (stop.avgIncrementalDelay - p10) / delayRange;
+        intensity = clamp(intensity, 0, 1); // clamp outliers
+      }
+      
+      heatmapPoints.push([lat, lon, intensity]);
+    }
+    
+    if (heatmapPoints.length === 0) {
+      return;
+    }
+    
+    // Ensure map has proper size before creating heatmap
+    const mapSize = leafletMap.getSize();
+    if (mapSize.x === 0 || mapSize.y === 0) {
+      setTimeout(() => {
+        leafletMap.invalidateSize();
+        updateHeatmap(stopDeltas);
+      }, 200);
+      return;
+    }
+
+    try {
+      cachedHeatmapPoints = heatmapPoints;
+      rebuildHeatLayer();
+      
+      // Fit map bounds to show all points
+      try {
+        if (heatmapPoints.length > 0) {
+          const bounds = L.latLngBounds(heatmapPoints.map(p => [p[0], p[1]]));
+          leafletMap.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
+        }
+      } catch (boundsErr) {
+      }
+    } catch (err) {
+    }
   }
 
   function updateStatusBadge(badgeEl, text, type) {
@@ -785,17 +1394,17 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
       return false;
     }
     
-    // Initialize stop chart
-    const stopCanvas = doc.getElementById('stopChart');
-    if (!stopCanvas) {
-      console.error('[Viewer] Canvas element #stopChart not found!');
+    // Initialize busiest routes chart
+    const busiestRoutesCanvas = doc.getElementById('busiestRoutesChart');
+    if (!busiestRoutesCanvas) {
+      console.error('[Viewer] Canvas element #busiestRoutesChart not found!');
       return false;
     }
     
-    console.log('[Viewer] Creating stop chart...');
+    console.log('[Viewer] Creating busiest routes chart...');
     try {
-      const stopCtx = stopCanvas.getContext('2d');
-      stopChart = new Chart(stopCtx, {
+      const busiestRoutesCtx = busiestRoutesCanvas.getContext('2d');
+      busiestRoutesChart = new Chart(busiestRoutesCtx, {
         type: 'bar',
         data: {
           labels: [],
@@ -832,6 +1441,64 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
               }
             },
             y: {
+              title: { display: true, text: 'Route' }
+            }
+          }
+        }
+      });
+      console.log('[Viewer] Busiest routes chart created successfully');
+    } catch (err) {
+      console.error('[Viewer] Failed to create busiest routes chart:', err);
+      return false;
+    }
+    
+    // Initialize stop chart
+    const stopCanvas = doc.getElementById('stopChart');
+    if (!stopCanvas) {
+      console.error('[Viewer] Canvas element #stopChart not found!');
+      return false;
+    }
+    
+    console.log('[Viewer] Creating stop chart...');
+    try {
+      const stopCtx = stopCanvas.getContext('2d');
+      stopChart = new Chart(stopCtx, {
+        type: 'bar',
+        data: {
+          labels: [],
+          datasets: [{
+            label: 'Average Incremental Delay',
+            data: [],
+            backgroundColor: [],
+            borderColor: [],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (context) => {
+                  const delay = context.parsed.x;
+                  return `Avg Incremental Delay: ${delay.toFixed(0)}s`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              title: { display: true, text: 'Average Incremental Delay (seconds)' },
+              ticks: {
+                stepSize: 60,
+                callback: (value) => `${value}s`
+              }
+            },
+            y: {
               title: { display: true, text: 'Stop' },
               ticks: {
                 font: { size: 10 }
@@ -857,15 +1524,39 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
       selectedRoutes: Array.from(selectedRouteIds)
     });
     
-    const routeAgg = aggregateByRoute(processedData.tripSummaries, selectedRouteIds);
-    const stopAgg = aggregateByStop(processedData.stopDeltas, selectedRouteIds, stopsData);
+    // Apply time filtering
+    let filteredTripSummaries = processedData.tripSummaries;
+    let filteredStopDeltas = processedData.stopDeltas;
+    
+    if (timeFilterStart !== null && timeFilterEnd !== null) {
+      const filteredTripIds = new Set();
+      
+      for (const trip of processedData.tripSummaries) {
+        if (!trip.firstScheduledTime || !trip.lastScheduledTime) continue;
+        
+        // Check if any part of the trip is within the time filter range
+        if (isTimeInRange(trip.firstScheduledTime, timeFilterStart, timeFilterEnd) ||
+            isTimeInRange(trip.lastScheduledTime, timeFilterStart, timeFilterEnd) ||
+            (isTimeBefore(trip.firstScheduledTime, timeFilterStart) && isTimeBefore(timeFilterEnd, trip.lastScheduledTime))) {
+          filteredTripIds.add(trip.tripId);
+        }
+      }
+      
+      filteredTripSummaries = processedData.tripSummaries.filter(t => filteredTripIds.has(t.tripId));
+      filteredStopDeltas = processedData.stopDeltas.filter(s => filteredTripIds.has(s.tripId));
+    }
+    
+    const routeAgg = aggregateByRoute(filteredTripSummaries, selectedRouteIds);
+    const busiestRoutesAgg = aggregateByBusiestRoutes(filteredTripSummaries, selectedRouteIds, filteredStopDeltas);
+    const stopAgg = aggregateByStop(filteredStopDeltas, selectedRouteIds, stopsData);
     
     console.log('[Viewer] Aggregation complete:', {
       routeAggCount: routeAgg.length,
+      busiestRoutesAggCount: busiestRoutesAgg.length,
       stopAggCount: stopAgg.length
     });
     
-    if (routeAgg.length === 0 && stopAgg.length === 0) {
+    if (routeAgg.length === 0 && stopAgg.length === 0 && busiestRoutesAgg.length === 0) {
       doc.getElementById('otpTab').innerHTML = '<div class="no-data">No data available. Try adjusting filters or selecting a different date.</div>';
       return;
     }
@@ -873,8 +1564,43 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
     // Update route chart
     updateRouteChart(routeAgg);
     
+    // Update busiest routes chart
+    updateBusiestRoutesChart(busiestRoutesAgg);
+    
     // Update stop chart
     updateStopChart(stopAgg);
+    
+    // Update heatmap (pass all filtered stop deltas, not just top 20)
+    updateHeatmap(filteredStopDeltas);
+    
+    // Update stats tab
+    renderStatsTab(doc, filteredTripSummaries, filteredStopDeltas);
+  }
+  
+  // Helper functions for time filtering
+  function parseScheduledTime(timeStr) {
+    const parts = timeStr.split(':');
+    if (parts.length !== 3) return null;
+    const hours = parseInt(parts[0]);
+    const minutes = parseInt(parts[1]);
+    const seconds = parseInt(parts[2]);
+    if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) return null;
+    return hours * 3600 + minutes * 60 + seconds;
+  }
+  
+  function isTimeInRange(timeStr, startStr, endStr) {
+    const time = parseScheduledTime(timeStr);
+    const start = parseScheduledTime(startStr);
+    const end = parseScheduledTime(endStr);
+    if (time === null || start === null || end === null) return false;
+    return time >= start && time <= end;
+  }
+  
+  function isTimeBefore(timeStr1, timeStr2) {
+    const time1 = parseScheduledTime(timeStr1);
+    const time2 = parseScheduledTime(timeStr2);
+    if (time1 === null || time2 === null) return false;
+    return time1 < time2;
   }
 
   function updateRouteChart(data) {
@@ -955,7 +1681,7 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
     
     // Update data
     stopChart.data.labels = data.map(d => `${d.stopId} - ${d.stopName}`);
-    stopChart.data.datasets[0].data = data.map(d => d.avgDelay);
+    stopChart.data.datasets[0].data = data.map(d => d.avgIncrementalDelay);
     stopChart.data.datasets[0].backgroundColor = colors;
     stopChart.data.datasets[0].borderColor = colors;
     
@@ -966,13 +1692,104 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
     stopChart.options.plugins.tooltip.callbacks.label = (context) => {
       const stop = stopChart.fullData[context.dataIndex];
       return [
-        `Avg Delay: ${stop.avgDelay.toFixed(0)}s`,
+        `Avg Incremental Delay: ${stop.avgIncrementalDelay.toFixed(0)}s`,
         `Records: ${stop.recordCount}`,
         `Stop: ${stop.stopName}`
       ];
     };
     
     stopChart.update('none');
+  }
+
+  function updateBusiestRoutesChart(data) {
+    console.log('[Viewer] Updating busiest routes chart with', data.length, 'routes');
+    
+    if (!busiestRoutesChart) {
+      console.error('[Viewer] Busiest routes chart not initialized!');
+      return;
+    }
+    
+    if (data.length === 0) {
+      busiestRoutesChart.data.labels = [];
+      busiestRoutesChart.data.datasets[0].data = [];
+      busiestRoutesChart.data.datasets[0].backgroundColor = [];
+      busiestRoutesChart.data.datasets[0].borderColor = [];
+      busiestRoutesChart.update('none');
+      return;
+    }
+    
+    // Create gradient colors (red = worst delay)
+    const colors = data.map((_, i) => {
+      const ratio = i / Math.max(data.length - 1, 1);
+      const r = Math.floor(220 - ratio * 70);
+      const g = Math.floor(50 + ratio * 150);
+      const b = 50;
+      return `rgb(${r}, ${g}, ${b})`;
+    });
+    
+    // Update data with route names (sorted by trip-hours already)
+    busiestRoutesChart.data.labels = data.map(d => {
+      const routeName = routesData && routesData[d.routeId] ? routesData[d.routeId].route_long_name : null;
+      return routeName ? `${d.routeId} - ${routeName}` : d.routeId;
+    });
+    busiestRoutesChart.data.datasets[0].data = data.map(d => d.avgDelay);
+    busiestRoutesChart.data.datasets[0].backgroundColor = colors;
+    busiestRoutesChart.data.datasets[0].borderColor = colors;
+    
+    // Store full data for tooltip access
+    busiestRoutesChart.fullData = data;
+    
+    // Update tooltip callback to access stored data
+    busiestRoutesChart.options.plugins.tooltip.callbacks.label = (context) => {
+      const route = busiestRoutesChart.fullData[context.dataIndex];
+      return [
+        `Avg Delay: ${route.avgDelay.toFixed(0)}s`,
+        `Trip-Hours: ${route.tripHours.toFixed(1)}`,
+        `Trips: ${route.tripCount}`
+      ];
+    };
+    
+    busiestRoutesChart.update('none');
+  }
+
+  function renderStatsTab(doc, tripSummaries, stopDeltas) {
+    const statsGrid = doc.getElementById('statsGrid');
+    if (!statsGrid) return;
+    
+    // Calculate statistics
+    const totalTrips = tripSummaries.length;
+    const totalStops = stopDeltas.length;
+    const tripsMissingSchedule = tripSummaries.filter(t => t.scheduledDuration === null).length;
+    const stopsWithActual = stopDeltas.filter(s => s.delta !== null).length;
+    const stopsMissingActual = totalStops - stopsWithActual;
+    const tripsWithDelay = tripSummaries.filter(t => t.maxDelay !== null).length;
+    const avgMaxDelay = tripsWithDelay > 0 
+      ? tripSummaries.filter(t => t.maxDelay !== null).reduce((sum, t) => sum + t.maxDelay, 0) / tripsWithDelay 
+      : 0;
+    const stopsWithIncrementalDelay = stopDeltas.filter(s => s.incrementalDelay !== null).length;
+    const avgIncrementalDelay = stopsWithIncrementalDelay > 0
+      ? stopDeltas.filter(s => s.incrementalDelay !== null).reduce((sum, s) => sum + s.incrementalDelay, 0) / stopsWithIncrementalDelay
+      : 0;
+    
+    // Create stat cards
+    const stats = [
+      { title: 'Total Trips', value: totalTrips, description: 'Number of trips in dataset' },
+      { title: 'Total Stop Records', value: totalStops, description: 'Number of stop-level records' },
+      { title: 'Trips Missing Schedule', value: tripsMissingSchedule, description: 'Trips without scheduled duration' },
+      { title: 'Stop Records Missing Actual', value: stopsMissingActual, description: 'Stops without actual arrival time' },
+      { title: 'Trips with Delay Data', value: tripsWithDelay, description: 'Trips with valid delay measurements' },
+      { title: 'Avg Max Delay per Trip', value: `${avgMaxDelay.toFixed(0)}s`, description: 'Average maximum delay across trips' },
+      { title: 'Stops with Incremental Delay', value: stopsWithIncrementalDelay, description: 'Stops with valid incremental delay' },
+      { title: 'Avg Incremental Delay', value: `${avgIncrementalDelay.toFixed(0)}s`, description: 'Average incremental delay across stops' }
+    ];
+    
+    statsGrid.innerHTML = stats.map(stat => `
+      <div class="stat-card">
+        <h3>${stat.title}</h3>
+        <div class="stat-value">${stat.value}</div>
+        <div class="stat-description">${stat.description}</div>
+      </div>
+    `).join('');
   }
 
   // ============================================================================

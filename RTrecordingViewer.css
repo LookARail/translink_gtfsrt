@@ -45,9 +45,9 @@ body {
   overflow: hidden;
 }
 
-/* Left Panel - 30% */
+/* Left Panel - 20% */
 .left-panel {
-  width: 30%;
+  width: 20%;
   background: white;
   border-right: 1px solid #ddd;
   overflow-y: auto;
@@ -66,13 +66,15 @@ body {
   padding-bottom: 8px;
 }
 
-/* Right Panel - 70% */
+/* Right Panel - 80% */
 .right-panel {
-  width: 70%;
+  width: 80%;
+  flex: 1;
   background: #f9f9f9;
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow: hidden;
 }
 
 .loading {
@@ -134,7 +136,10 @@ body {
 }
 
 .tab-content.active {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
 }
 
 .chart-wrapper {
@@ -152,7 +157,8 @@ body {
   color: #333;
 }
 
-canvas {
+/* Only size Chart.js canvases. Leaflet uses its own canvases too (heat layer / renderer). */
+.chart-wrapper canvas {
   max-width: 100%;
   height: 400px !important;
 }
@@ -288,4 +294,106 @@ button {
   padding: 40px;
   color: #999;
   font-size: 16px;
+}
+
+/* Time Filter */
+.time-filter {
+  margin-top: 12px;
+  padding: 12px;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.time-filter input[type="time"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.time-filter input[type="time"]:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.time-range-info {
+  margin-top: 8px;
+  padding: 8px;
+  background: #e8f4fd;
+  border-left: 3px solid #0078d4;
+  font-size: 12px;
+  color: #333;
+  border-radius: 3px;
+}
+
+.apply-filter-container {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid #ddd;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h3 {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.stat-card .stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0078d4;
+  margin-bottom: 4px;
+}
+
+.stat-card .stat-description {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Map View */
+.map-controls {
+  background: white;
+  padding: 12px 20px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.map-controls label {
+  font-weight: 500;
+  color: #555;
+}
+
+.map-controls select {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.map-container {
+  width: 100%;
+  min-height: 1000px;
+  background: #e5e5e5;
+  flex: 1;
 }

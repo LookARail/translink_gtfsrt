@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <title>RT Recording Viewer</title>
   <link rel="stylesheet" href="RTrecordingViewer.css">
+
+  <!-- Leaflet CSS (for map view) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
   <div class="header">
@@ -51,7 +54,23 @@
         <div class="filter-controls">
           <button id="selectAllRoutes" class="small-btn">Select All</button>
           <button id="deselectAllRoutes" class="small-btn">Deselect All</button>
-          <button id="applyFilter" class="primary-btn">Apply Filter</button>
+        </div>
+        
+        <h3 style="margin-top: 20px;">Time Filter</h3>
+        <div class="time-filter">
+          <div class="form-group">
+            <label for="timeStart">Start Time:</label>
+            <input type="time" id="timeStart" disabled>
+          </div>
+          <div class="form-group">
+            <label for="timeEnd">End Time:</label>
+            <input type="time" id="timeEnd" disabled>
+          </div>
+          <div class="time-range-info" id="timeRangeInfo"></div>
+        </div>
+        
+        <div class="apply-filter-container">
+          <button id="applyFilter" class="primary-btn">Apply Filters</button>
         </div>
       </div>
     </div>
@@ -65,19 +84,40 @@
       <div id="viewerContent" style="display:none;">
         <div class="tabs">
           <button class="tab active" data-tab="otp">On-Time Performance</button>
+          <button class="tab" data-tab="map">Map View</button>
+          <button class="tab" data-tab="stats">General Stats</button>
         </div>
         
         <div class="charts-container">
           <div id="otpTab" class="tab-content active">
             <div class="chart-wrapper">
-              <div class="chart-title">Top 10 Routes by Average Delay</div>
+              <div class="chart-title">Top 10 Routes by Average Max Delay</div>
               <canvas id="routeChart"></canvas>
             </div>
             
             <div class="chart-wrapper">
-              <div class="chart-title">Top 20 Stops by Average Delay</div>
+              <div class="chart-title">Top 10 Busiest Routes by Average Delay (by Trip-Hours)</div>
+              <canvas id="busiestRoutesChart"></canvas>
+            </div>
+            
+            <div class="chart-wrapper">
+              <div class="chart-title">Top 20 Stops by Average Incremental Delay</div>
               <canvas id="stopChart"></canvas>
             </div>
+          </div>
+          
+          <div id="mapTab" class="tab-content">
+            <div class="map-controls">
+              <label for="heatmapMetric">Metric:</label>
+              <select id="heatmapMetric">
+                <option value="incrementalDelay">Incremental Delay at Stops</option>
+              </select>
+            </div>
+            <div id="heatmapContainer" class="map-container"></div>
+          </div>
+          
+          <div id="statsTab" class="tab-content">
+            <div class="stats-grid" id="statsGrid"></div>
           </div>
         </div>
       </div>
@@ -86,6 +126,12 @@
   
   <!-- Load Chart.js statically (local or CDN fallback) -->
   <script src="libs/chart.js" onerror="this.onerror=null; this.src='https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js';"></script>
+  
+  <!-- Load Leaflet (for map view) -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  
+  <!-- Load Leaflet.heat plugin -->
+  <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
   
   <!-- Main viewer script -->
   <script src="RTrecordingViewer.js"></script>
