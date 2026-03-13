@@ -40,64 +40,8 @@
   // TIMEZONE & FORMATTING UTILITIES
   // ============================================================================
 
-  function scheduledTimeToEpoch(scheduledTimeStr, referenceEpochSeconds) {
-    if (!scheduledTimeStr || !referenceEpochSeconds) return null;
-    
-    const parts = scheduledTimeStr.split(':');
-    if (parts.length !== 3) return null;
-    
-    let hours = parseInt(parts[0]);
-    const minutes = parseInt(parts[1]);
-    const seconds = parseInt(parts[2]);
-    
-    if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) return null;
-    
-    const referenceDate = new Date(referenceEpochSeconds * 1000);
-    const formatter = new Intl.DateTimeFormat('en-US', {
-      timeZone: TORONTO_TZ,
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false
-    });
-    
-    const formatParts = formatter.formatToParts(referenceDate);
-    const year = parseInt(formatParts.find(p => p.type === 'year').value);
-    const month = parseInt(formatParts.find(p => p.type === 'month').value) - 1;
-    const day = parseInt(formatParts.find(p => p.type === 'day').value);
-    
-    let daysToAdd = 0;
-    while (hours >= 24) {
-      hours -= 24;
-      daysToAdd++;
-    }
-    
-    const testDate = new Date(Date.UTC(year, month, day, 12, 0, 0));
-    const testParts = formatter.formatToParts(testDate);
-    const torontoHour = parseInt(testParts.find(p => p.type === 'hour').value);
-    let offsetHours = torontoHour - 12;
-    if (offsetHours > 12) offsetHours -= 24;
-    if (offsetHours < -12) offsetHours += 24;
-    
-let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, minutes, seconds);
-  let scheduledEpoch = Math.floor(scheduledUTC / 1000);
-  
-  // Adjust if scheduled time is unreasonably far from reference time
-  // If scheduled is more than 12 hours ahead of actual, subtract a day
-  // If scheduled is more than 12 hours behind actual, add a day
-  const diff = scheduledEpoch - referenceEpochSeconds;
-  
-  if (diff > 43200) { // More than 12 hours in the future
-    scheduledEpoch -= 86400; // Subtract one day
-  } else if (diff < -43200) { // More than 12 hours in the past
-    scheduledEpoch += 86400; // Add one day
-  }
-  
-  return scheduledEpoch;
-  }
+  // Note: scheduledTimeToEpoch is no longer needed.
+  // Both arr and sch_arr are now in epoch seconds (Toronto timezone).
 
   function formatDuration(seconds) {
     if (seconds === null || seconds === undefined) return 'N/A';
@@ -268,9 +212,9 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
         // Skip if no actual arrival time
         if (!stop.arr) continue;
         
-        // Get scheduled time (prefer arrival, fallback to departure)
-        const scheduledTimeStr = stop.sch_arr || stop.sch_dep;
-        if (!scheduledTimeStr) {
+        // Get scheduled arrival time (already in epoch seconds, Toronto timezone)
+        const scheduledEpoch = stop.sch_arr || stop.sch_dep;
+        if (!scheduledEpoch) {
           const stopDelta = {
             tripId,
             routeId: trip.rid,
@@ -286,31 +230,14 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
         
         // Debug first few conversions
         if (!debugSampleShown) {
-          console.log('[Viewer] Sample scheduled time conversion:', {
+          console.log('[Viewer] Sample stop delta calculation:', {
             tripId,
             routeId: trip.rid,
             stopSeq,
-            scheduledTimeStr,
             actualArrival: stop.arr,
-            actualArrivalDate: new Date(stop.arr * 1000).toISOString()
+            scheduledArrival: scheduledEpoch
           });
           debugSampleShown = true;
-        }
-        
-        // Convert scheduled time to epoch
-        const scheduledEpoch = scheduledTimeToEpoch(scheduledTimeStr, stop.arr);
-        if (scheduledEpoch === null) {
-          const stopDelta = {
-            tripId,
-            routeId: trip.rid,
-            stopId: stop.sid,
-            stopSeq: stop.seq,
-            delta: null,
-            incrementalDelay: null
-          };
-          stopDeltas.push(stopDelta);
-          tripStopDeltas.push(stopDelta);
-          continue;
         }
         
         // Calculate delta (positive = late, negative = early)
@@ -379,27 +306,12 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
         lastScheduledTime = lastStop.sch_arr || lastStop.sch_dep;
         
         if (firstScheduledTime && lastScheduledTime) {
-          // Parse HH:MM:SS format (hours can be >= 24)
-          const parseScheduledTime = (timeStr) => {
-            const parts = timeStr.split(':');
-            if (parts.length !== 3) return null;
-            const hours = parseInt(parts[0]);
-            const minutes = parseInt(parts[1]);
-            const seconds = parseInt(parts[2]);
-            if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) return null;
-            return hours * 3600 + minutes * 60 + seconds;
-          };
-          
-          const firstSeconds = parseScheduledTime(firstScheduledTime);
-          const lastSeconds = parseScheduledTime(lastScheduledTime);
-          
-          if (firstSeconds !== null && lastSeconds !== null) {
-            scheduledDuration = lastSeconds - firstSeconds;
-            // Ensure non-negative duration
-            if (scheduledDuration < 0) {
-              // This might happen if there's wrapping issues, add 24 hours
-              scheduledDuration += 86400;
-            }
+          // Both times are already in epoch seconds (Toronto timezone)
+          scheduledDuration = lastScheduledTime - firstScheduledTime;
+          // Ensure non-negative duration
+          if (scheduledDuration < 0) {
+            // This might happen if there's wrapping issues, add 24 hours
+            scheduledDuration += 86400;
           }
         }
       }
@@ -837,14 +749,12 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
         const stopDetails = [];
         for (const stopSeq in tripData.stops) {
           const stop = tripData.stops[stopSeq];
-          const scheduledTimeStr = stop.sch_arr || stop.sch_dep;
-          const scheduledEpoch = scheduledTimeStr ? scheduledTimeToEpoch(scheduledTimeStr, stop.arr) : null;
+          const scheduledEpoch = stop.sch_arr || stop.sch_dep;
           const delta = (stop.arr && scheduledEpoch) ? stop.arr - scheduledEpoch : null;
           
           stopDetails.push({
             seq: stop.seq,
             stopId: stop.sid,
-            scheduledStr: scheduledTimeStr || 'MISSING',
             scheduledEpoch: scheduledEpoch,
             actualEpoch: stop.arr,
             actualTime: stop.arr ? new Date(stop.arr * 1000).toISOString() : 'MISSING',
@@ -871,20 +781,19 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
     errorEl.style.display = 'block';
   }
 
-  // Helper function to convert HTML time input (HH:MM) to scheduled time format (HH:MM:SS)
+  // Helper function to convert HTML time input (HH:MM) to epoch seconds offset from midnight
   function convertTimeInputToScheduled(timeInput) {
-    return `${timeInput}:00`;
+    const [hours, minutes] = timeInput.split(':').map(Number);
+    if (isNaN(hours) || isNaN(minutes)) return 0;
+    return hours * 3600 + minutes * 60;
   }
   
-  // Helper function to convert scheduled time format (HH:MM:SS) to HTML time input (HH:MM)
-  function convertScheduledToTimeInput(scheduledTime) {
-    if (!scheduledTime) return '';
-    const parts = scheduledTime.split(':');
-    if (parts.length < 2) return '';
-    let hours = parseInt(parts[0]);
-    // Handle hours >= 24 by wrapping
-    if (hours >= 24) hours = hours % 24;
-    return `${hours.toString().padStart(2, '0')}:${parts[1]}`;
+  // Helper function to convert epoch seconds offset from midnight to HTML time input (HH:MM)
+  function convertScheduledToTimeInput(epochSeconds) {
+    if (epochSeconds === null || epochSeconds === undefined) return '';
+    const hours = Math.floor(epochSeconds / 3600) % 24;
+    const minutes = Math.floor((epochSeconds % 3600) / 60);
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
   }
   
   // Update time filter range based on currently checked routes (not selectedRouteIds)
@@ -905,7 +814,7 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
     const checkboxes = doc.querySelectorAll('.route-filter input[type="checkbox"]:checked');
     checkboxes.forEach(cb => checkedRoutes.add(cb.value));
     
-    // Find min and max scheduled times across checked routes
+    // Find min and max scheduled times (in epoch seconds) across checked routes
     let minTime = null;
     let maxTime = null;
     
@@ -913,39 +822,33 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
       if (checkedRoutes.size > 0 && !checkedRoutes.has(trip.routeId)) continue;
       
       if (trip.firstScheduledTime) {
-        const firstSeconds = parseScheduledTime(trip.firstScheduledTime);
-        if (firstSeconds !== null && (minTime === null || firstSeconds < minTime)) {
-          minTime = firstSeconds;
+        if (minTime === null || trip.firstScheduledTime < minTime) {
+          minTime = trip.firstScheduledTime;
         }
       }
       
       if (trip.lastScheduledTime) {
-        const lastSeconds = parseScheduledTime(trip.lastScheduledTime);
-        if (lastSeconds !== null && (maxTime === null || lastSeconds > maxTime)) {
-          maxTime = lastSeconds;
+        if (maxTime === null || trip.lastScheduledTime > maxTime) {
+          maxTime = trip.lastScheduledTime;
         }
       }
     }
     
     if (minTime !== null && maxTime !== null) {
-      const formatTimeFromSeconds = (seconds) => {
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds % 3600) / 60);
-        const secs = seconds % 60;
-        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-      };
-      
-      const minTimeStr = formatTimeFromSeconds(minTime);
-      const maxTimeStr = formatTimeFromSeconds(maxTime);
-      
       timeStartInput.disabled = false;
       timeEndInput.disabled = false;
       
-      // Always update the values to reflect the new range
-      timeStartInput.value = convertScheduledToTimeInput(minTimeStr);
-      timeEndInput.value = convertScheduledToTimeInput(maxTimeStr);
+      // Convert to HH:MM for display and input
+      timeStartInput.value = convertScheduledToTimeInput(minTime);
+      timeEndInput.value = convertScheduledToTimeInput(maxTime);
       
-      timeRangeInfo.innerHTML = `Available range: ${minTimeStr} to ${maxTimeStr}`;
+      const formatMinutes = (seconds) => {
+        const hours = Math.floor(seconds / 3600) % 24;
+        const minutes = Math.floor((seconds % 3600) / 60);
+        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+      };
+      
+      timeRangeInfo.innerHTML = `Available range: ${formatMinutes(minTime)} to ${formatMinutes(maxTime)}`;
     } else {
       timeStartInput.disabled = true;
       timeEndInput.disabled = true;
@@ -966,7 +869,7 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
       return;
     }
     
-    // Find min and max scheduled times across selected trips
+    // Find min and max scheduled times (in epoch seconds) across selected trips
     let minTime = null;
     let maxTime = null;
     
@@ -974,43 +877,37 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
       if (selectedRouteIds.size > 0 && !selectedRouteIds.has(trip.routeId)) continue;
       
       if (trip.firstScheduledTime) {
-        const firstSeconds = parseScheduledTime(trip.firstScheduledTime);
-        if (firstSeconds !== null && (minTime === null || firstSeconds < minTime)) {
-          minTime = firstSeconds;
+        if (minTime === null || trip.firstScheduledTime < minTime) {
+          minTime = trip.firstScheduledTime;
         }
       }
       
       if (trip.lastScheduledTime) {
-        const lastSeconds = parseScheduledTime(trip.lastScheduledTime);
-        if (lastSeconds !== null && (maxTime === null || lastSeconds > maxTime)) {
-          maxTime = lastSeconds;
+        if (maxTime === null || trip.lastScheduledTime > maxTime) {
+          maxTime = trip.lastScheduledTime;
         }
       }
     }
     
     if (minTime !== null && maxTime !== null) {
-      const formatTimeFromSeconds = (seconds) => {
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds % 3600) / 60);
-        const secs = seconds % 60;
-        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-      };
-      
-      const minTimeStr = formatTimeFromSeconds(minTime);
-      const maxTimeStr = formatTimeFromSeconds(maxTime);
-      
       timeStartInput.disabled = false;
       timeEndInput.disabled = false;
       
       // Set default values if not already set
       if (!timeStartInput.value) {
-        timeStartInput.value = convertScheduledToTimeInput(minTimeStr);
+        timeStartInput.value = convertScheduledToTimeInput(minTime);
       }
       if (!timeEndInput.value) {
-        timeEndInput.value = convertScheduledToTimeInput(maxTimeStr);
+        timeEndInput.value = convertScheduledToTimeInput(maxTime);
       }
       
-      timeRangeInfo.innerHTML = `Available range: ${minTimeStr} to ${maxTimeStr}`;
+      const formatMinutes = (seconds) => {
+        const hours = Math.floor(seconds / 3600) % 24;
+        const minutes = Math.floor((seconds % 3600) / 60);
+        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+      };
+      
+      timeRangeInfo.innerHTML = `Available range: ${formatMinutes(minTime)} to ${formatMinutes(maxTime)}`;
     } else {
       timeStartInput.disabled = true;
       timeEndInput.disabled = true;
@@ -1577,30 +1474,15 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
     renderStatsTab(doc, filteredTripSummaries, filteredStopDeltas);
   }
   
-  // Helper functions for time filtering
-  function parseScheduledTime(timeStr) {
-    const parts = timeStr.split(':');
-    if (parts.length !== 3) return null;
-    const hours = parseInt(parts[0]);
-    const minutes = parseInt(parts[1]);
-    const seconds = parseInt(parts[2]);
-    if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) return null;
-    return hours * 3600 + minutes * 60 + seconds;
+  // Helper functions for time filtering (working with epoch seconds)
+  function isTimeInRange(timeEpoch, startEpoch, endEpoch) {
+    if (timeEpoch === null || startEpoch === null || endEpoch === null) return false;
+    return timeEpoch >= startEpoch && timeEpoch <= endEpoch;
   }
   
-  function isTimeInRange(timeStr, startStr, endStr) {
-    const time = parseScheduledTime(timeStr);
-    const start = parseScheduledTime(startStr);
-    const end = parseScheduledTime(endStr);
-    if (time === null || start === null || end === null) return false;
-    return time >= start && time <= end;
-  }
-  
-  function isTimeBefore(timeStr1, timeStr2) {
-    const time1 = parseScheduledTime(timeStr1);
-    const time2 = parseScheduledTime(timeStr2);
-    if (time1 === null || time2 === null) return false;
-    return time1 < time2;
+  function isTimeBefore(timeEpoch1, timeEpoch2) {
+    if (timeEpoch1 === null || timeEpoch2 === null) return false;
+    return timeEpoch1 < timeEpoch2;
   }
 
   function updateRouteChart(data) {
@@ -1793,11 +1675,106 @@ let scheduledUTC = Date.UTC(year, month, day + daysToAdd, hours - offsetHours, m
   }
 
   // ============================================================================
+  // DEBUG HELPERS
+  // ============================================================================
+
+  /**
+   * Get 20 random trips for a specific route with all stop details
+   * Usage in console: RTRecordingViewer.sampleTrips('501')
+   */
+  function sampleTripsForRoute(routeId) {
+    if (!currentData || !currentData.recordedData) {
+      console.log('[Viewer] No data loaded yet');
+      return;
+    }
+
+    const recordedData = currentData.recordedData;
+    
+    // Find all trips for this route
+    const tripsForRoute = [];
+    for (const tripId in recordedData) {
+      const trip = recordedData[tripId];
+      if (trip.rid === routeId) {
+        tripsForRoute.push(tripId);
+      }
+    }
+
+    if (tripsForRoute.length === 0) {
+      console.log(`[Viewer] No trips found for route ${routeId}`);
+      return;
+    }
+
+    // Randomly select up to 20 trips
+    const sampleSize = Math.min(20, tripsForRoute.length);
+    const randomTrips = [];
+    const usedIndices = new Set();
+    
+    while (randomTrips.length < sampleSize && usedIndices.size < tripsForRoute.length) {
+      const idx = Math.floor(Math.random() * tripsForRoute.length);
+      if (!usedIndices.has(idx)) {
+        usedIndices.add(idx);
+        randomTrips.push(tripsForRoute[idx]);
+      }
+    }
+
+    // Build stop deltas map for quick lookup (tripId -> stopSeq -> stopDelta)
+    const stopDeltasMap = {};
+    if (processedData.stopDeltas) {
+      for (const stopDelta of processedData.stopDeltas) {
+        if (stopDelta.routeId === routeId) {
+          if (!stopDeltasMap[stopDelta.tripId]) {
+            stopDeltasMap[stopDelta.tripId] = {};
+          }
+          stopDeltasMap[stopDelta.tripId][stopDelta.stopSeq] = stopDelta;
+        }
+      }
+    }
+
+    console.log(`[Viewer Debug] Route ${routeId}: showing ${randomTrips.length} random trips from ${tripsForRoute.length} total\n`);
+
+    // Log each trip
+    randomTrips.forEach((tripId, tripIdx) => {
+      const trip = recordedData[tripId];
+      const route = routesData[trip.rid];
+      const routeDisplay = route ? `${route.route_short_name || trip.rid}` : trip.rid;
+      
+      const stopSeqs = Object.keys(trip.stops).map(Number).sort((a, b) => a - b);
+
+      const stopDetails = [];
+      for (const seq of stopSeqs) {
+        const stop = trip.stops[seq];
+        const stopData = stopsData[stop.sid];
+        const stopName = stopData?.stop_name || stop.sid;
+        
+        // Get delay info from stopDeltas if available
+        const stopDelta = stopDeltasMap[tripId]?.[stop.seq];
+        const delay = stopDelta?.delta || null;
+        const incrementalDelay = stopDelta?.incrementalDelay || null;
+
+        stopDetails.push({
+          seq: stop.seq,
+          stopId: stop.sid,
+          stopName: stopName,
+          arr: stop.arr || null,
+          sch_arr: stop.sch_arr || null,
+          delay: delay !== null ? `${delay}s (${formatDuration(delay)})` : 'null',
+          incrementalDelay: incrementalDelay !== null ? `${incrementalDelay}s (${formatDuration(incrementalDelay)})` : 'null'
+        });
+      }
+
+      console.group(`Trip ${tripIdx + 1}/${randomTrips.length}: ${tripId} (Route ${routeDisplay}, Vehicle ${trip.vid})`);
+      console.table(stopDetails);
+      console.groupEnd();
+    });
+  }
+
+  // ============================================================================
   // EXPORTS
   // ============================================================================
 
   window.RTRecordingViewer = {
-    open: openViewer
+    open: openViewer,
+    sampleTrips: sampleTripsForRoute
   };
 
   // ============================================================================
