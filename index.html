@@ -82,7 +82,7 @@
   <script>
     (async function() {
       try {
-        const resp = await fetch('/config.json');
+        const resp = await fetch('config.json');
         if (resp.ok) window.APP_CONFIG = await resp.json();
         else window.APP_CONFIG = {};
       } catch (e) {
