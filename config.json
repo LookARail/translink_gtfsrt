@@ -1,0 +1,11 @@
+{
+  "agencyId": "translink",
+  "feedUrl": "https://ttc-gtfsrt.onrender.com/translink-vehicles",
+  "githubRepo": "LookArail/translink_gtfsrt",
+  "githubBranch": "main",
+  "timeZone": "America/Vancouver",
+  "map": {
+    "center": [49.2827, -123.1207],
+    "zoom": 12
+  }
+}
