@@ -8291,12 +8291,6 @@
     "stop_lat": 49.22566,
     "stop_lon": -123.098055
   },
-  "2051": {
-    "stop_id": "2051",
-    "stop_name": "Langara-49th Station @ Bay 2",
-    "stop_lat": 49.226178,
-    "stop_lon": -123.116035
-  },
   "2052": {
     "stop_id": "2052",
     "stop_name": "Westbound W 49 Ave @ Tisdall St",
@@ -12688,6 +12682,12 @@
     "stop_name": "Coquitlam Central Station @ Bay 4",
     "stop_lat": 49.275172,
     "stop_lon": -122.798784
+  },
+  "3068": {
+    "stop_id": "3068",
+    "stop_name": "Westbound Dewdney Trunk Rd @ Lougheed Hwy",
+    "stop_lat": 49.269433,
+    "stop_lon": -122.799514
   },
   "3069": {
     "stop_id": "3069",
@@ -18832,6 +18832,12 @@
     "stop_name": "Southbound Chesterfield Ave @ W 3rd St",
     "stop_lat": 49.314494,
     "stop_lon": -123.080587
+  },
+  "4470": {
+    "stop_id": "4470",
+    "stop_name": "Southbound Chesterfield Ave @ W 1st St",
+    "stop_lat": 49.31297,
+    "stop_lon": -123.082166
   },
   "4471": {
     "stop_id": "4471",
@@ -42457,7 +42463,7 @@
   },
   "10480": {
     "stop_id": "10480",
-    "stop_name": "Northbound Quebec St @",
+    "stop_name": "Northbound Quebec St @ Terminal Ave",
     "stop_lat": 49.273368,
     "stop_lon": -123.101534
   },
@@ -45521,12 +45527,6 @@
     "stop_lat": 49.252969,
     "stop_lon": -122.893126
   },
-  "11308": {
-    "stop_id": "11308",
-    "stop_name": "Northbound Ioco Rd @ Suter Brook Way",
-    "stop_lat": 49.2797,
-    "stop_lon": -122.82696
-  },
   "11310": {
     "stop_id": "11310",
     "stop_name": "Yaletown-Roundhouse Station @ Bay 1",
@@ -46702,12 +46702,6 @@
     "stop_name": "Westbound North Fraser Way @ 4300 Block",
     "stop_lat": 49.20024,
     "stop_lon": -123.005536
-  },
-  "11681": {
-    "stop_id": "11681",
-    "stop_name": "Southbound Howes St @ Hwy 91A Offramp",
-    "stop_lat": 49.187052,
-    "stop_lon": -122.947624
   },
   "11682": {
     "stop_id": "11682",
@@ -52271,6 +52265,12 @@
     "stop_lat": 49.230974,
     "stop_lon": -123.139847
   },
+  "13088": {
+    "stop_id": "13088",
+    "stop_name": "Westbound W 49 Ave @ Columbia St",
+    "stop_lat": 49.225969,
+    "stop_lon": -123.110487
+  },
   "13091": {
     "stop_id": "13091",
     "stop_name": "Westbound Pacific St @ Richards St",
@@ -52366,18 +52366,6 @@
     "stop_name": "Eastbound River Rd @ 8600 Blk",
     "stop_lat": 49.152011,
     "stop_lon": -122.985391
-  },
-  "13111": {
-    "stop_id": "13111",
-    "stop_name": "Eastbound E 49 Ave @ Ontario St",
-    "stop_lat": 49.225697,
-    "stop_lon": -123.106275
-  },
-  "13112": {
-    "stop_id": "13112",
-    "stop_name": "Westbound W 49 Ave @ Ontario St",
-    "stop_lat": 49.225848,
-    "stop_lon": -123.106842
   },
   "13113": {
     "stop_id": "13113",
@@ -52498,6 +52486,18 @@
     "stop_name": "Northbound West Blvd @ W 42 Ave",
     "stop_lat": 49.233431,
     "stop_lon": -123.155538
+  },
+  "13140": {
+    "stop_id": "13140",
+    "stop_name": "Westbound E 49th Ave @ Quebec St",
+    "stop_lat": 49.225771,
+    "stop_lon": -123.10345
+  },
+  "13141": {
+    "stop_id": "13141",
+    "stop_name": "Westbound W 49 Ave @ Cambie St",
+    "stop_lat": 49.226222,
+    "stop_lon": -123.117145
   },
   "99901": {
     "stop_id": "99901",
