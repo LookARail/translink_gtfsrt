@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-04-02T08:24:34.484Z",
+  "generated_at": "2026-04-03T08:20:32.178Z",
   "source_url": "https://gtfs-static.translink.ca/gtfs/google_transit.zip",
   "stats": {
     "routes": 242,
-    "trips": 62543,
-    "stops": 8936,
-    "shapes": 1054,
-    "stop_times_trips": 62542,
-    "stop_times_route_files": 237
+    "trips": 125803,
+    "stops": 8954,
+    "shapes": 2113,
+    "stop_times_trips": 125801,
+    "stop_times_route_files": 240
   },
   "stop_times_files": {
     "6612": "stop-times-route-6612.json",
@@ -170,12 +170,14 @@
     "7224": "stop-times-route-7224.json",
     "7321": "stop-times-route-7321.json",
     "7322": "stop-times-route-7322.json",
+    "7509": "stop-times-route-7509.json",
     "8286": "stop-times-route-8286.json",
     "8289": "stop-times-route-8289.json",
     "8290": "stop-times-route-8290.json",
     "9745": "stop-times-route-9745.json",
     "10232": "stop-times-route-10232.json",
     "11201": "stop-times-route-11201.json",
+    "11202": "stop-times-route-11202.json",
     "11692": "stop-times-route-11692.json",
     "11693": "stop-times-route-11693.json",
     "11696": "stop-times-route-11696.json",
@@ -201,6 +203,7 @@
     "30039": "stop-times-route-30039.json",
     "30040": "stop-times-route-30040.json",
     "30041": "stop-times-route-30041.json",
+    "30042": "stop-times-route-30042.json",
     "30043": "stop-times-route-30043.json",
     "30044": "stop-times-route-30044.json",
     "30045": "stop-times-route-30045.json",
