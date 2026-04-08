@@ -23,7 +23,6 @@
           <label for="dataSource">Source:</label>
           <select id="dataSource">
             <option value="">-- Select source --</option>
-            <option value="memory">Current Recording</option>
             <option value="github">Load from GitHub</option>
             <option value="file">Upload JSON File</option>
           </select>
@@ -33,10 +32,7 @@
           <label for="githubDate">Select Date:</label>
           <select id="githubDate">
             <option value="">-- Loading... --</option>
-          </select>
-          <div class="date-annotation">
-            Note: "2026-03-09.json" contains data from March 8 (completed at 3 AM Toronto time).
-          </div>
+          </select>          
         </div>
         
         <div id="fileUpload" style="display:none;" class="form-group">
@@ -58,17 +54,19 @@
         
         <h3 style="margin-top: 20px;">Time Filter</h3>
         <div class="time-filter">
-          <div class="form-group">
-            <label for="timeStart">Start Time:</label>
-            <input type="time" id="timeStart" disabled>
+          <div class="form-group time-filter-row">
+            <div class="time-col">
+              <label for="timeStart">Start:</label>
+              <input type="text" id="timeStart" placeholder="HH:MM:SS" disabled class="time-input">
+            </div>
+            <div class="time-col">
+              <label for="timeEnd">End:</label>
+              <input type="text" id="timeEnd" placeholder="HH:MM:SS" disabled class="time-input">
+            </div>
           </div>
-          <div class="form-group">
-            <label for="timeEnd">End Time:</label>
-            <input type="time" id="timeEnd" disabled>
-          </div>
-          <div class="time-range-info" id="timeRangeInfo"></div>
+          <div id="timeRangeInfo" class="time-range-info">Available range: —</div>
         </div>
-        
+
         <div class="apply-filter-container">
           <button id="applyFilter" class="primary-btn">Apply Filters</button>
         </div>
@@ -91,12 +89,12 @@
         <div class="charts-container">
           <div id="otpTab" class="tab-content active">
             <div class="chart-wrapper">
-              <div class="chart-title">Top 10 Routes by Average Max Delay</div>
+              <div class="chart-title">Top 10 Routes by Average Highest Delay Along Each Trip</div>
               <canvas id="routeChart"></canvas>
             </div>
             
             <div class="chart-wrapper">
-              <div class="chart-title">Top 10 Busiest Routes by Average Delay (by Trip-Hours)</div>
+              <div class="chart-title">Top 10 Busiest Routes (by Trip-Hours) by Average Highest Delay Along Each Trip </div>
               <canvas id="busiestRoutesChart"></canvas>
             </div>
             
@@ -104,15 +102,29 @@
               <div class="chart-title">Top 20 Stops by Average Incremental Delay</div>
               <canvas id="stopChart"></canvas>
             </div>
+            
+            <div class="chart-wrapper">
+              <div class="chart-title">Hourly Average Incremental Delay (Top 5 Busiest Routes)</div>
+              <canvas id="hourlyDelayChart"></canvas>
+            </div>
           </div>
           
           <div id="mapTab" class="tab-content">
             <div class="map-controls">
-              <label for="heatmapMetric">Metric:</label>
-              <select id="heatmapMetric">
-                <option value="incrementalDelay">Incremental Delay at Stops</option>
-              </select>
+              <div class="control-group">
+                <label for="topNRoutes">Top N Routes:</label>
+                <input type="number" id="topNRoutes" min="1" max="200" value="150" />
+                <button id="refreshHeatmapBtn" style="margin-left: 8px; padding: 6px 12px; cursor: pointer;">🔄 Refresh</button>
+              </div>
+              <div class="control-group">
+                <label for="heatmapMetric">Metric:</label>
+                <select id="heatmapMetric">
+                  <option value="incrementalDelay">Incremental Delay at Stops</option>
+                  <option value="travelTime">Travel Time (All Routes)</option>
+                </select>
+              </div>
             </div>
+            <div id="heatmapLegend" class="heatmap-legend"></div>
             <div id="heatmapContainer" class="map-container"></div>
           </div>
           
@@ -132,15 +144,18 @@
   
   <!-- Load Leaflet.heat plugin -->
   <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+
+  <!-- RT Recording Utility functions -->
+  <script src="RTrecordingUtility.js" defer></script>
   
   <!-- Main viewer script -->
   <script>
   (async function () {
     try {
-      const res = await fetch('/config.json');
+      const res = await fetch('config.json');
       window.APP_CONFIG = (res && res.ok) ? await res.json() : {};
     } catch (err) {
-      console.warn('[Viewer] could not load /config.json', err);
+      console.warn('[Viewer] could not load config.json', err);
       window.APP_CONFIG = window.APP_CONFIG || {};
     }
     const s = document.createElement('script');

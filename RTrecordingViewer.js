@@ -10,6 +10,8 @@
   const GITHUB_RAW_BASE = GITHUB_REPO ? `https://raw.githubusercontent.com/${GITHUB_REPO}/${GITHUB_BRANCH}` : "";
 
   const TIME_ZONE = (window.APP_CONFIG && window.APP_CONFIG.timeZone) || 'UTC';
+  const MAP_CONFIG = (window.APP_CONFIG && window.APP_CONFIG.map) || { center: [43.65, -79.38], zoom: 11 };
+  let TOP_N_ROUTES = 150; // Customizable via UI
   let viewerWindow = null;
   let currentData = null;
   let stopsData = null;
@@ -17,11 +19,19 @@
   let selectedRouteIds = new Set();
   let timeFilterStart = null;
   let timeFilterEnd = null;
+  let timeFilterBaseDay = null; // epoch seconds of base day used for extended time display
+  let timeFilterStartEpoch = null; // computed epoch start after applying base day
+  let timeFilterEndEpoch = null;
   let processedData = {
     tripSummaries: [],
     stopDeltas: [],
+    stopDeltasByTrip: {},
+    routeStats: {},
+    stopStats: {},
     routeAggregations: [],
-    stopAggregations: []
+    stopAggregations: [],
+    tripsByRoute: {},       // routeId -> [tripSummaries]
+    tripsByShape: {}        // shapeId -> [tripSummaries]
   };
 
   // ============================================================================
@@ -31,10 +41,12 @@
   let routeChart = null;
   let busiestRoutesChart = null;
   let stopChart = null;
+  let hourlyDelayChart = null;
   let heatmapLayer = null;
   let leafletMap = null;
   let mapInitialized = false;
   let cachedHeatmapPoints = null;
+  let segmentsCache = {}; // Global cache for segments: key = "fromStopId_toStopId" -> Segment object
 
   // ============================================================================
   // TIMEZONE & FORMATTING UTILITIES
@@ -53,6 +65,97 @@
     
     const sign = seconds >= 0 ? '+' : '-';
     return `${sign}${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  }
+
+  // Convert epoch seconds to extended HH:MM:SS where hours may be >= 24 using baseDay
+  function convertEpochToExtendedTime(epochSeconds, baseDay) {
+    if (epochSeconds == null || baseDay == null) return '';
+    const delta = Math.max(0, Math.floor(epochSeconds - baseDay));
+    const hrs = Math.floor(delta / 3600);
+    const mins = Math.floor((delta % 3600) / 60);
+    const secs = Math.floor(delta % 60);
+    return `${String(hrs).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+  }
+
+  // Format epoch seconds as either HH:MM:SS (hours possibly >=24) or D+HH:MM:SS when crossing days
+  function formatEpochWithDayPrefix(epochSeconds, baseDay) {
+    if (epochSeconds == null || baseDay == null) return '';
+    const delta = Math.max(0, Math.floor(epochSeconds - baseDay));
+    const days = Math.floor(delta / 86400);
+    const rem = delta % 86400;
+    const hrs = Math.floor(rem / 3600);
+    const mins = Math.floor((rem % 3600) / 60);
+    const secs = Math.floor(rem % 60);
+    const timeStr = `${String(hrs).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+    if (days > 0) return `${days}+${timeStr}`;
+    return timeStr;
+  }
+
+  // Check if arrival time is valid (numeric, not "skip" or other non-numeric values)
+  function isValidArrivalTime(arr) {
+    // TODO: Future enhancement - track skipped stops for statistics
+    return typeof arr === 'number' && isFinite(arr) && arr !== null;
+  }
+
+  // Normalize delay: fix day-boundary issues where actual arrival is 24hrs relative to scheduled
+  // If delay is between -22 to -26 hours, add 24 hours (likely day boundary data issue)
+  function normalizeDelay(delaySeconds) {
+    if (delaySeconds === null || delaySeconds === undefined) return delaySeconds;
+    
+    const HOUR_22_SECONDS = -22 * 3600; // -79,200
+    const HOUR_26_SECONDS = -26 * 3600; // -93,600
+    const DAY_SECONDS = 86400;
+    
+    // If delay is between -22 to -26 hours, assume day boundary crossing
+    if (delaySeconds <= HOUR_22_SECONDS && delaySeconds >= HOUR_26_SECONDS) {
+      return delaySeconds + DAY_SECONDS;
+    }
+    
+    return delaySeconds;
+  }
+
+  // Normalize data structure: handle both old (wrapped) and new (direct) formats
+  function normalizeRecordedData(data) {
+    // If data already has recordedData property, it's old format
+    if (data.recordedData) {
+      return {
+        recordedData: data.recordedData,
+        scheduledTimesCache: data.scheduledTimesCache || {},
+        source: data.source,
+        date: data.date
+      };
+    }
+    // If data is an object with trip keys (starts with numbers/strings), assume new format (direct trips)
+    // Check if the object looks like trip data: has properties that look like trip IDs with 'rid' and 'stops'
+    const keys = Object.keys(data);
+    if (keys.length > 0 && keys.some(k => data[k] && data[k].rid && data[k].stops)) {
+      console.log('[Viewer] Detected new JSON format (direct trips, no wrapper)');
+      return {
+        recordedData: data,
+        scheduledTimesCache: {},
+        source: data.source || 'unknown',
+        date: data.date || 'unknown'
+      };
+    }
+    // Otherwise, assume it's old format with recordedData
+    return {
+      recordedData: data.recordedData || {},
+      scheduledTimesCache: data.scheduledTimesCache || {},
+      source: data.source,
+      date: data.date
+    };
+  }
+
+  // Parse extended time string HH:MM or HH:MM:SS (hours may be >=24) to seconds offset
+  function parseExtendedTimeToOffset(s) {
+    if (!s || typeof s !== 'string') return null;
+    const parts = s.trim().split(':').map(p => Number(p));
+    if (parts.length < 2) return null;
+    const hrs = Number.isFinite(parts[0]) ? parts[0] : null;
+    const mins = Number.isFinite(parts[1]) ? parts[1] : 0;
+    const secs = parts.length >= 3 && Number.isFinite(parts[2]) ? parts[2] : 0;
+    if (hrs === null || isNaN(hrs) || isNaN(mins) || isNaN(secs)) return null;
+    return Math.floor(hrs) * 3600 + Math.floor(mins) * 60 + Math.floor(secs);
   }
 
   // ============================================================================
@@ -137,27 +240,7 @@
     return available.sort().reverse(); // Newest first
   }
 
-  async function loadFromMemory() {
-    // Access recordedData from parent window (injected by openViewer)
-    const parentData = window.parentRecordedData || (typeof recordedData !== 'undefined' ? recordedData : null);
-    const parentCache = window.parentScheduledTimesCache || (typeof scheduledTimesCache !== 'undefined' ? scheduledTimesCache : null);
-    
-    if (!parentData) {
-      throw new Error('No recording data available in memory. Start recording first.');
-    }
-    
-    const tripCount = Object.keys(parentData).length;
-    if (tripCount === 0) {
-      throw new Error('Recording data is empty. No trips recorded yet.');
-    }
-    
-    return {
-      recordedData: JSON.parse(JSON.stringify(parentData)),
-      scheduledTimesCache: parentCache ? JSON.parse(JSON.stringify(parentCache)) : {},
-      source: 'memory',
-      tripCount
-    };
-  }
+  // NOTE: in-memory "Current Recording" support removed; use GitHub or file sources.
 
   async function loadFromGitHub(dateStr) {
     if (!GITHUB_RAW_BASE) {
@@ -168,8 +251,9 @@
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
     const data = await response.json();
+    const normalized = normalizeRecordedData(data);
     return {
-      ...data,
+      ...normalized,
       source: 'github',
       date: dateStr
     };
@@ -181,12 +265,14 @@
       reader.onload = (e) => {
         try {
           const data = JSON.parse(e.target.result);
-          if (!data.recordedData) {
-            reject(new Error('Invalid file format: missing recordedData'));
+          // Handle both old format (wrapped in recordedData) and new format (direct trips)
+          const normalized = normalizeRecordedData(data);
+          if (!normalized.recordedData || Object.keys(normalized.recordedData).length === 0) {
+            reject(new Error('Invalid file format: no recordedData or trip records found'));
             return;
           }
           resolve({
-            ...data,
+            ...normalized,
             source: 'file',
             filename: file.name
           });
@@ -204,7 +290,22 @@
   // ============================================================================
 
   function processData(data) {
-    const { recordedData, scheduledTimesCache = {} } = data;
+    console.log('[Viewer] processData called with:', { data, dataKeys: data ? Object.keys(data) : 'data is null/undefined' });
+    
+    if (!data || typeof data !== 'object') {
+      console.error('[Viewer] ERROR: processData received invalid data:', { type: typeof data, value: data });
+      throw new Error('Invalid data object passed to processData');
+    }
+    
+    // Normalize the data structure to handle both old and new formats
+    const normalized = normalizeRecordedData(data);
+    const recordedData = normalized.recordedData;
+    const scheduledTimesCache = normalized.scheduledTimesCache || {};
+    
+    if (!recordedData || typeof recordedData !== 'object' || Object.keys(recordedData).length === 0) {
+      console.error('[Viewer] ERROR: recordedData is missing or empty:', { recordedData, dataKeys: Object.keys(data).slice(0, 10) });
+      throw new Error('Missing recordedData in data object');
+    }
     
     console.log('[Viewer] Processing data:', {
       tripCount: Object.keys(recordedData).length,
@@ -212,24 +313,39 @@
     });
     
     const tripSummaries = [];
-    const stopDeltas = [];
+    const stopDeltas = []; // Keep flat array for backward compatibility
+    const stopDeltasByTrip = {}; // tripId -> [stopDeltas]
+    const routeStats = {}; // routeId -> { delaySum, delayCount, tripHours, tripCount, delays }
+    const stopStats = {}; // stopId -> { incDelaySum, incDelayCount, recordCount, delays }
     let debugSampleShown = false;
     
-    // Process each trip
+    // FIRST PASS: Process each trip, build stopDeltasByTrip and collect raw data
     for (const tripId in recordedData) {
       const trip = recordedData[tripId];
       let maxDelay = null;
       const tripStopDeltas = []; // Store stops for this trip to compute incremental delays
+      let firstRecordedTime = null;
+      let lastRecordedTime = null;
       
       // Process each stop in the trip
       for (const stopSeq in trip.stops) {
         const stop = trip.stops[stopSeq];
         
-        // Skip if no actual arrival time
-        if (!stop.arr) continue;
+        // Skip if no valid actual arrival time (including arr="skip")
+        if (!isValidArrivalTime(stop.arr)) {
+          // TODO: Future - track trips with skipped stops for statistics
+          continue;
+        }
         
-        // Get scheduled arrival time (already in epoch seconds, Toronto timezone)
+        // Get scheduled arrival time (already in epoch seconds)
         const scheduledEpoch = stop.sch_arr || stop.sch_dep;
+        // Also capture recorded (actual) times for this trip
+        // At this point, stop.arr is guaranteed to be valid by isValidArrivalTime() check
+        const actualEpoch = stop.arr;
+        if (actualEpoch) {
+          if (firstRecordedTime === null || actualEpoch < firstRecordedTime) firstRecordedTime = actualEpoch;
+          if (lastRecordedTime === null || actualEpoch > lastRecordedTime) lastRecordedTime = actualEpoch;
+        }
         if (!scheduledEpoch) {
           const stopDelta = {
             tripId,
@@ -237,7 +353,8 @@
             stopId: stop.sid,
             stopSeq: stop.seq,
             delta: null, // No scheduled data
-            incrementalDelay: null
+            incrementalDelay: null,
+            scheduledEpoch: null
           };
           stopDeltas.push(stopDelta);
           tripStopDeltas.push(stopDelta);
@@ -251,13 +368,15 @@
             routeId: trip.rid,
             stopSeq,
             actualArrival: stop.arr,
+            actualArrivalValid: isValidArrivalTime(stop.arr),
             scheduledArrival: scheduledEpoch
           });
           debugSampleShown = true;
         }
         
         // Calculate delta (positive = late, negative = early)
-        const delta = stop.arr - scheduledEpoch;
+        let delta = stop.arr - scheduledEpoch;
+        delta = normalizeDelay(delta);
         
         const stopDelta = {
           tripId,
@@ -265,7 +384,9 @@
           stopId: stop.sid,
           stopSeq: stop.seq,
           delta,
-          incrementalDelay: null // Will be computed after all stops are processed
+          incrementalDelay: null, // Will be computed after all stops are processed
+          scheduledEpoch: scheduledEpoch,
+          actualEpoch: stop.arr  // Add actual arrival time for speed calculations
         };
         stopDeltas.push(stopDelta);
         tripStopDeltas.push(stopDelta);
@@ -300,12 +421,20 @@
         }
       }
       
+      // Store tripStopDeltas in the nested structure for O(1) lookup
+      stopDeltasByTrip[tripId] = tripStopDeltas;
+      
       // Calculate scheduled duration for this trip
       let scheduledDuration = null;
       let firstScheduledTime = null;
       let lastScheduledTime = null;
       
       // Get stops sorted by sequence
+      if (!trip.stops || typeof trip.stops !== 'object') {
+        console.warn(`[Viewer] WARNING: trip.stops is invalid for tripId ${tripId}:`, { stops: trip.stops });
+        continue;  // Skip this trip if stops data is missing
+      }
+      
       const sortedStopSeqs = Object.keys(trip.stops).sort((a, b) => {
         const seqA = parseInt(trip.stops[a].seq) || 0;
         const seqB = parseInt(trip.stops[b].seq) || 0;
@@ -332,7 +461,7 @@
         }
       }
       
-      // Record trip summary
+      // Record trip summary (include recorded time range)
       tripSummaries.push({
         tripId,
         routeId: trip.rid,
@@ -341,8 +470,55 @@
         stopCount: Object.keys(trip.stops).length,
         scheduledDuration,
         firstScheduledTime,
-        lastScheduledTime
+        lastScheduledTime,
+        firstRecordedTime,
+        lastRecordedTime
       });
+    }
+    
+    // SECOND PASS: Pre-compute route and stop statistics for faster aggregation
+    for (const stopDelta of stopDeltas) {
+      // Accumulate route-level stats
+      if (!routeStats[stopDelta.routeId]) {
+        routeStats[stopDelta.routeId] = {
+          delaySum: 0,
+          delayCount: 0,
+          tripHours: 0,
+          tripCount: 0,
+          delays: []
+        };
+      }
+      
+      if (stopDelta.delta !== null) {
+        routeStats[stopDelta.routeId].delaySum += stopDelta.delta;
+        routeStats[stopDelta.routeId].delayCount++;
+        routeStats[stopDelta.routeId].delays.push(stopDelta.delta);
+      }
+      
+      // Accumulate stop-level stats
+      if (!stopStats[stopDelta.stopId]) {
+        stopStats[stopDelta.stopId] = {
+          incDelaySum: 0,
+          incDelayCount: 0,
+          recordCount: 0,
+          delays: []
+        };
+      }
+      
+      stopStats[stopDelta.stopId].recordCount++;
+      if (stopDelta.incrementalDelay !== null) {
+        stopStats[stopDelta.stopId].incDelaySum += stopDelta.incrementalDelay;
+        stopStats[stopDelta.stopId].incDelayCount++;
+        stopStats[stopDelta.stopId].delays.push(stopDelta.incrementalDelay);
+      }
+    }
+    
+    // Finalize route stats by adding trip info
+    for (const trip of tripSummaries) {
+      if (trip.scheduledDuration !== null && routeStats[trip.routeId]) {
+        routeStats[trip.routeId].tripHours += trip.scheduledDuration / 3600;
+        routeStats[trip.routeId].tripCount++;
+      }
     }
     
     console.log('[Viewer] Processing complete:', {
@@ -351,6 +527,8 @@
       deltasWithValues: stopDeltas.filter(d => d.delta !== null).length,
       deltasWithIncrementalDelay: stopDeltas.filter(d => d.incrementalDelay !== null).length,
       tripsWithMaxDelay: tripSummaries.filter(t => t.maxDelay !== null).length,
+      preComputedRoutes: Object.keys(routeStats).length,
+      preComputedStops: Object.keys(stopStats).length,
       sampleTripsWithDelay: tripSummaries.filter(t => t.maxDelay !== null).slice(0, 3).map(t => ({ 
         routeId: t.routeId, 
         maxDelay: t.maxDelay 
@@ -361,7 +539,44 @@
       }))
     });
     
-    return { tripSummaries, stopDeltas };
+    return { tripSummaries, stopDeltas, stopDeltasByTrip, routeStats, stopStats };
+  }
+
+  /**
+   * Build trip index maps for efficient lookups during visualization
+   * Builds tripsByRoute and tripsByShape indices from tripSummaries
+   */
+  function buildTripIndexMaps(tripSummaries, gtfsData) {
+    const tripsByRoute = {};
+    const tripsByShape = {};
+
+    console.log('[Viewer] Building trip index maps for visualization...');
+
+    for (const trip of tripSummaries) {
+      // Index by route
+      if (!tripsByRoute[trip.routeId]) {
+        tripsByRoute[trip.routeId] = [];
+      }
+      tripsByRoute[trip.routeId].push(trip);
+
+      // Index by shape (from GTFS data)
+      const gtfsTrip = gtfsData.trips && gtfsData.trips[trip.tripId];
+      if (gtfsTrip && gtfsTrip.shape_id) {
+        if (!tripsByShape[gtfsTrip.shape_id]) {
+          tripsByShape[gtfsTrip.shape_id] = [];
+        }
+        tripsByShape[gtfsTrip.shape_id].push(trip);
+      }
+    }
+
+    console.log('[Viewer] Trip index maps built:', {
+      routeCount: Object.keys(tripsByRoute).length,
+      shapeCount: Object.keys(tripsByShape).length,
+      totalRouteTrips: Object.values(tripsByRoute).reduce((sum, trips) => sum + trips.length, 0),
+      totalShapeTrips: Object.values(tripsByShape).reduce((sum, trips) => sum + trips.length, 0)
+    });
+
+    return { tripsByRoute, tripsByShape };
   }
 
   function aggregateByRoute(tripSummaries, selectedRoutes) {
@@ -393,6 +608,7 @@
     
     // Calculate averages
     const aggregations = [];
+    console.log('[Viewer] About to iterate routeMap:', { routeMapType: typeof routeMap, routeMapKeys: routeMap ? Object.keys(routeMap) : 'N/A' });
     for (const routeId in routeMap) {
       const route = routeMap[routeId];
       const avgDelay = route.delays.reduce((sum, d) => sum + d, 0) / route.delays.length;
@@ -442,6 +658,7 @@
     
     // Calculate averages
     const aggregations = [];
+    console.log('[Viewer] About to iterate stopMap:', { stopMapType: typeof stopMap, stopMapKeys: stopMap ? Object.keys(stopMap) : 'N/A' });
     for (const stopId in stopMap) {
       const stop = stopMap[stopId];
       const avgIncrementalDelay = stop.incrementalDelays.reduce((sum, d) => sum + d, 0) / stop.incrementalDelays.length;
@@ -466,58 +683,48 @@
     return topStops;
   }
 
-  function aggregateByBusiestRoutes(tripSummaries, selectedRoutes, stopDeltas) {
-    console.log('[Viewer] Aggregating busiest routes:', {
+  function aggregateByBusiestRoutes(tripSummaries, selectedRoutes, routeStats) {
+    console.log('[Viewer] Aggregating busiest routes by average max delay:', {
       totalTrips: tripSummaries.length,
       selectedRoutes: Array.from(selectedRoutes)
     });
     
+    // Build route map with trip max delays (same method as aggregateByRoute)
     const routeMap = {};
-    
     for (const trip of tripSummaries) {
       if (selectedRoutes.size > 0 && !selectedRoutes.has(trip.routeId)) continue;
-      if (trip.scheduledDuration === null) continue;
+      if (trip.maxDelay === null) continue;
       
       if (!routeMap[trip.routeId]) {
         routeMap[trip.routeId] = {
           routeId: trip.routeId,
-          tripHours: 0,
+          maxDelays: [],
           tripCount: 0,
-          delays: []
+          tripHours: routeStats[trip.routeId]?.tripHours || 0
         };
       }
       
-      // Add trip-hours (scheduled duration in hours)
-      routeMap[trip.routeId].tripHours += trip.scheduledDuration / 3600;
+      routeMap[trip.routeId].maxDelays.push(trip.maxDelay);
       routeMap[trip.routeId].tripCount++;
-      
-      // Collect delays from all stops for this trip
-      const tripDelays = stopDeltas.filter(d => d.tripId === trip.tripId && d.delta !== null);
-      for (const stopDelta of tripDelays) {
-        routeMap[trip.routeId].delays.push(stopDelta.delta);
-      }
     }
     
-    // Calculate averages
+    // Calculate average of max delays per route
     const aggregations = [];
     for (const routeId in routeMap) {
       const route = routeMap[routeId];
-      
-      let avgDelay = 0;
-      if (route.delays.length > 0) {
-        avgDelay = route.delays.reduce((sum, d) => sum + d, 0) / route.delays.length;
-      }
+      const avgDelay = route.maxDelays.length > 0 
+        ? route.maxDelays.reduce((sum, d) => sum + d, 0) / route.maxDelays.length 
+        : 0;
       
       aggregations.push({
         routeId,
         tripHours: route.tripHours,
         tripCount: route.tripCount,
-        avgDelay,
-        delayCount: route.delays.length
+        avgDelay
       });
     }
     
-    // Sort by tripHours descending, take top 10
+    // Sort by tripHours descending (busiest = most trip-hours), take top 10
     aggregations.sort((a, b) => b.tripHours - a.tripHours);
     const topRoutes = aggregations.slice(0, 10);
     
@@ -527,11 +734,117 @@
       top10: topRoutes.map(r => ({ 
         route: r.routeId, 
         tripHours: r.tripHours.toFixed(2), 
-        avgDelay: r.avgDelay.toFixed(0) 
+        avgMaxDelay: r.avgDelay.toFixed(0) 
       }))
     });
     
     return topRoutes;
+  }
+
+  function aggregateHourlyDelayByRoute(stopDeltas, selectedRoutes, routeStats, timeFilterStartEpoch, timeFilterEndEpoch) {
+    console.log('[Viewer] Aggregating hourly delay:', {
+      totalStopDeltas: stopDeltas.length,
+      selectedRoutes: Array.from(selectedRoutes),
+      timeRange: { start: timeFilterStartEpoch, end: timeFilterEndEpoch }
+    });
+    
+    // If no time range, return empty
+    if (timeFilterStartEpoch === null || timeFilterEndEpoch === null) {
+      console.log('[Viewer] No time filter active, skipping hourly aggregation');
+      return { series: [], hourLabels: [] };
+    }
+    
+    // Round start down to nearest hour, end up to nearest hour
+    const hourStart = Math.floor(timeFilterStartEpoch / 3600) * 3600;
+    const hourEnd = Math.ceil(timeFilterEndEpoch / 3600) * 3600;
+    const hourCount = Math.max(1, (hourEnd - hourStart) / 3600);
+    
+    console.log('[Viewer] Hourly aggregation boundaries:', {
+      hourStart,
+      hourEnd,
+      hourCount,
+      startEpoch: timeFilterStartEpoch,
+      endEpoch: timeFilterEndEpoch
+    });
+    
+    // Get top N routes by trip-hours (same definition as busiest routes)
+    const topRoutes = [];
+    console.log('[Viewer] About to iterate routeStats for hourly:', { routeStatsType: typeof routeStats, routeStatsKeys: routeStats ? Object.keys(routeStats).length : 'N/A' });
+    for (const routeId in routeStats) {
+      if (selectedRoutes.size > 0 && !selectedRoutes.has(routeId)) continue;
+      const stats = routeStats[routeId];
+      if (stats.tripCount > 0) {
+        topRoutes.push({
+          routeId,
+          tripHours: stats.tripHours
+        });
+      }
+    }
+    topRoutes.sort((a, b) => b.tripHours - a.tripHours);
+    const selectedTopRoutes = topRoutes.slice(0, TOP_N_ROUTES);
+    
+    console.log('[Viewer] Top routes for hourly chart:', {
+      totalRoutes: topRoutes.length,
+      selectedCount: selectedTopRoutes.length,
+      selected: selectedTopRoutes.map(r => ({ routeId: r.routeId, tripHours: r.tripHours.toFixed(2) }))
+    });
+    
+    // Create bin structure: routeId -> array of hourly buckets
+    const bins = {};
+    for (const route of selectedTopRoutes) {
+      bins[route.routeId] = Array(Math.ceil(hourCount)).fill(null).map(() => ({ sum: 0, count: 0 }));
+    }
+    
+    // Bin all stops by route and hour
+    for (const stop of stopDeltas) {
+      if (stop.incrementalDelay === null || stop.scheduledEpoch === null) continue;
+      if (!bins[stop.routeId]) continue; // Not in top N routes
+      
+      const hourIndex = Math.floor((stop.scheduledEpoch - hourStart) / 3600);
+      if (hourIndex < 0 || hourIndex >= bins[stop.routeId].length) continue; // Outside time range
+      
+      bins[stop.routeId][hourIndex].sum += stop.incrementalDelay;
+      bins[stop.routeId][hourIndex].count++;
+    }
+    
+    // Compute averages and prepare series data
+    const series = [];
+    const hourStartTimes = [];
+    
+    // Generate actual epoch times for each hour
+    for (let i = 0; i < Math.ceil(hourCount); i++) {
+      hourStartTimes.push(hourStart + i * 3600);
+    }
+    
+    // Build series for each selected top route
+    for (const route of selectedTopRoutes) {
+      const data = bins[route.routeId].map(bucket => {
+        if (bucket.count === 0) return null; // Gap for empty buckets
+        return bucket.sum / bucket.count;
+      });
+      
+      const routeName = routesData && routesData[route.routeId] ? routesData[route.routeId].route_long_name : null;
+      const label = routeName ? `${route.routeId} - ${routeName}` : route.routeId;
+      
+      series.push({
+        label,
+        data,
+        borderColor: null, // Will be assigned in updateHourlyDelayChart
+        backgroundColor: null,
+        tension: 0.1,
+        fill: false,
+        pointRadius: 4,
+        pointHoverRadius: 6
+      });
+    }
+    
+    console.log('[Viewer] Hourly aggregation complete:', {
+      hourCount: Math.ceil(hourCount),
+      seriesCount: series.length,
+      seriesLabels: series.map(s => s.label)
+    });
+    
+    return { series, hourStartTimes };
   }
 
   // ============================================================================
@@ -550,14 +863,11 @@
       return;
     }
     
-    // Wait for window to fully load, then inject data references
-    // The child window will auto-initialize itself
+    // Wait for window to fully load; no in-memory injection performed
     const checkLoad = setInterval(() => {
       if (viewerWindow.document.readyState === 'complete') {
         clearInterval(checkLoad);
-        // Inject data accessors into the child window
-        viewerWindow.parentRecordedData = typeof recordedData !== 'undefined' ? recordedData : null;
-        viewerWindow.parentScheduledTimesCache = typeof scheduledTimesCache !== 'undefined' ? scheduledTimesCache : null;
+        // Intentionally not injecting parent in-memory recording data (feature removed)
       }
     }, 100);
   }
@@ -590,22 +900,27 @@
     const selectAllBtn = doc.getElementById('selectAllRoutes');
     const deselectAllBtn = doc.getElementById('deselectAllRoutes');
     const applyFilterBtn = doc.getElementById('applyFilter');
+    const topNRoutesInput = doc.getElementById('topNRoutes');
     
-    // Data source selection
+    // Initialize TOP_N_ROUTES from input FIRST, before any data loading or visualization
+    if (topNRoutesInput) {
+      TOP_N_ROUTES = parseInt(topNRoutesInput.value) || 150;
+      console.log('[Viewer] TOP_N_ROUTES initialized to:', TOP_N_ROUTES);
+    }
+    
+    // Data source selection (memory option removed)
     dataSourceSelect.addEventListener('change', async (e) => {
       const source = e.target.value;
-      
+
       githubDateContainer.style.display = 'none';
       fileUploadContainer.style.display = 'none';
       loadDataBtn.disabled = true;
       loadError.style.display = 'none';
-      
-      if (source === 'memory') {
-        loadDataBtn.disabled = false;
-      } else if (source === 'github') {
+
+      if (source === 'github') {
         githubDateContainer.style.display = 'block';
         githubDateSelect.innerHTML = '<option value="">-- Loading... --</option>';
-        
+
         try {
           const dates = await scanAvailableRecordings();
           if (dates.length === 0) {
@@ -646,10 +961,7 @@
       try {
         let data;
         
-        if (source === 'memory') {
-          data = await loadFromMemory();
-          updateStatusBadge(statusBadge, `Loaded from memory: ${data.tripCount} trips`, 'success');
-        } else if (source === 'github') {
+        if (source === 'github') {
           const date = githubDateSelect.value;
           data = await loadFromGitHub(date);
           updateStatusBadge(statusBadge, `Loaded from GitHub: ${date}`, 'info');
@@ -657,6 +969,8 @@
           const file = fileInput.files[0];
           data = await loadFromFile(file);
           updateStatusBadge(statusBadge, `Loaded from file: ${file.name}`, 'info');
+        } else {
+          throw new Error('No data source selected');
         }
         
         currentData = data;
@@ -666,18 +980,69 @@
         const processed = processData(data);
         processedData.tripSummaries = processed.tripSummaries;
         processedData.stopDeltas = processed.stopDeltas;
+        processedData.stopDeltasByTrip = processed.stopDeltasByTrip;
+        processedData.routeStats = processed.routeStats;
+        processedData.stopStats = processed.stopStats;
+        
+        // Load GTFS data required for building trip index maps
+        let gtfsDataForIndexing = {
+          trips: {},
+          shapes: {},
+          stops: {},
+          routes: {},
+          shapeRouteMap: {},
+          stopTimes: {}
+        };
+        
+        try {
+          // Load GTFS trips if not already cached
+          if (!window.gtfsTrips) {
+            const response = await fetch(`${GITHUB_RAW_BASE}/data/trips.json`);
+            if (response.ok) {
+              window.gtfsTrips = await response.json();
+              console.log(`[Viewer] Loaded ${Object.keys(window.gtfsTrips).length} trips for indexing`);
+            }
+          }
+          gtfsDataForIndexing.trips = window.gtfsTrips || {};
+          
+          // Build trip index maps (tripsByRoute, tripsByShape) for visualization
+          const indexMaps = buildTripIndexMaps(processed.tripSummaries, gtfsDataForIndexing);
+          processedData.tripsByRoute = indexMaps.tripsByRoute;
+          processedData.tripsByShape = indexMaps.tripsByShape;
+        } catch (err) {
+          console.warn('[Viewer] Could not build trip index maps:', err);
+        }
         
         // Initialize route filter
+        initializeRouteFilter(doc, processed.tripSummaries);
         initializeRouteFilter(doc, processed.tripSummaries);
         
         // Setup tab switching
         setupTabSwitching(doc);
         
+        // Initialize map eagerly so visualization works regardless of which tab user is on
+        // THIS IS CRITICAL: If we don't initialize the map here, visualizeSubshapesForBusiestRoutes()
+        // will be skipped in renderCharts() because mapInitialized will be false
+        if (!mapInitialized) {
+          const mapReady = initializeMap(doc);
+          if (mapReady) {
+            mapInitialized = true;
+            console.log('[Viewer] Map initialized eagerly during data load');
+          } else {
+            console.warn('[Viewer] Failed to initialize map during data load');
+          }
+        }
+        
         // Update time filter range (initially all routes are selected)
         updateTimeFilterRangeFromRouteSelection(doc);
         
-        // Render charts with all routes selected
-        renderCharts(doc);
+        // Render charts with all routes selected (AWAIT to ensure visualization completes)
+        try {
+          await renderCharts(doc);
+          console.log('[Viewer] Initial chart rendering and visualization complete');
+        } catch (err) {
+          console.error('[Viewer] Error during initial chart rendering:', err);
+        }
         
         loadingIndicator.style.display = 'none';
         filterSection.style.display = 'block';
@@ -713,27 +1078,38 @@
       }
     });
     
-    applyFilterBtn.addEventListener('click', () => {
+    applyFilterBtn.addEventListener('click', async () => {
       const checkboxes = doc.querySelectorAll('.route-filter input[type="checkbox"]:checked');
       selectedRouteIds.clear();
       checkboxes.forEach(cb => selectedRouteIds.add(cb.value));
       
-      // Read time filter values
+      // Read time filter values (extended HH:MM[:SS]) and compute epoch range
       const timeStartInput = doc.getElementById('timeStart');
       const timeEndInput = doc.getElementById('timeEnd');
-      
-      if (timeStartInput.value && timeEndInput.value) {
-        timeFilterStart = convertTimeInputToScheduled(timeStartInput.value);
-        timeFilterEnd = convertTimeInputToScheduled(timeEndInput.value);
+
+      if (timeStartInput.value && timeEndInput.value && timeFilterBaseDay != null) {
+        const offsetStart = parseExtendedTimeToOffset(timeStartInput.value);
+        const offsetEnd = parseExtendedTimeToOffset(timeEndInput.value);
+        if (offsetStart != null && offsetEnd != null) {
+          timeFilterStartEpoch = timeFilterBaseDay + offsetStart;
+          timeFilterEndEpoch = timeFilterBaseDay + offsetEnd;
+          // If end is before start, assume it wraps to next day
+          if (timeFilterEndEpoch < timeFilterStartEpoch) {
+            timeFilterEndEpoch += 86400;
+          }
+        } else {
+          timeFilterStartEpoch = null;
+          timeFilterEndEpoch = null;
+        }
       } else {
-        timeFilterStart = null;
-        timeFilterEnd = null;
+        timeFilterStartEpoch = null;
+        timeFilterEndEpoch = null;
       }
       
       console.log('[Viewer] Apply filter clicked:', {
         selectedCount: selectedRouteIds.size,
         selectedRoutes: Array.from(selectedRouteIds),
-        timeFilter: { start: timeFilterStart, end: timeFilterEnd }
+        timeFilterEpoch: { start: timeFilterStartEpoch, end: timeFilterEndEpoch }
       });
       
       // Update time filter range based on current dataset
@@ -766,14 +1142,15 @@
         for (const stopSeq in tripData.stops) {
           const stop = tripData.stops[stopSeq];
           const scheduledEpoch = stop.sch_arr || stop.sch_dep;
-          const delta = (stop.arr && scheduledEpoch) ? stop.arr - scheduledEpoch : null;
+          let delta = (isValidArrivalTime(stop.arr) && scheduledEpoch) ? stop.arr - scheduledEpoch : null;
+          delta = normalizeDelay(delta);
           
           stopDetails.push({
             seq: stop.seq,
             stopId: stop.sid,
             scheduledEpoch: scheduledEpoch,
             actualEpoch: stop.arr,
-            actualTime: stop.arr ? new Date(stop.arr * 1000).toISOString() : 'MISSING',
+            actualTime: isValidArrivalTime(stop.arr) ? new Date(stop.arr * 1000).toISOString() : 'MISSING',
             delta: delta !== null ? `${delta}s (${formatDuration(delta)})` : 'NULL'
           });
         }
@@ -788,8 +1165,83 @@
         });
       });
       
-      renderCharts(doc);
+      // Show loading indicator for filter application (same as initialization)
+      const loadingIndicator = doc.getElementById('loadingIndicator');
+      if (loadingIndicator) {
+        loadingIndicator.style.display = 'block';
+        console.log('[Viewer] Filter loading indicator shown');
+      }
+      
+      try {
+        // Await chart rendering to ensure visualization completes
+        await renderCharts(doc);
+        console.log('[Viewer] Filter application and visualization complete');
+      } catch (err) {
+        console.error('[Viewer] Error applying filters:', err);
+      } finally {
+        // Hide loading indicator after visualization is complete
+        if (loadingIndicator) {
+          loadingIndicator.style.display = 'none';
+          console.log('[Viewer] Filter loading indicator hidden');
+        }
+      }
     });
+
+    // Top N Routes selector - attach change listener (initialization already done earlier)
+    if (topNRoutesInput) {
+      topNRoutesInput.addEventListener('change', async () => {
+        TOP_N_ROUTES = parseInt(topNRoutesInput.value) || 150;
+        console.log('[Viewer] Top N Routes changed to:', TOP_N_ROUTES);
+        
+        // Show loading indicator
+        const loadingIndicator = doc.getElementById('loadingIndicator');
+        if (loadingIndicator) {
+          loadingIndicator.style.display = 'block';
+          console.log('[Viewer] Top N Routes loading indicator shown');
+        }
+        
+        // Refresh visualization with new Top N routes (await to ensure completion)
+        try {
+          console.log('[Viewer] Refreshing visualization with new Top N routes...');
+          await renderCharts(doc);
+          console.log('[Viewer] Top N Routes visualization refresh complete');
+        } catch (err) {
+          console.error('[Viewer] Error during Top N Routes refresh:', err);
+        } finally {
+          if (loadingIndicator) {
+            loadingIndicator.style.display = 'none';
+            console.log('[Viewer] Top N Routes loading indicator hidden');
+          }
+        }
+      });
+    }
+    
+    // Refresh Heatmap button
+    const refreshHeatmapBtn = doc.getElementById('refreshHeatmapBtn');
+    if (refreshHeatmapBtn) {
+      refreshHeatmapBtn.addEventListener('click', async () => {
+        console.log('[Viewer] Refresh button clicked - triggering visualization refresh...');
+        console.log('[Viewer] Current state:', {
+          leafletMapExists: !!leafletMap,
+          mapInitialized: mapInitialized,
+          leafletMapType: leafletMap ? leafletMap.constructor.name : 'null',
+          currentZoom: leafletMap ? leafletMap.getZoom() : 'N/A',
+          currentCenter: leafletMap ? leafletMap.getCenter() : 'N/A'
+        });
+        
+        // Call the visualization function (it manages its own loading overlay)
+        if (leafletMap && mapInitialized) {
+          console.log('[Viewer] Calling visualizeSubshapesForBusiestRoutes...');
+          await visualizeSubshapesForBusiestRoutes();
+          console.log('[Viewer] visualizeSubshapesForBusiestRoutes completed');
+        } else {
+          console.warn('[Viewer] Cannot refresh: map not ready', { 
+            leafletMap: !!leafletMap, 
+            mapInitialized 
+          });
+        }
+      });
+    }
   }
 
   function showError(errorEl, message) {
@@ -817,58 +1269,60 @@
     const timeStartInput = doc.getElementById('timeStart');
     const timeEndInput = doc.getElementById('timeEnd');
     const timeRangeInfo = doc.getElementById('timeRangeInfo');
-    
+
     if (!processedData.tripSummaries || processedData.tripSummaries.length === 0) {
       timeStartInput.disabled = true;
       timeEndInput.disabled = true;
-      timeRangeInfo.innerHTML = 'No trips available';
+      if (timeRangeInfo) timeRangeInfo.innerHTML = 'No trips available';
       return;
     }
-    
+
     // Get currently checked routes (not yet applied)
     const checkedRoutes = new Set();
     const checkboxes = doc.querySelectorAll('.route-filter input[type="checkbox"]:checked');
     checkboxes.forEach(cb => checkedRoutes.add(cb.value));
-    
-    // Find min and max scheduled times (in epoch seconds) across checked routes
+
+    // Find min and max recorded times (in epoch seconds) across checked routes
     let minTime = null;
     let maxTime = null;
-    
+
     for (const trip of processedData.tripSummaries) {
       if (checkedRoutes.size > 0 && !checkedRoutes.has(trip.routeId)) continue;
-      
-      if (trip.firstScheduledTime) {
-        if (minTime === null || trip.firstScheduledTime < minTime) {
-          minTime = trip.firstScheduledTime;
+
+      if (trip.firstRecordedTime) {
+        if (minTime === null || trip.firstRecordedTime < minTime) {
+          minTime = trip.firstRecordedTime;
         }
       }
-      
-      if (trip.lastScheduledTime) {
-        if (maxTime === null || trip.lastScheduledTime > maxTime) {
-          maxTime = trip.lastScheduledTime;
+
+      if (trip.lastRecordedTime) {
+        if (maxTime === null || trip.lastRecordedTime > maxTime) {
+          maxTime = trip.lastRecordedTime;
         }
       }
     }
-    
+
     if (minTime !== null && maxTime !== null) {
       timeStartInput.disabled = false;
       timeEndInput.disabled = false;
-      
-      // Convert to HH:MM for display and input
-      timeStartInput.value = convertScheduledToTimeInput(minTime);
-      timeEndInput.value = convertScheduledToTimeInput(maxTime);
-      
-      const formatMinutes = (seconds) => {
-        const hours = Math.floor(seconds / 3600) % 24;
-        const minutes = Math.floor((seconds % 3600) / 60);
-        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-      };
-      
-      timeRangeInfo.innerHTML = `Available range: ${formatMinutes(minTime)} to ${formatMinutes(maxTime)}`;
+
+      // Base day is the midnight epoch of the earliest recorded time
+      const baseDay = Math.floor(minTime / 86400) * 86400;
+      timeFilterBaseDay = baseDay;
+
+      // Show extended HH:MM:SS where hours may be >24
+      timeStartInput.value = convertEpochToExtendedTime(minTime, baseDay);
+      timeEndInput.value = convertEpochToExtendedTime(maxTime, baseDay);
+      // Update the available range display using day-prefix formatting
+      if (timeRangeInfo) {
+        const startDisplay = formatEpochWithDayPrefix(minTime, baseDay);
+        const endDisplay = formatEpochWithDayPrefix(maxTime, baseDay);
+        timeRangeInfo.innerHTML = `Available range: ${startDisplay} to ${endDisplay}`;
+      }
     } else {
       timeStartInput.disabled = true;
       timeEndInput.disabled = true;
-      timeRangeInfo.innerHTML = 'No valid scheduled times found';
+      if (timeRangeInfo) timeRangeInfo.innerHTML = 'No valid scheduled times found';
     }
   }
   
@@ -881,7 +1335,7 @@
     if (!processedData.tripSummaries || processedData.tripSummaries.length === 0) {
       timeStartInput.disabled = true;
       timeEndInput.disabled = true;
-      timeRangeInfo.innerHTML = 'No trips available';
+      if (timeRangeInfo) timeRangeInfo.innerHTML = 'No trips available';
       return;
     }
     
@@ -916,18 +1370,20 @@
       if (!timeEndInput.value) {
         timeEndInput.value = convertScheduledToTimeInput(maxTime);
       }
-      
-      const formatMinutes = (seconds) => {
-        const hours = Math.floor(seconds / 3600) % 24;
-        const minutes = Math.floor((seconds % 3600) / 60);
-        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-      };
-      
-      timeRangeInfo.innerHTML = `Available range: ${formatMinutes(minTime)} to ${formatMinutes(maxTime)}`;
+      // Compute base day and display with day-prefix formatting so hours >=24 or D+HH:MM:SS are shown
+      const baseDay = Math.floor(minTime / 86400) * 86400;
+      timeFilterBaseDay = baseDay;
+      if (timeRangeInfo) {
+        const startDisplay = formatEpochWithDayPrefix(minTime, baseDay);
+        const endDisplay = formatEpochWithDayPrefix(maxTime, baseDay);
+        timeRangeInfo.innerHTML = `Available range: ${startDisplay} to ${endDisplay}`;
+      }
     } else {
       timeStartInput.disabled = true;
       timeEndInput.disabled = true;
-      timeRangeInfo.innerHTML = 'No valid scheduled times found';
+      if (timeRangeInfo) {
+        timeRangeInfo.innerHTML = 'No valid scheduled times found';
+      }
     }
   }
   
@@ -936,7 +1392,7 @@
     const tabContents = doc.querySelectorAll('.tab-content');
     
     tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
+      tab.addEventListener('click', async () => {
         const targetTab = tab.getAttribute('data-tab');
         
         // Update tab buttons
@@ -960,8 +1416,25 @@
               mapInitialized = true;
               // If we have data, render the heatmap
               if (processedData.stopDeltas.length > 0) {
-                // Re-render with current filters
-                renderCharts(doc);
+                // Show loading indicator while rendering
+                const loadingIndicator = doc.getElementById('loadingIndicator');
+                if (loadingIndicator) {
+                  loadingIndicator.style.display = 'block';
+                  console.log('[Viewer] Map tab loading indicator shown');
+                }
+                
+                try {
+                  // Re-render with current filters (await to ensure completion)
+                  await renderCharts(doc);
+                  console.log('[Viewer] Map tab visualization complete');
+                } catch (err) {
+                  console.error('[Viewer] Error rendering map tab visualization:', err);
+                } finally {
+                  if (loadingIndicator) {
+                    loadingIndicator.style.display = 'none';
+                    console.log('[Viewer] Map tab loading indicator hidden');
+                  }
+                }
               }
             }
           } else if (leafletMap) {
@@ -995,12 +1468,12 @@
       max: 1.0,
       minOpacity,
       gradient: {
-        0.0: 'blue',
-        0.2: 'lime',
-        0.4: 'yellow',
-        0.6: 'orange',
-        0.8: 'red',
-        1.0: 'darkred'
+        0.0: '#ffffff',
+        0.2: '#d3d3d3',
+        0.4: '#a9a9a9',
+        0.6: '#808080',
+        0.8: '#404040',
+        1.0: '#000000'
       }
     };
   }
@@ -1018,6 +1491,66 @@
       cachedHeatmapPoints,
       getHeatLayerOptionsForZoom(leafletMap.getZoom())
     ).addTo(leafletMap);
+  }
+  
+  function addHeatmapLegend(map) {
+    // Create a legend control
+    const legend = L.control({ position: 'bottomright' });
+
+    legend.onAdd = function() {
+      const div = L.DomUtil.create('div', 'heatmap-legend');
+      div.style.cssText = `
+        background-color: white;
+        padding: 12px;
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        max-width: 200px;
+      `;
+
+      const title = document.createElement('div');
+      title.textContent = 'Average Speed (km/h)';
+      title.style.fontWeight = 'bold';
+      title.style.marginBottom = '8px';
+      div.appendChild(title);
+
+      const bins = [
+        { range: '< 5', color: '#d32f2f', label: 'Stopped/Very Slow' },
+        { range: '5 - 15', color: '#f57c00', label: 'Slow' },
+        { range: '15 - 30', color: '#fbc02d', label: 'Normal' },
+        { range: '30 - 50', color: '#7cb342', label: 'Good' },
+        { range: '≥ 50', color: '#388e3c', label: 'Very Good' }
+      ];
+
+      for (const bin of bins) {
+        const row = document.createElement('div');
+        row.style.display = 'flex';
+        row.style.alignItems = 'center';
+        row.style.marginBottom = '6px';
+
+        const colorBox = document.createElement('div');
+        colorBox.style.cssText = `
+          width: 16px;
+          height: 16px;
+          background-color: ${bin.color};
+          border-radius: 2px;
+          margin-right: 8px;
+          flex-shrink: 0;
+        `;
+
+        const label = document.createElement('span');
+        label.textContent = `${bin.range} km/h - ${bin.label}`;
+
+        row.appendChild(colorBox);
+        row.appendChild(label);
+        div.appendChild(row);
+      }
+
+      return div;
+    };
+
+    legend.addTo(map);
   }
   
   function initializeMap(doc) {
@@ -1038,16 +1571,16 @@
       // Ensure the container is empty (Leaflet will populate it)
       mapContainer.innerHTML = '';
 
-      // Initialize Leaflet map centered on Toronto
+      // Initialize Leaflet map using configuration
       leafletMap = L.map(mapContainer, {
-        center: [43.65, -79.38],
-        zoom: 11,
+        center: MAP_CONFIG.center,
+        zoom: MAP_CONFIG.zoom || 11,
         preferCanvas: true
       });
       
-      // Add OpenStreetMap tile layer
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors',
+      // Add CartoDB Positron (greyscale) tile layer for better subshape visibility
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+        attribution: '&copy; CartoDB &copy; OpenStreetMap contributors',
         maxZoom: 18
       }).addTo(leafletMap);
 
@@ -1055,6 +1588,9 @@
       leafletMap.on('zoomend', () => {
         rebuildHeatLayer();
       });
+      
+      // Add legend for the heatmap
+      addHeatmapLegend(leafletMap);
       
       // Defer a size invalidation to the next tick in case layout just changed (tab switched)
       setTimeout(() => {
@@ -1192,6 +1728,379 @@
       } catch (boundsErr) {
       }
     } catch (err) {
+    }
+  }
+
+  /**
+   * Visualize top 10 busiest routes with subshapes on the map
+   * Calls RTUtil.visualizeTop10BusiestRoutes to generate and render subshapes
+   */
+  async function visualizeSubshapesForBusiestRoutes() {
+    console.log('[DEBUG] ▶️ visualizeSubshapesForBusiestRoutes ENTRY');
+    
+    // Determine the correct document context (popup window or main page)
+    const targetDoc = viewerWindow ? viewerWindow.document : document;
+    console.log('[DEBUG] Using document context:', viewerWindow ? 'popup window' : 'main window');
+    
+    // Show loading overlay in the correct document
+    console.log('[DEBUG] 📍 Showing loading overlay...');
+    const loadingOverlay = showSubshapeLoadingOverlay(targetDoc);
+    console.log('[DEBUG] ✅ Loading overlay created:', !!loadingOverlay);
+
+    try {
+      if (!leafletMap) {
+        console.warn('[DEBUG] ❌ Map not initialized, cannot visualize subshapes');
+        hideSubshapeLoadingOverlay(loadingOverlay);
+        return;
+      }
+
+      if (!window.RTUtil || !window.RTUtil.visualizeTop10BusiestRoutes) {
+        console.warn('[Viewer] RTUtil not loaded, cannot visualize subshapes');
+        hideSubshapeLoadingOverlay(loadingOverlay);
+        return;
+      }
+
+      if (!processedData || !processedData.tripSummaries || Object.keys(processedData.routeStats).length === 0) {
+        console.warn('[Viewer] No processed data available for subshape visualization');
+        hideSubshapeLoadingOverlay(loadingOverlay);
+        return;
+      }
+
+      // CRITICAL: Reset subshapesLayer on refresh to avoid mixing stale layers
+      // Initialize as fresh L.layerGroup() to ensure clean redraw
+      if (window.subshapesLayer) {
+        try {
+          if (leafletMap.hasLayer(window.subshapesLayer)) {
+            leafletMap.removeLayer(window.subshapesLayer);
+            console.log('[Viewer] Removed stale subshapesLayer from map');
+          }
+        } catch (e) {
+          console.warn('[Viewer] Error removing old subshapesLayer:', e);
+        }
+      }
+      
+      // Create fresh layer group for this visualization
+      window.subshapesLayer = L.layerGroup();
+      console.log('[Viewer] Initialized fresh L.layerGroup() for subshapes visualization');
+
+      console.log('[Viewer] Starting subshape visualization...');
+
+      // Load GTFS data needed for subshape generation
+      // This data is loaded from the same GitHub repo as the recorded data
+      const gtfsData = {
+        trips: {},
+        shapes: {},
+        stops: {},
+        routes: {},
+        shapeRouteMap: {},
+        stopTimes: {}
+      };
+
+      // Load trips data
+      if (!window.gtfsTrips) {
+        try {
+          console.log('[Viewer] Loading GTFS trips data for subshape analysis...');
+          const response = await fetch(`${GITHUB_RAW_BASE}/data/trips.json`);
+          if (response.ok) {
+            window.gtfsTrips = await response.json();
+            console.log(`[Viewer] Loaded ${Object.keys(window.gtfsTrips).length} trips`);
+          } else {
+            console.warn('[Viewer] Could not load trips.json:', response.status);
+          }
+        } catch (err) {
+          console.error('[Viewer] Error loading trips data:', err);
+        }
+      }
+      gtfsData.trips = window.gtfsTrips || {};
+
+      // Load shapes data
+      if (!window.gtfsShapes) {
+        try {
+          console.log('[Viewer] Loading GTFS shapes data for subshape analysis...');
+          const response = await fetch(`${GITHUB_RAW_BASE}/data/shapes.json`);
+          if (response.ok) {
+            window.gtfsShapes = await response.json();
+            console.log(`[Viewer] Loaded ${Object.keys(window.gtfsShapes).length} shapes`);
+          } else {
+            console.warn('[Viewer] Could not load shapes.json:', response.status);
+          }
+        } catch (err) {
+          console.error('[Viewer] Error loading shapes data:', err);
+        }
+      }
+      gtfsData.shapes = window.gtfsShapes || {};
+
+      // Load stops data (reuse existing stopsData if available)
+      if (!stopsData || Object.keys(stopsData).length === 0) {
+        try {
+          console.log('[Viewer] Loading stops data for subshape analysis...');
+          await loadStopsData();
+        } catch (err) {
+          console.error('[Viewer] Error loading stops data:', err);
+        }
+      }
+      gtfsData.stops = stopsData || {};
+
+      // Load routes data (reuse existing routesData if available)
+      if (!routesData || Object.keys(routesData).length === 0) {
+        try {
+          console.log('[Viewer] Loading routes data for subshape analysis...');
+          await loadRoutesData();
+        } catch (err) {
+          console.error('[Viewer] Error loading routes data:', err);
+        }
+      }
+      gtfsData.routes = routesData || {};
+
+      // Load shape-route-map data
+      if (!window.gtfsShapeRouteMap) {
+        try {
+          console.log('[Viewer] Loading GTFS shape-route-map for subshape analysis...');
+          const response = await fetch(`${GITHUB_RAW_BASE}/data/shape-route-map.json`);
+          if (response.ok) {
+            window.gtfsShapeRouteMap = await response.json();
+            console.log(`[Viewer] Loaded shape-route-map with ${Object.keys(window.gtfsShapeRouteMap).length} entries`);
+          } else {
+            console.warn('[Viewer] Could not load shape-route-map.json:', response.status);
+          }
+        } catch (err) {
+          console.error('[Viewer] Error loading shape-route-map:', err);
+        }
+      }
+      gtfsData.shapeRouteMap = window.gtfsShapeRouteMap || {};
+
+      // Build stop_times from recording data for all trips we'll visualize
+      // Strategy: Single pass through tripSummaries to:
+      // 1. Identify top 10 routes by trip-hours
+      // 2. Build maps for efficient lookup
+      // 3. For each shape on each top route, select the trip with most stops
+      
+      console.log('[Viewer] Building stop_times data from recording data...');
+      
+      // Use pre-built tripsByRoute map (built during data initialization)
+      // Identify top N routes by trip-hours for this visualization (using TOP_N_ROUTES)
+      const routeMap = {};
+      
+      for (const routeId in processedData.tripsByRoute) {
+        // Filter by selected routes if any are selected
+        if (selectedRouteIds.size > 0 && !selectedRouteIds.has(routeId)) continue;
+        if (!processedData.routeStats[routeId]) continue;
+        routeMap[routeId] = processedData.routeStats[routeId].tripHours || 0;
+      }
+      
+      const topRouteIds = Object.entries(routeMap)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, TOP_N_ROUTES)
+        .map(entry => entry[0]);
+
+      // Use tripsByRoute from processedData for efficient lookups
+      const tripsByRoute = processedData.tripsByRoute;
+
+      // SECOND PASS: For each top route & shape, select the trip with most stops
+      // Keep recorded data separate from GTFS namespace
+      const recordedStopTimes = {};
+      const shapeIdToTripIdMap = {};  // Track which tripId we selected for each shapeId
+      
+      for (const routeId of topRouteIds) {
+        if (!tripsByRoute[routeId]) continue;
+        
+        // Group trips by shape_id
+        const shapeMap = {};
+        for (const trip of tripsByRoute[routeId]) {
+          const shapeId = gtfsData.trips[trip.tripId]?.shape_id;
+          if (!shapeId) continue;
+          
+          if (!shapeMap[shapeId]) {
+            shapeMap[shapeId] = [];
+          }
+          shapeMap[shapeId].push(trip);
+        }
+        
+        // For each shape, pick trip with most stops
+        for (const shapeId in shapeMap) {
+          const tripsForShape = shapeMap[shapeId];
+          const selectedTrip = tripsForShape.reduce((max, t) => 
+            (t.stopCount > max.stopCount) ? t : max
+          );
+          
+          // Track which tripId we selected for this shapeId (to avoid rescanning in utility)
+          shapeIdToTripIdMap[shapeId] = selectedTrip.tripId;
+          
+          // Extract stops from recording data and convert to stop_times format
+          if (processedData.stopDeltasByTrip[selectedTrip.tripId]) {
+            const recordingStops = processedData.stopDeltasByTrip[selectedTrip.tripId];
+            const stopTimesArray = recordingStops.map(s => ({
+              stop_id: s.stopId,
+              stop_sequence: s.stopSeq
+            }));
+            recordedStopTimes[selectedTrip.tripId] = stopTimesArray;
+          }
+        }
+      }
+      
+      console.log(`[Viewer] Built stop_times for ${Object.keys(recordedStopTimes).length} trips from recording data`);
+
+      console.log('[Viewer] GTFS data prepared:', {
+        trips: Object.keys(gtfsData.trips).length,
+        shapes: Object.keys(gtfsData.shapes).length,
+        stops: Object.keys(gtfsData.stops).length,
+        routes: Object.keys(gtfsData.routes).length,
+        shapeRouteMap: Object.keys(gtfsData.shapeRouteMap).length,
+        recordedStopTimes: Object.keys(recordedStopTimes).length
+      });
+
+      // Clear the heatmap layer to show subshapes on top
+      console.log('[DEBUG] 🗺️ Clearing heatmap layer...');
+      if (heatmapLayer) {
+        leafletMap.removeLayer(heatmapLayer);
+        heatmapLayer = null;
+      }
+      cachedHeatmapPoints = null;
+
+      // Call the utility function with separate recorded data and shape→trip mapping
+      console.log('[DEBUG] 🔧 Calling RTUtil.visualizeTop10BusiestRoutes...');
+      const result = await window.RTUtil.visualizeTop10BusiestRoutes(
+        processedData.tripSummaries,
+        processedData.routeStats,
+        gtfsData,
+        recordedStopTimes,
+        shapeIdToTripIdMap,
+        leafletMap,
+        processedData.stopDeltasByTrip,  // Pass full stop details for speed calculation
+        TOP_N_ROUTES,  // Pass the topN parameter
+        segmentsCache  // Pass the persistent segments cache
+      );
+      console.log('[DEBUG] ✅ RTUtil call returned:', result?.metadata);
+      
+      // 🔍 SANITY CHECK: Verify shapes were actually added to layer
+      if (window.subshapesLayer) {
+        const shapeCount = window.subshapesLayer.getLayers().length;
+        console.log('[DEBUG] 🔍 Subshapes layer contains', shapeCount, 'visual elements');
+        if (shapeCount === 0) {
+          console.warn('[DEBUG] ⚠️ WARNING: Subshapes layer is EMPTY! No shapes were rendered!');
+        }
+      } else {
+        console.error('[DEBUG] ❌ ERROR: window.subshapesLayer is undefined!');
+      }
+      
+      // Refresh map size and view to ensure layers are visible
+      if (leafletMap) {
+        try {
+          console.log('[Viewer] Refreshing map view...');
+          leafletMap.invalidateSize();
+          
+          // Check if subshapesLayer is on the map
+          if (window.subshapesLayer) {
+            const hasLayer = leafletMap.hasLayer(window.subshapesLayer);
+            console.log('[DEBUG] 🗺️ Subshapes layer on map:', hasLayer);
+            
+            if (!hasLayer) {
+              console.warn('[DEBUG] ⚠️ Subshapes layer not on map! Attempting to re-add...');
+              try {
+                window.subshapesLayer.addTo(leafletMap);
+                console.log('[DEBUG] ✅ Re-added subshapes layer to map');
+              } catch (e) {
+                console.error('[DEBUG] ❌ Failed to re-add subshapes layer:', e);
+              }
+            }
+          } else {
+            console.warn('[DEBUG] ❌ window.subshapesLayer is not defined');
+          }
+        } catch (e) {
+          console.error('[DEBUG] ❌ Error refreshing map:', e);
+        }
+      }
+      
+      // Log summary statistics (removed verbose segment details)
+      const segmentKeys = Object.keys(segmentsCache);
+      console.log(`[DEBUG] 📊 Segments cache: ${segmentKeys.length} total segments built`);
+
+    } catch (err) {
+      console.error('[DEBUG] ❌ Error visualizing subshapes:', err);
+    } finally {
+      // Hide loading overlay
+      console.log('[DEBUG] 🔚 Hiding loading overlay...');
+      hideSubshapeLoadingOverlay(loadingOverlay);
+      console.log('[DEBUG] ⏹️ visualizeSubshapesForBusiestRoutes EXIT');
+    }
+  }
+
+  function showSubshapeLoadingOverlay(targetDoc) {
+    // Use provided document or fallback to global document
+    const doc = targetDoc || document;
+    console.log('[DEBUG] 📍 showSubshapeLoadingOverlay - using doc:', doc === document ? 'MAIN' : 'POPUP');
+    
+    // Create overlay element
+    const overlay = doc.createElement('div');
+    overlay.id = 'subshapeLoadingOverlay';
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      pointer-events: auto;
+    `;
+
+    // Create spinner (MUST use doc, not global document)
+    const spinner = doc.createElement('div');
+    spinner.style.cssText = `
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-top: 5px solid #ffffff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    `;
+
+    // Add animation (MUST use doc)
+    const style = doc.createElement('style');
+    style.textContent = `
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    `;
+    doc.head.appendChild(style);
+
+    // Add loading text (MUST use doc)
+    const text = doc.createElement('div');
+    text.style.cssText = `
+      position: absolute;
+      color: white;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+      margin-top: 80px;
+      text-align: center;
+    `;
+    text.textContent = 'Generating subshapes...';
+
+    overlay.appendChild(spinner);
+    overlay.appendChild(text);
+    doc.body.appendChild(overlay);
+
+    console.log('[Viewer] Loading overlay shown in correct document context');
+    return overlay;
+  }
+
+  function hideSubshapeLoadingOverlay(overlay) {
+    if (overlay && overlay.parentNode) {
+      try {
+        overlay.parentNode.removeChild(overlay);
+        console.log('[DEBUG] ✅ Loading overlay removed from DOM');
+      } catch (e) {
+        console.error('[DEBUG] ❌ Error removing overlay:', e);
+      }
+    } else {
+      console.warn('[DEBUG] ⚠️ Cannot remove overlay - overlay or parentNode missing', {
+        overlayExists: !!overlay,
+        hasParent: overlay?.parentNode ? true : false
+      });
     }
   }
 
@@ -1426,41 +2335,103 @@
       return false;
     }
     
+    // Initialize hourly delay chart
+    const hourlyDelayCanvas = doc.getElementById('hourlyDelayChart');
+    if (!hourlyDelayCanvas) {
+      console.error('[Viewer] Canvas element #hourlyDelayChart not found!');
+      return false;
+    }
+    
+    console.log('[Viewer] Creating hourly delay chart...');
+    try {
+      const hourlyDelayCtx = hourlyDelayCanvas.getContext('2d');
+      hourlyDelayChart = new Chart(hourlyDelayCtx, {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: []
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: false,
+          plugins: {
+            legend: { display: true, position: 'top' },
+            tooltip: {
+              callbacks: {
+                label: (context) => {
+                  const value = context.parsed.y;
+                  if (value === null) return 'No data';
+                  return `Avg Incremental Delay: ${value.toFixed(0)}s`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              title: { display: true, text: 'Time of Day' },
+              type: 'linear',
+              ticks: {
+                stepSize: 3600,
+                autoSkip: false,
+                callback: (value) => `${value}h`
+              },
+              min: 0,
+              max: 86400
+            },
+            y: {
+              title: { display: true, text: 'Average Incremental Delay (seconds)' },
+              ticks: {
+                stepSize: 60,
+                callback: (value) => `${value}s`
+              }
+            }
+          }
+        }
+      });
+      console.log('[Viewer] Hourly delay chart created successfully');
+    } catch (err) {
+      console.error('[Viewer] Failed to create hourly delay chart:', err);
+      return false;
+    }
+    
     console.log('[Viewer] Charts initialized');
     return true;
   }
 
-  function renderCharts(doc) {
-    console.log('[Viewer] Updating charts with:', {
+  async function renderCharts(doc) {
+    console.log('[Viewer] ▶️ renderCharts ENTRY:', {
       tripSummaries: processedData.tripSummaries.length,
       stopDeltas: processedData.stopDeltas.length,
-      selectedRoutes: Array.from(selectedRouteIds)
+      selectedRoutes: Array.from(selectedRouteIds),
+      mapInitialized,
+      leafletMapExists: !!leafletMap
     });
     
     // Apply time filtering
     let filteredTripSummaries = processedData.tripSummaries;
     let filteredStopDeltas = processedData.stopDeltas;
     
-    if (timeFilterStart !== null && timeFilterEnd !== null) {
+    if (timeFilterStartEpoch !== null && timeFilterEndEpoch !== null) {
       const filteredTripIds = new Set();
-      
+
       for (const trip of processedData.tripSummaries) {
-        if (!trip.firstScheduledTime || !trip.lastScheduledTime) continue;
-        
-        // Check if any part of the trip is within the time filter range
-        if (isTimeInRange(trip.firstScheduledTime, timeFilterStart, timeFilterEnd) ||
-            isTimeInRange(trip.lastScheduledTime, timeFilterStart, timeFilterEnd) ||
-            (isTimeBefore(trip.firstScheduledTime, timeFilterStart) && isTimeBefore(timeFilterEnd, trip.lastScheduledTime))) {
+        if (!trip.firstRecordedTime || !trip.lastRecordedTime) continue;
+
+        // Interval overlap test: trip [firstRecordedTime, lastRecordedTime] intersects filter [start, end]
+        const tripStart = trip.firstRecordedTime;
+        const tripEnd = trip.lastRecordedTime;
+        if (tripEnd >= timeFilterStartEpoch && tripStart <= timeFilterEndEpoch) {
           filteredTripIds.add(trip.tripId);
         }
       }
-      
+
       filteredTripSummaries = processedData.tripSummaries.filter(t => filteredTripIds.has(t.tripId));
       filteredStopDeltas = processedData.stopDeltas.filter(s => filteredTripIds.has(s.tripId));
     }
     
     const routeAgg = aggregateByRoute(filteredTripSummaries, selectedRouteIds);
-    const busiestRoutesAgg = aggregateByBusiestRoutes(filteredTripSummaries, selectedRouteIds, filteredStopDeltas);
+    const busiestRoutesAgg = aggregateByBusiestRoutes(filteredTripSummaries, selectedRouteIds, processedData.routeStats);
     const stopAgg = aggregateByStop(filteredStopDeltas, selectedRouteIds, stopsData);
     
     console.log('[Viewer] Aggregation complete:', {
@@ -1483,11 +2454,56 @@
     // Update stop chart
     updateStopChart(stopAgg);
     
-    // Update heatmap (pass all filtered stop deltas, not just top 20)
-    updateHeatmap(filteredStopDeltas);
+    // Update hourly delay chart
+    // Compute a default time range if not set by Apply Filter
+    let hourlyStartEpoch = timeFilterStartEpoch;
+    let hourlyEndEpoch = timeFilterEndEpoch;
+    
+    if (hourlyStartEpoch === null || hourlyEndEpoch === null) {
+      // Use the same timeFilterBaseDay and time source as the time filter for consistency
+      let minTime = null, maxTime = null;
+      for (const trip of filteredTripSummaries) {
+        if (trip.firstRecordedTime && (minTime === null || trip.firstRecordedTime < minTime)) minTime = trip.firstRecordedTime;
+        if (trip.lastRecordedTime && (maxTime === null || trip.lastRecordedTime > maxTime)) maxTime = trip.lastRecordedTime;
+      }
+      if (minTime !== null && maxTime !== null) {
+        hourlyStartEpoch = minTime;
+        hourlyEndEpoch = maxTime;
+      }
+    }
+    
+    updateHourlyDelayChart(doc, filteredStopDeltas, hourlyStartEpoch, hourlyEndEpoch, timeFilterBaseDay);
+    
+    // DISABLED: Old heatmap plotting - now using subshape visualization instead
+    // updateHeatmap(filteredStopDeltas);
+
+    // Visualize subshapes for top 10 busiest routes (if map is ready)
+    // Replaced heatmap with subshape visualization for better route-level insights
+    // IMPORTANT: Await visualization to ensure loading overlay and all async work completes
+    console.log('[DEBUG] 🎯 Visualization check:', {
+      leafletMapExists: !!leafletMap,
+      mapInitialized,
+      shouldVisualize: leafletMap && mapInitialized
+    });
+    
+    if (leafletMap && mapInitialized) {
+      try {
+        console.log('[DEBUG] ▶️ Starting visualization...');
+        await visualizeSubshapesForBusiestRoutes();
+        console.log('[DEBUG] ✅ Subshape visualization COMPLETED');
+      } catch (err) {
+        console.error('[DEBUG] ❌ Subshape visualization ERROR:', err);
+      }
+    } else {
+      console.warn('[DEBUG] ⏭️ Skipping visualization:', {
+        reason: !leafletMap ? 'no leafletMap' : 'mapInitialized=false'
+      });
+    }
     
     // Update stats tab
     renderStatsTab(doc, filteredTripSummaries, filteredStopDeltas);
+    
+    console.log('[Viewer] ⏹️ renderCharts EXIT - all updates complete');
   }
   
   // Helper functions for time filtering (working with epoch seconds)
@@ -1650,6 +2666,101 @@
     busiestRoutesChart.update('none');
   }
 
+  function updateHourlyDelayChart(doc, filteredStopDeltas, hourlyStartEpoch, hourlyEndEpoch, baseDay) {
+    console.log('[Viewer] Updating hourly delay chart');
+    
+    if (!hourlyDelayChart) {
+      console.error('[Viewer] Hourly delay chart not initialized!');
+      return;
+    }
+    
+    // Aggregate by hourly buckets
+    const hourlyData = aggregateHourlyDelayByRoute(filteredStopDeltas, selectedRouteIds, processedData.routeStats, hourlyStartEpoch, hourlyEndEpoch);
+    
+    if (hourlyData.series.length === 0 || hourlyData.hourStartTimes.length === 0) {
+      console.log('[Viewer] No hourly data available');
+      hourlyDelayChart.data.labels = [];
+      hourlyDelayChart.data.datasets = [];
+      hourlyDelayChart.update('none');
+      return;
+    }
+    
+    // Determine baseDay: use passed-in value, or compute from first hour time
+    let chartBaseDay = baseDay;
+    if (!chartBaseDay && hourlyData.hourStartTimes.length > 0) {
+      chartBaseDay = Math.floor(hourlyData.hourStartTimes[0] / 86400) * 86400;
+    }
+    
+    // Assign colors to series (red, black, yellow, blue, green)
+    const colors = [
+      'rgb(255, 0, 0)',       // red
+      'rgb(0, 0, 0)',         // black
+      'rgb(255, 255, 0)',     // yellow
+      'rgb(0, 0, 255)',       // blue
+      'rgb(0, 128, 0)'        // green
+    ];
+    
+    hourlyData.series.forEach((series, idx) => {
+      const color = colors[idx % colors.length];
+      series.borderColor = color;
+      series.backgroundColor = color;
+      series.borderWidth = 2;
+    });
+    
+    // Helper: format epoch seconds to HH:MM using consistent baseDay
+    function formatEpochToHHMM(epochSeconds) {
+      if (epochSeconds === null) return '';
+      const delta = Math.max(0, Math.floor(epochSeconds - chartBaseDay));
+      const hrs = Math.floor(delta / 3600);
+      const mins = Math.floor((delta % 3600) / 60);
+      return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+    }
+    
+    // Build datasets with x,y format using actual epoch times
+    const datasets = hourlyData.series.map(series => {
+      const data = [];
+      for (let idx = 0; idx < series.data.length; idx++) {
+        const value = series.data[idx];
+        if (value !== null) {
+          data.push({
+            x: hourlyData.hourStartTimes[idx],
+            y: value
+          });
+        }
+      }
+      
+      return {
+        label: series.label,
+        data: data,
+        borderColor: series.borderColor,
+        backgroundColor: series.backgroundColor,
+        borderWidth: series.borderWidth,
+        tension: series.tension,
+        fill: series.fill,
+        pointRadius: series.pointRadius,
+        pointHoverRadius: series.pointHoverRadius,
+        spanGaps: false // Don't connect gaps
+      };
+    });
+    
+    // Generate labels for all hours
+    const labels = hourlyData.hourStartTimes.map(epochTime => formatEpochToHHMM(epochTime));
+    
+    hourlyDelayChart.data.labels = labels;
+    hourlyDelayChart.data.datasets = datasets;
+    
+    // Update x-axis scale to show all hours tightly
+    hourlyDelayChart.options.scales.x.min = hourlyData.hourStartTimes[0];
+    hourlyDelayChart.options.scales.x.max = hourlyData.hourStartTimes[hourlyData.hourStartTimes.length - 1];
+    hourlyDelayChart.options.scales.x.ticks.stepSize = 3600; // 1 hour in seconds
+    hourlyDelayChart.options.scales.x.ticks.autoSkip = false; // Show all ticks
+    hourlyDelayChart.options.scales.x.ticks.callback = function(value) {
+      return formatEpochToHHMM(value);
+    };
+    
+    hourlyDelayChart.update('none');
+  }
+
   function renderStatsTab(doc, tripSummaries, stopDeltas) {
     const statsGrid = doc.getElementById('statsGrid');
     if (!statsGrid) return;
@@ -1771,7 +2882,7 @@
           seq: stop.seq,
           stopId: stop.sid,
           stopName: stopName,
-          arr: stop.arr || null,
+          arr: isValidArrivalTime(stop.arr) ? stop.arr : null,
           sch_arr: stop.sch_arr || null,
           delay: delay !== null ? `${delay}s (${formatDuration(delay)})` : 'null',
           incrementalDelay: incrementalDelay !== null ? `${incrementalDelay}s (${formatDuration(incrementalDelay)})` : 'null'
@@ -1785,12 +2896,250 @@
   }
 
   // ============================================================================
+  // DEBUG UTILITIES
+  // ============================================================================
+
+  /**
+   * Debug function to analyze a specific trip by ID
+   * Shows detailed stop-by-stop data and delay metrics
+   * 
+   * Call from browser console in RTRecordingViewer.html:
+   *   window.RTRecordingViewer.debugTripById('your-trip-id-here')
+   */
+  function debugTripById(tripId) {
+    console.group(`%c[RTRecordingViewer DEBUG] Trip Details: ${tripId}`, 'color: #d32f2f; font-weight: bold');
+    
+    if (!currentData || !currentData.recordedData) {
+      console.error('ERROR: No data loaded. Use "Load Data" first.');
+      console.groupEnd();
+      return;
+    }
+    
+    const recordedData = currentData.recordedData;
+    const routes = (window.gtfsData && window.gtfsData.routes) || {};
+    
+    // Look up the trip
+    const trip = recordedData[tripId];
+    if (!trip) {
+      console.error(`ERROR: Trip ID "${tripId}" not found in recorded data.`);
+      console.groupEnd();
+      return;
+    }
+    
+    const routeId = String(trip.rid);
+    const route = routes[routeId];
+    const routeName = route 
+      ? `${route.route_short_name || ''} - ${route.route_long_name || ''}`
+      : `Route ${routeId}`;
+    
+    console.log(`Route: ${routeName} (${routeId})`);
+    console.log(`Vehicle: ${trip.vid || 'N/A'}`);
+    
+    // Build stop details
+    const stopSeqKeys = Object.keys(trip.stops);
+    const stopDetails = [];
+    const stopIds = (stopsData || {});
+    
+    for (let s = 0; s < stopSeqKeys.length; s++) {
+      const stopSeq = stopSeqKeys[s];
+      const stop = trip.stops[stopSeq];
+      
+      if (stop && typeof stop === 'object') {
+        let delaySeconds = (isValidArrivalTime(stop.arr) && stop.sch_arr)
+          ? (stop.arr - stop.sch_arr)
+          : null;
+        delaySeconds = normalizeDelay(delaySeconds);
+        
+        const stopName = stopIds[stop.sid] ? stopIds[stop.sid].name : `Stop ${stop.sid}`;
+        
+        stopDetails.push({
+          seq: Number(stopSeq),
+          stopId: stop.sid,
+          stopName: stopName,
+          arr_recorded: isValidArrivalTime(stop.arr) ? stop.arr : 'MISSING',
+          sch_arr: stop.sch_arr || 'N/A',
+          delaySeconds: delaySeconds,
+          delayFormatted: delaySeconds !== null ? formatDuration(delaySeconds) : 'N/A'
+        });
+      }
+    }
+    
+    if (stopDetails.length > 0) {
+      console.log(`\nStops (${stopDetails.length} total):`);
+      console.table(stopDetails);
+      
+      // Calculate trip-level metrics
+      const validDelays = stopDetails
+        .filter(s => s.delaySeconds !== null)
+        .map(s => s.delaySeconds);
+      
+      if (validDelays.length > 0) {
+        const maxDelay = Math.max(...validDelays);
+        const minDelay = Math.min(...validDelays);
+        const avgDelay = validDelays.reduce((a, b) => a + b, 0) / validDelays.length;
+        
+        console.log('\n📈 Trip Metrics:');
+        console.log(`  Max Delay: ${formatDuration(maxDelay)} (${maxDelay}s)`);
+        console.log(`  Min Delay: ${formatDuration(minDelay)} (${minDelay}s)`);
+        console.log(`  Avg Delay: ${formatDuration(avgDelay)} (${avgDelay.toFixed(1)}s)`);
+        console.log(`  Valid stops: ${validDelays.length}/${stopDetails.length}`);
+      } else {
+        console.log('⚠️  No valid delay data for this trip');
+      }
+    } else {
+      console.log('⚠️  No stops recorded for this trip');
+    }
+    
+    console.groupEnd();
+  }
+
+  /**
+   * Debug function to analyze trip delays from currently loaded data
+   * Call from browser console in RTrecordingViewer.html:
+   *   window.RTRecordingViewer.debugTripDelays()
+   */
+  function debugTripDelays() {
+    console.group('%c[RTRecordingViewer DEBUG] Trip Delay Analysis', 'color: #d32f2f; font-weight: bold');
+    
+    if (!currentData || !currentData.recordedData) {
+      console.error('ERROR: No data loaded. Use "Load Data" first.');
+      console.groupEnd();
+      return;
+    }
+    
+    const recordedData = currentData.recordedData;
+    const routes = (window.gtfsData && window.gtfsData.routes) || {};
+    const allTripIds = Object.keys(recordedData);
+    
+    console.log(`📊 Total recorded trips: ${allTripIds.length}`);
+    
+    // Read current filter state from DOM (not from selectedRouteIds which might be stale)
+    // Check if we're in a popup (viewerWindow) or the main page (document)
+    const targetDoc = viewerWindow ? viewerWindow.document : document;
+    const checkedCheckboxes = targetDoc.querySelectorAll('.route-filter input[type="checkbox"]:checked');
+    const currentSelectedRoutes = new Set();
+    
+    checkedCheckboxes.forEach(cb => {
+      currentSelectedRoutes.add(String(cb.value));
+    });
+    
+    console.log(`🔍 Selected Routes (from UI): ${currentSelectedRoutes.size > 0 ? Array.from(currentSelectedRoutes).join(', ') : 'None (all routes)'}`);
+    
+    // Filter trips by selected routes
+    const filteredTripIds = [];
+    for (let i = 0; i < allTripIds.length; i++) {
+      const tripId = allTripIds[i];
+      const trip = recordedData[tripId];
+      
+      if (trip && typeof trip === 'object' && trip.rid) {
+        const routeId = String(trip.rid);
+        // Include trip if no filter is active OR if its route is in the selected set
+        if (currentSelectedRoutes.size === 0 || currentSelectedRoutes.has(routeId)) {
+          filteredTripIds.push(tripId);
+        }
+      }
+    }
+    
+    console.log(`✓ Found ${filteredTripIds.length} trips matching filter\n`);
+    
+    if (filteredTripIds.length === 0) {
+      console.warn('⚠️  No trips found. Try selecting different routes or click "Apply Filter".');
+      console.groupEnd();
+      return;
+    }
+    
+    // Analyze ALL filtered trips (up to 1000)
+    const tripsToAnalyze = filteredTripIds.slice(0, 1000);
+    console.log(`✓ Analyzing all ${tripsToAnalyze.length} trips (capped at 1000)\n`);
+    
+    const tripDelayData = [];
+    
+    // Analyze each trip
+    for (let i = 0; i < tripsToAnalyze.length; i++) {
+      const tripId = tripsToAnalyze[i];
+      const trip = recordedData[tripId];
+      
+      if (!trip || !trip.stops) continue;
+      
+      const routeId = String(trip.rid);
+      const route = routes[routeId];
+      const routeName = route 
+        ? `${route.route_short_name || ''} - ${route.route_long_name || ''}`
+        : `Route ${routeId}`;
+      
+      // Build stop details (for calculating delays, not logging)
+      const stopSeqKeys = Object.keys(trip.stops);
+      const stopDetails = [];
+      
+      for (let s = 0; s < stopSeqKeys.length; s++) {
+        const stopSeq = stopSeqKeys[s];
+        const stop = trip.stops[stopSeq];
+        
+        if (stop && typeof stop === 'object') {
+          let delaySeconds = (isValidArrivalTime(stop.arr) && stop.sch_arr)
+            ? (stop.arr - stop.sch_arr)
+            : null;
+          delaySeconds = normalizeDelay(delaySeconds);
+          
+          stopDetails.push({
+            seq: Number(stopSeq),
+            delaySeconds: delaySeconds
+          });
+        }
+      }
+      
+      // Calculate trip-level metrics (silently, no logging per trip - too verbose for 1000 trips)
+      const validDelays = stopDetails
+        .filter(s => s.delaySeconds !== null)
+        .map(s => s.delaySeconds);
+      
+      if (validDelays.length > 0) {
+        const maxDelay = Math.max(...validDelays);
+        const minDelay = Math.min(...validDelays);
+        const avgDelay = validDelays.reduce((a, b) => a + b, 0) / validDelays.length;
+        
+        tripDelayData.push({
+          tripId,
+          routeName,
+          vehicleId: trip.vid,
+          stopCount: stopDetails.length,
+          maxDelay,
+          minDelay,
+          avgDelay
+        });
+      }
+    }
+    
+    // Summary
+    if (tripDelayData.length > 0) {
+      console.log(`\n📊 SUMMARY - All ${tripDelayData.length} Analyzed Trips:`);
+      console.table(tripDelayData);
+      
+      const allMaxDelays = tripDelayData.map(t => t.maxDelay);
+      const overallMax = Math.max(...allMaxDelays);
+      const overallMin = Math.min(...allMaxDelays);
+      const overallAvg = allMaxDelays.reduce((a, b) => a + b, 0) / allMaxDelays.length;
+      
+      console.log('\n🎯 Overall Max Delays (Average of Trip Max Delays):');
+      console.log(`  Highest: ${formatDuration(overallMax)}`);
+      console.log(`  Lowest: ${formatDuration(overallMin)}`);
+      console.log(`  Average: ${formatDuration(overallAvg)}`);
+    }
+    
+    console.log('\n✅ Analysis complete');
+    console.groupEnd();
+  }
+
+  // ============================================================================
   // EXPORTS
   // ============================================================================
 
   window.RTRecordingViewer = {
     open: openViewer,
-    sampleTrips: sampleTripsForRoute
+    sampleTrips: sampleTripsForRoute,
+    debugTripById: debugTripById,
+    debugTripDelays: debugTripDelays,
+    visualizeSubshapesForBusiestRoutes: visualizeSubshapesForBusiestRoutes
   };
 
   // ============================================================================
