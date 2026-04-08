@@ -11,7 +11,7 @@
 
   const TIME_ZONE = (window.APP_CONFIG && window.APP_CONFIG.timeZone) || 'UTC';
   const MAP_CONFIG = (window.APP_CONFIG && window.APP_CONFIG.map) || { center: [43.65, -79.38], zoom: 11 };
-  let TOP_N_ROUTES = 50; // Customizable via UI - this is the source of truth
+  let TOP_N_ROUTES = 200; // Customizable via UI - this is the source of truth
   let viewerWindow = null;
   let currentData = null;
   let stopsData = null;
