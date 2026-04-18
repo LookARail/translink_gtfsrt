@@ -8261,6 +8261,12 @@
     "stop_lat": 49.225535,
     "stop_lon": -123.091289
   },
+  "2045": {
+    "stop_id": "2045",
+    "stop_name": "Westbound E 49 Ave @ St. George St",
+    "stop_lat": 49.225593,
+    "stop_lon": -123.094471
+  },
   "2046": {
     "stop_id": "2046",
     "stop_name": "Westbound E 49 Ave @ Prince Edward St",
@@ -37411,7 +37417,7 @@
   },
   "8683": {
     "stop_id": "8683",
-    "stop_name": "Northbound Holdom Ave @ Lougheed Hwy",
+    "stop_name": "Holdom Station @ Bay 1",
     "stop_lat": 49.264688,
     "stop_lon": -122.981032
   },
@@ -37459,7 +37465,7 @@
   },
   "8697": {
     "stop_id": "8697",
-    "stop_name": "Southbound Holdom Ave @ Lougheed Hwy",
+    "stop_name": "Holdom Station @ Bay 3",
     "stop_lat": 49.264489,
     "stop_lon": -122.981313
   },
@@ -41071,13 +41077,13 @@
   },
   "10017": {
     "stop_id": "10017",
-    "stop_name": "Westbound Lougheed Hwy @ Holdom Ave",
+    "stop_name": "Holdom Station @ Bay 5",
     "stop_lat": 49.265095,
     "stop_lon": -122.982086
   },
   "10018": {
     "stop_id": "10018",
-    "stop_name": "Eastbound Lougheed Hwy @ Holdom Ave",
+    "stop_name": "Holdom Station @ Bay 2",
     "stop_lat": 49.264649,
     "stop_lon": -122.980395
   },
@@ -41095,13 +41101,13 @@
   },
   "10028": {
     "stop_id": "10028",
-    "stop_name": "Westbound Lougheed Hwy @ Lake City Way",
+    "stop_name": "Lake City Way Station @ Bay 3",
     "stop_lat": 49.25443,
     "stop_lon": -122.938606
   },
   "10029": {
     "stop_id": "10029",
-    "stop_name": "Eastbound Lougheed Hwy @ Lake City Way",
+    "stop_name": "Lake City Station  @ Bay 2",
     "stop_lat": 49.254139,
     "stop_lon": -122.937052
   },
@@ -52351,9 +52357,9 @@
   },
   "13088": {
     "stop_id": "13088",
-    "stop_name": "Westbound W 49 Ave @ Columbia St",
-    "stop_lat": 49.225969,
-    "stop_lon": -123.110487
+    "stop_name": "Westbound W 49th Ave @ Columbia St",
+    "stop_lat": 49.226029,
+    "stop_lon": -123.112124
   },
   "13091": {
     "stop_id": "13091",
