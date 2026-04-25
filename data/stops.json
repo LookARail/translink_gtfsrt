@@ -10340,8 +10340,8 @@
   "2554": {
     "stop_id": "2554",
     "stop_name": "Northbound Norland Ave @ Ledger Ave",
-    "stop_lat": 49.248593,
-    "stop_lon": -122.974611
+    "stop_lat": 49.248692,
+    "stop_lon": -122.974621
   },
   "2556": {
     "stop_id": "2556",
@@ -25091,12 +25091,6 @@
     "stop_lat": 49.126318,
     "stop_lon": -122.855592
   },
-  "5740": {
-    "stop_id": "5740",
-    "stop_name": "Eastbound 68 Ave @ 134 St",
-    "stop_lat": 49.126249,
-    "stop_lon": -122.850718
-  },
   "5741": {
     "stop_id": "5741",
     "stop_name": "Northbound King George Blvd @ 68 Ave",
@@ -26014,12 +26008,6 @@
     "stop_name": "Westbound 108 Ave @ 140 St",
     "stop_lat": 49.19892,
     "stop_lon": -122.834564
-  },
-  "5905": {
-    "stop_id": "5905",
-    "stop_name": "Westbound 108 Ave @ Whalley Blvd",
-    "stop_lat": 49.198936,
-    "stop_lon": -122.840815
   },
   "5907": {
     "stop_id": "5907",
@@ -47237,12 +47225,6 @@
     "stop_lat": 49.19488,
     "stop_lon": -123.127321
   },
-  "11792": {
-    "stop_id": "11792",
-    "stop_name": "UBC Exchange @ Bay 9",
-    "stop_lat": 49.265726,
-    "stop_lon": -123.248724
-  },
   "11793": {
     "stop_id": "11793",
     "stop_name": "UBC Exchange @ Bay 10",
@@ -47393,12 +47375,6 @@
     "stop_lat": 49.104514,
     "stop_lon": -122.867495
   },
-  "11839": {
-    "stop_id": "11839",
-    "stop_name": "Northbound 192 St @ 28 Ave",
-    "stop_lat": 49.053205,
-    "stop_lon": -122.691408
-  },
   "11840": {
     "stop_id": "11840",
     "stop_name": "Eastbound Westminster Hwy @ Kartner Rd",
@@ -47488,12 +47464,6 @@
     "stop_name": "Newton Exchange @ Bay 10",
     "stop_lat": 49.132578,
     "stop_lon": -122.842905
-  },
-  "11862": {
-    "stop_id": "11862",
-    "stop_name": "Newton Exchange @ Layover",
-    "stop_lat": 49.133269,
-    "stop_lon": -122.843474
   },
   "11864": {
     "stop_id": "11864",
@@ -52457,18 +52427,6 @@
     "stop_lat": 49.152011,
     "stop_lon": -122.985391
   },
-  "13113": {
-    "stop_id": "13113",
-    "stop_name": "Southbound 208 St @ 72 Ave",
-    "stop_lat": 49.132957,
-    "stop_lon": -122.646079
-  },
-  "13114": {
-    "stop_id": "13114",
-    "stop_name": "Northbound 208 St @ 72 Ave",
-    "stop_lat": 49.133858,
-    "stop_lon": -122.645811
-  },
   "13115": {
     "stop_id": "13115",
     "stop_name": "Southbound Granville St @ W 16th Ave",
@@ -52973,101 +52931,53 @@
     "stop_lat": 49.189147,
     "stop_lon": -123.131862
   },
-  "PHWEA": {
-    "stop_id": "PHWEA",
-    "stop_name": "Port Haney Station WCE accesible entrance",
-    "stop_lat": 49.212435,
-    "stop_lon": -122.605882
+  "WFSCS": {
+    "stop_id": "WFSCS",
+    "stop_name": "Waterfront Station West Cordova Street Entrance",
+    "stop_lat": 49.285635,
+    "stop_lon": -123.111961
   },
-  "KESSE": {
-    "stop_id": "KESSE",
-    "stop_name": "King Edward Station entrance",
-    "stop_lat": 49.249188,
-    "stop_lon": -123.11578
+  "WFSHS": {
+    "stop_id": "WFSHS",
+    "stop_name": "Waterfront Station Howe Street Entrance",
+    "stop_lat": 49.286907,
+    "stop_lon": -123.113297
   },
-  "PTSWS": {
-    "stop_id": "PTSWS",
-    "stop_name": "Patterson Station West Concourse South Entrance",
-    "stop_lat": 49.229928,
-    "stop_lon": -123.013221
+  "WFSSE": {
+    "stop_id": "WFSSE",
+    "stop_name": "Waterfront Station SeaBus entrance",
+    "stop_lat": 49.286592,
+    "stop_lon": -123.110003
   },
-  "PTSWN": {
-    "stop_id": "PTSWN",
-    "stop_name": "Patterson Station West Concourse North Entrance",
-    "stop_lat": 49.230073,
-    "stop_lon": -123.013186
+  "WFSCG": {
+    "stop_id": "WFSCG",
+    "stop_name": "Waterfront Station Canada Line access at Granville and Hastings",
+    "stop_lat": 49.285084,
+    "stop_lon": -123.114359
   },
-  "VCCGE": {
-    "stop_id": "VCCGE",
-    "stop_name": "Vancouver City Centre Station Georgia Street Entrance",
-    "stop_lat": 49.28252,
-    "stop_lon": -123.118542
+  "WFSGE": {
+    "stop_id": "WFSGE",
+    "stop_name": "Waterfront Station Canada Line elevator entrance at Granville and Hastings",
+    "stop_lat": 49.28525,
+    "stop_lon": -123.114192
   },
-  "SASKS": {
-    "stop_id": "SASKS",
-    "stop_name": "Sapperton South Entrance",
-    "stop_lat": 49.22411,
-    "stop_lon": -122.890011
+  "YVRDE": {
+    "stop_id": "YVRDE",
+    "stop_name": "YVR-Airport Station Domestic Terminal entrance",
+    "stop_lat": 49.194265,
+    "stop_lon": -123.180486
   },
-  "MCSWE": {
-    "stop_id": "MCSWE",
-    "stop_name": "Mission City Station WCE entrance",
-    "stop_lat": 49.133877,
-    "stop_lon": -122.304724
+  "YVRIE": {
+    "stop_id": "YVRIE",
+    "stop_name": "YVR-Airport International Terminal  (upper level)",
+    "stop_lat": 49.194702,
+    "stop_lon": -123.178038
   },
-  "BQSWE": {
-    "stop_id": "BQSWE",
-    "stop_name": "Burquitlam Station West Entrance",
-    "stop_lat": 49.261528,
-    "stop_lon": -122.889767
-  },
-  "BDSET": {
-    "stop_id": "BDSET",
-    "stop_name": "Braid Station Entrance",
-    "stop_lat": 49.232958,
-    "stop_lon": -122.882858
-  },
-  "NWSCS": {
-    "stop_id": "NWSCS",
-    "stop_name": "New Westminster Station Carnavon Street Entrance",
-    "stop_lat": 49.201798,
-    "stop_lon": -122.91295
-  },
-  "LHSLW": {
-    "stop_id": "LHSLW",
-    "stop_name": "Lougheed Town Centre Station Lower West Concourse Entrance",
-    "stop_lat": 49.248808,
-    "stop_lon": -122.8974
-  },
-  "CCSET": {
-    "stop_id": "CCSET",
-    "stop_name": "Coquitlam Central Station Entrance",
-    "stop_lat": 49.274732,
-    "stop_lon": -122.800253
-  },
-  "HOSET": {
-    "stop_id": "HOSET",
-    "stop_name": "Holdom Station Entrance",
-    "stop_lat": 49.264684,
-    "stop_lon": -122.981499
-  },
-  "BSSDS": {
-    "stop_id": "BSSDS",
-    "stop_name": "Burrard Station Dunsmuir Street Entrance",
-    "stop_lat": 49.285747,
-    "stop_lon": -123.120042
-  },
-  "SCSCE": {
-    "stop_id": "SCSCE",
-    "stop_name": "Surrey Central Station Central Concourse Entrance",
-    "stop_lat": 49.18928,
-    "stop_lon": -122.84794
-  },
-  "LSSME": {
-    "stop_id": "LSSME",
-    "stop_name": "Lansdowne Station main entrance",
-    "stop_lat": 49.174544,
-    "stop_lon": -123.136486
+  "YVRIU": {
+    "stop_id": "YVRIU",
+    "stop_name": "YVR-Airport Station entrance from International Arrivals (lower level)",
+    "stop_lat": 49.194358,
+    "stop_lon": -123.178101
   },
   "SICSN": {
     "stop_id": "SICSN",
@@ -53081,281 +52991,59 @@
     "stop_lat": 49.192555,
     "stop_lon": -123.15792
   },
-  "LASWE": {
-    "stop_id": "LASWE",
-    "stop_name": "Lafarge Lake-Douglas Station West Entrance",
-    "stop_lat": 49.285228,
-    "stop_lon": -122.791928
+  "TSSNE": {
+    "stop_id": "TSSNE",
+    "stop_name": "Templetone Station North Entrance",
+    "stop_lat": 49.196833,
+    "stop_lon": -123.146621
   },
-  "WFSSE": {
-    "stop_id": "WFSSE",
-    "stop_name": "Waterfront Station SeaBus entrance",
-    "stop_lat": 49.286592,
-    "stop_lon": -123.110003
+  "TSSSE": {
+    "stop_id": "TSSSE",
+    "stop_name": "Templetone Station South Entrance",
+    "stop_lat": 49.196485,
+    "stop_lon": -123.146494
   },
-  "YVRIU": {
-    "stop_id": "YVRIU",
-    "stop_name": "YVR-Airport Station entrance from International Arrivals (lower level)",
-    "stop_lat": 49.194358,
-    "stop_lon": -123.178101
+  "RBSSE": {
+    "stop_id": "RBSSE",
+    "stop_name": "Richmond-Brighouse Station main entrance",
+    "stop_lat": 49.167945,
+    "stop_lon": -123.136256
   },
-  "YVRIE": {
-    "stop_id": "YVRIE",
-    "stop_name": "YVR-Airport International Terminal  (upper level)",
-    "stop_lat": 49.194702,
-    "stop_lon": -123.178038
+  "LSSME": {
+    "stop_id": "LSSME",
+    "stop_name": "Lansdowne Station main entrance",
+    "stop_lat": 49.174544,
+    "stop_lon": -123.136486
   },
-  "YRSES": {
-    "stop_id": "YRSES",
-    "stop_name": "Yaletown-Roundhouse Station Elevator Entrance",
-    "stop_lat": 49.274534,
-    "stop_lon": -123.121878
+  "ASSME": {
+    "stop_id": "ASSME",
+    "stop_name": "Aberdeen Station main Entrance",
+    "stop_lat": 49.184148,
+    "stop_lon": -123.136321
   },
-  "MNSWE": {
-    "stop_id": "MNSWE",
-    "stop_name": "Main Street-Science World Station West Concourse East Entrance",
-    "stop_lat": 49.273128,
-    "stop_lon": -123.100286
+  "ASSEM": {
+    "stop_id": "ASSEM",
+    "stop_name": "Aberdeen Station entrance from mall to platform",
+    "stop_lat": 49.183804,
+    "stop_lon": -123.136149
   },
-  "MNSWS": {
-    "stop_id": "MNSWS",
-    "stop_name": "Main Street-Science World Station West Concourse South Entrance",
-    "stop_lat": 49.273129,
-    "stop_lon": -123.100868
+  "CSSME": {
+    "stop_id": "CSSME",
+    "stop_name": "Capstan Station main Entrance",
+    "stop_lat": 49.189298,
+    "stop_lon": -123.13177
   },
-  "OVSSE": {
-    "stop_id": "OVSSE",
-    "stop_name": "Olympic Village Station entrance",
-    "stop_lat": 49.266435,
-    "stop_lon": -123.115836
+  "BSSME": {
+    "stop_id": "BSSME",
+    "stop_name": "Bridgeport Station main Entrance from Bus Loop",
+    "stop_lat": 49.195347,
+    "stop_lon": -123.126529
   },
-  "BSSBS": {
-    "stop_id": "BSSBS",
-    "stop_name": "Burrard Station Burrard Street Entrance",
-    "stop_lat": 49.285431,
-    "stop_lon": -123.120045
-  },
-  "KGSWE": {
-    "stop_id": "KGSWE",
-    "stop_name": "King George Station West Entrance",
-    "stop_lat": 49.182814,
-    "stop_lon": -122.844791
-  },
-  "GVSGS": {
-    "stop_id": "GVSGS",
-    "stop_name": "Granville Station Granville Street Entrance",
-    "stop_lat": 49.282982,
-    "stop_lon": -123.117147
-  },
-  "WFSHS": {
-    "stop_id": "WFSHS",
-    "stop_name": "Waterfront Station Howe Street Entrance",
-    "stop_lat": 49.286907,
-    "stop_lon": -123.113297
-  },
-  "SRSWN": {
-    "stop_id": "SRSWN",
-    "stop_name": "Scott Road Station West Concourse North Entrance",
-    "stop_lat": 49.204333,
-    "stop_lon": -122.875397
-  },
-  "SRSWS": {
-    "stop_id": "SRSWS",
-    "stop_name": "Scott Road Station West Concourse South Entrance",
-    "stop_lat": 49.204238,
-    "stop_lon": -122.875369
-  },
-  "PTSEN": {
-    "stop_id": "PTSEN",
-    "stop_name": "Patterson Station East Concourse North Entrance",
-    "stop_lat": 49.22963,
-    "stop_lon": -123.012182
-  },
-  "PTSES": {
-    "stop_id": "PTSES",
-    "stop_name": "Patterson Station East Concourse South Entrance",
-    "stop_lat": 49.229519,
-    "stop_lon": -123.012298
-  },
-  "EDSNE": {
-    "stop_id": "EDSNE",
-    "stop_name": "Edmonds Station North Entrance",
-    "stop_lat": 49.212279,
-    "stop_lon": -122.958934
-  },
-  "MCSET": {
-    "stop_id": "MCSET",
-    "stop_name": "Moody Centre Station Entrance",
-    "stop_lat": 49.277789,
-    "stop_lon": -122.845487
-  },
-  "COSFS": {
-    "stop_id": "COSFS",
-    "stop_name": "Columbia Station Fourth Street Entrance",
-    "stop_lat": 49.204949,
-    "stop_lon": -122.905893
-  },
-  "NWSQD": {
-    "stop_id": "NWSQD",
-    "stop_name": "New Westminster Station Quayside Drive Entrance",
-    "stop_lat": 49.200493,
-    "stop_lon": -122.914153
-  },
-  "CCSWE": {
-    "stop_id": "CCSWE",
-    "stop_name": "Coquitlam Central Station WCE entrance",
-    "stop_lat": 49.273904,
-    "stop_lon": -122.799327
-  },
-  "RESEE": {
-    "stop_id": "RESEE",
-    "stop_name": "Renfrew Station Entrance",
-    "stop_lat": 49.259013,
-    "stop_lon": -123.044774
-  },
-  "BWSSE": {
-    "stop_id": "BWSSE",
-    "stop_name": "Commercial-Broadway Station South Entrance",
-    "stop_lat": 49.261438,
-    "stop_lon": -123.069118
-  },
-  "JYSWN": {
-    "stop_id": "JYSWN",
-    "stop_name": "Joyce-Collingwood Station West Concourse North Entrance",
-    "stop_lat": 49.238623,
-    "stop_lon": -123.032123
-  },
-  "JYSWS": {
-    "stop_id": "JYSWS",
-    "stop_name": "Joyce-Collingwood Station West Concourse South Entrance",
-    "stop_lat": 49.238499,
-    "stop_lon": -123.032242
-  },
-  "LASEE": {
-    "stop_id": "LASEE",
-    "stop_name": "Lafarge Lake-Douglas Station East Entrance",
-    "stop_lat": 49.285186,
-    "stop_lon": -122.791747
-  },
-  "TNSEE": {
-    "stop_id": "TNSEE",
-    "stop_name": "29th Avenue Station East Entrance",
-    "stop_lat": 49.24392,
-    "stop_lon": -123.045246
-  },
-  "SPSSE": {
-    "stop_id": "SPSSE",
-    "stop_name": "Sperling-Burnaby Lake Station South Entrance",
-    "stop_lat": 49.259125,
-    "stop_lon": -122.96392
-  },
-  "PMSWE": {
-    "stop_id": "PMSWE",
-    "stop_name": "Pitt Meadows Station WCE entrance",
-    "stop_lat": 49.225754,
-    "stop_lon": -122.688413
-  },
-  "YRSSE": {
-    "stop_id": "YRSSE",
-    "stop_name": "Yaletown-Roundhouse Station Davie Street entrance",
-    "stop_lat": 49.274541,
-    "stop_lon": -123.12196
-  },
-  "LNSET": {
-    "stop_id": "LNSET",
-    "stop_name": "Lincoln Station Entrance",
-    "stop_lat": 49.280591,
-    "stop_lon": -122.793821
-  },
-  "RUSET": {
-    "stop_id": "RUSET",
-    "stop_name": "Rupert Station Entrance",
-    "stop_lat": 49.260637,
-    "stop_lon": -123.033369
-  },
-  "PWSWE": {
-    "stop_id": "PWSWE",
-    "stop_name": "Production Way-University Station West Entrance",
-    "stop_lat": 49.253575,
-    "stop_lon": -122.918543
-  },
-  "MNSES": {
-    "stop_id": "MNSES",
-    "stop_name": "Main Street-Science World Station East Concourse South Entrance",
-    "stop_lat": 49.272886,
-    "stop_lon": -123.099296
-  },
-  "MNSEN": {
-    "stop_id": "MNSEN",
-    "stop_name": "Main Street-Science World Station East Concourse North Entrance",
-    "stop_lat": 49.273072,
-    "stop_lon": -123.099487
-  },
-  "SPSNE": {
-    "stop_id": "SPSNE",
-    "stop_name": "Sperling-Burnaby Lake Station North Entrance",
-    "stop_lat": 49.259223,
-    "stop_lon": -122.963896
-  },
-  "MTSWE": {
-    "stop_id": "MTSWE",
-    "stop_name": "Metrotown Station West Concourse Entrance",
-    "stop_lat": 49.226323,
-    "stop_lon": -123.004994
-  },
-  "LHSEE": {
-    "stop_id": "LHSEE",
-    "stop_name": "Lougheed Town Centre Station East Concourse Entrance",
-    "stop_lat": 49.248091,
-    "stop_lon": -122.895939
-  },
-  "EDSSE": {
-    "stop_id": "EDSSE",
-    "stop_name": "Edmonds Station South Entrance",
-    "stop_lat": 49.212157,
-    "stop_lon": -122.958994
-  },
-  "STSBS": {
-    "stop_id": "STSBS",
-    "stop_name": "Stadium-Chinatown Station Beatty Street Entrance",
-    "stop_lat": 49.279865,
-    "stop_lon": -123.110065
-  },
-  "MCWEA": {
-    "stop_id": "MCWEA",
-    "stop_name": "Mission City Station WCE accessible entrance",
-    "stop_lat": 49.133804,
-    "stop_lon": -122.303997
-  },
-  "BRSCL": {
-    "stop_id": "BRSCL",
-    "stop_name": "Brentwood Town Centre Station Concourse Level Entrance",
-    "stop_lat": 49.266643,
-    "stop_lon": -123.001858
-  },
-  "LCSET": {
-    "stop_id": "LCSET",
-    "stop_name": "Lake City Way Station Entrance",
-    "stop_lat": 49.254661,
-    "stop_lon": -122.938339
-  },
-  "ICSWE": {
-    "stop_id": "ICSWE",
-    "stop_name": "Inlet Centre Station West Concourse Entrance",
-    "stop_lat": 49.277236,
-    "stop_lon": -122.828173
-  },
-  "VCSET": {
-    "stop_id": "VCSET",
-    "stop_name": "VCC-Clark Station Entrance",
-    "stop_lat": 49.265721,
-    "stop_lon": -123.079099
-  },
-  "ROSET": {
-    "stop_id": "ROSET",
-    "stop_name": "Royal Oak Station Entrance",
-    "stop_lat": 49.219942,
-    "stop_lon": -122.988131
+  "BSSCE": {
+    "stop_id": "BSSCE",
+    "stop_name": "Bridgeport Station Entrance from Casino to concourse",
+    "stop_lat": 49.195527,
+    "stop_lon": -123.126524
   },
   "MDSSE": {
     "stop_id": "MDSSE",
@@ -53363,17 +53051,23 @@
     "stop_lat": 49.209358,
     "stop_lon": -123.116936
   },
-  "NWSBL": {
-    "stop_id": "NWSBL",
-    "stop_name": "New Westminster Station Bus Loop Entrance",
-    "stop_lat": 49.201169,
-    "stop_lon": -122.913092
+  "LSSEM": {
+    "stop_id": "LSSEM",
+    "stop_name": "Langra-49th Avenue Station entrance",
+    "stop_lat": 49.226287,
+    "stop_lon": -123.116092
   },
-  "GVSSS": {
-    "stop_id": "GVSSS",
-    "stop_name": "Granville Station Seymour Street Entrance",
-    "stop_lat": 49.282514,
-    "stop_lon": -123.116348
+  "LSSEE": {
+    "stop_id": "LSSEE",
+    "stop_name": "Langra-49th Avenue Station elevator entrance",
+    "stop_lat": 49.226353,
+    "stop_lon": -123.11614
+  },
+  "O41SE": {
+    "stop_id": "O41SE",
+    "stop_name": "Oakridge-41st Avenue Station entrance",
+    "stop_lat": 49.23324,
+    "stop_lon": -123.116656
   },
   "O41EE": {
     "stop_id": "O41EE",
@@ -53381,59 +53075,95 @@
     "stop_lat": 49.233146,
     "stop_lon": -123.116613
   },
-  "TSSNE": {
-    "stop_id": "TSSNE",
-    "stop_name": "Templetone Station North Entrance",
-    "stop_lat": 49.196833,
-    "stop_lon": -123.146621
+  "KESSE": {
+    "stop_id": "KESSE",
+    "stop_name": "King Edward Station entrance",
+    "stop_lat": 49.249188,
+    "stop_lon": -123.11578
   },
-  "SRSES": {
-    "stop_id": "SRSES",
-    "stop_name": "Scott Road Station East Concourse South Entrance",
-    "stop_lat": 49.204435,
-    "stop_lon": -122.873558
+  "BWCLN": {
+    "stop_id": "BWCLN",
+    "stop_name": "Broadway-City Hall North Entrance",
+    "stop_lat": 49.262707,
+    "stop_lon": -123.114822
   },
-  "SRSEN": {
-    "stop_id": "SRSEN",
-    "stop_name": "Scott Road Station East Concourse North Entrance",
-    "stop_lat": 49.204553,
-    "stop_lon": -122.873653
+  "BWCLS": {
+    "stop_id": "BWCLS",
+    "stop_name": "Broadway-City Hall South Entrance",
+    "stop_lat": 49.262727,
+    "stop_lon": -123.114822
   },
-  "SASSS": {
-    "stop_id": "SASSS",
-    "stop_name": "Sapperton Station Spruce Street Entrance",
-    "stop_lat": 49.225282,
-    "stop_lon": -122.890425
+  "BWSSE": {
+    "stop_id": "BWSSE",
+    "stop_name": "Commercial-Broadway Station South Entrance",
+    "stop_lat": 49.261438,
+    "stop_lon": -123.069118
   },
-  "BSSEE": {
-    "stop_id": "BSSEE",
-    "stop_name": "Burrard Station Elevator Entrance",
-    "stop_lat": 49.285581,
-    "stop_lon": -123.119804
+  "BWSNE": {
+    "stop_id": "BWSNE",
+    "stop_name": "Commercial-Broadway Station North Entrance",
+    "stop_lat": 49.262162,
+    "stop_lon": -123.069051
   },
-  "TNSWS": {
-    "stop_id": "TNSWS",
-    "stop_name": "29th Avenue Station West Concourse South Entrance",
-    "stop_lat": 49.244267,
-    "stop_lon": -123.046314
+  "OVSSE": {
+    "stop_id": "OVSSE",
+    "stop_name": "Olympic Village Station entrance",
+    "stop_lat": 49.266435,
+    "stop_lon": -123.115836
   },
-  "SRSWE": {
-    "stop_id": "SRSWE",
-    "stop_name": "Scott Road Station West Concourse Elevator Entrance",
-    "stop_lat": 49.204285,
-    "stop_lon": -122.874668
+  "YRSSE": {
+    "stop_id": "YRSSE",
+    "stop_name": "Yaletown-Roundhouse Station Davie Street entrance",
+    "stop_lat": 49.274541,
+    "stop_lon": -123.12196
   },
-  "JYSEN": {
-    "stop_id": "JYSEN",
-    "stop_name": "Joyce-Collingwood Station East Concourse North Entrance",
-    "stop_lat": 49.238082,
-    "stop_lon": -123.030797
+  "YRSES": {
+    "stop_id": "YRSES",
+    "stop_name": "Yaletown-Roundhouse Station Elevator Entrance",
+    "stop_lat": 49.274534,
+    "stop_lon": -123.121878
   },
-  "JYSES": {
-    "stop_id": "JYSES",
-    "stop_name": "Joyce-Collingwood Station East Concourse South Entrance",
-    "stop_lat": 49.237957,
-    "stop_lon": -123.030912
+  "VCCGE": {
+    "stop_id": "VCCGE",
+    "stop_name": "Vancouver City Centre Station Georgia Street Entrance",
+    "stop_lat": 49.28252,
+    "stop_lon": -123.118542
+  },
+  "VCCEE": {
+    "stop_id": "VCCEE",
+    "stop_name": "Vancouver City Centre Station Elevator Entrance",
+    "stop_lat": 49.282348,
+    "stop_lon": -123.118685
+  },
+  "VCSET": {
+    "stop_id": "VCSET",
+    "stop_name": "VCC-Clark Station Entrance",
+    "stop_lat": 49.265721,
+    "stop_lon": -123.079099
+  },
+  "CMSSE": {
+    "stop_id": "CMSSE",
+    "stop_name": "Commercial-Broadway Station South Entrance",
+    "stop_lat": 49.262511,
+    "stop_lon": -123.069245
+  },
+  "CMSWE": {
+    "stop_id": "CMSWE",
+    "stop_name": "Commercial-Broadway Station West Entrance",
+    "stop_lat": 49.262905,
+    "stop_lon": -123.069494
+  },
+  "RESEE": {
+    "stop_id": "RESEE",
+    "stop_name": "Renfrew Station Entrance",
+    "stop_lat": 49.259013,
+    "stop_lon": -123.044774
+  },
+  "RUSET": {
+    "stop_id": "RUSET",
+    "stop_name": "Rupert Station Entrance",
+    "stop_lat": 49.260637,
+    "stop_lon": -123.033369
   },
   "GMSET": {
     "stop_id": "GMSET",
@@ -53447,29 +53177,71 @@
     "stop_lat": 49.264769,
     "stop_lon": -123.013849
   },
-  "BWCLS": {
-    "stop_id": "BWCLS",
-    "stop_name": "Broadway-City Hall South Entrance",
-    "stop_lat": 49.262727,
-    "stop_lon": -123.114822
+  "BRSLS": {
+    "stop_id": "BRSLS",
+    "stop_name": "Brentwood Town Centre Station Lougheed Highway South Entrance",
+    "stop_lat": 49.266219,
+    "stop_lon": -123.00195
   },
-  "BWCLN": {
-    "stop_id": "BWCLN",
-    "stop_name": "Broadway-City Hall North Entrance",
-    "stop_lat": 49.262707,
-    "stop_lon": -123.114822
+  "BRSLN": {
+    "stop_id": "BRSLN",
+    "stop_name": "Brentwood Town Centre Station Lougheed Highway North Entrance",
+    "stop_lat": 49.266589,
+    "stop_lon": -123.001946
   },
-  "SCSNE": {
-    "stop_id": "SCSNE",
-    "stop_name": "Surrey Central Station North Concourse Entrance",
-    "stop_lat": 49.189977,
-    "stop_lon": -122.84797
+  "BRSCL": {
+    "stop_id": "BRSCL",
+    "stop_name": "Brentwood Town Centre Station Concourse Level Entrance",
+    "stop_lat": 49.266643,
+    "stop_lon": -123.001858
   },
-  "TNSWN": {
-    "stop_id": "TNSWN",
-    "stop_name": "29th Avenue Station West Concourse North Entrance",
-    "stop_lat": 49.244402,
-    "stop_lon": -123.046181
+  "HOSET": {
+    "stop_id": "HOSET",
+    "stop_name": "Holdom Station Entrance",
+    "stop_lat": 49.264684,
+    "stop_lon": -122.981499
+  },
+  "SPSSE": {
+    "stop_id": "SPSSE",
+    "stop_name": "Sperling-Burnaby Lake Station South Entrance",
+    "stop_lat": 49.259125,
+    "stop_lon": -122.96392
+  },
+  "SPSNE": {
+    "stop_id": "SPSNE",
+    "stop_name": "Sperling-Burnaby Lake Station North Entrance",
+    "stop_lat": 49.259223,
+    "stop_lon": -122.963896
+  },
+  "LCSET": {
+    "stop_id": "LCSET",
+    "stop_name": "Lake City Way Station Entrance",
+    "stop_lat": 49.254661,
+    "stop_lon": -122.938339
+  },
+  "PWSEE": {
+    "stop_id": "PWSEE",
+    "stop_name": "Production Way-University Station East Entrance",
+    "stop_lat": 49.253543,
+    "stop_lon": -122.9183
+  },
+  "PWSWE": {
+    "stop_id": "PWSWE",
+    "stop_name": "Production Way-University Station West Entrance",
+    "stop_lat": 49.253575,
+    "stop_lon": -122.918543
+  },
+  "LHSEE": {
+    "stop_id": "LHSEE",
+    "stop_name": "Lougheed Town Centre Station East Concourse Entrance",
+    "stop_lat": 49.248091,
+    "stop_lon": -122.895939
+  },
+  "LHSLW": {
+    "stop_id": "LHSLW",
+    "stop_name": "Lougheed Town Centre Station Lower West Concourse Entrance",
+    "stop_lat": 49.248808,
+    "stop_lon": -122.8974
   },
   "LHSUW": {
     "stop_id": "LHSUW",
@@ -53477,11 +53249,293 @@
     "stop_lat": 49.249032,
     "stop_lon": -122.897273
   },
-  "PWSEE": {
-    "stop_id": "PWSEE",
-    "stop_name": "Production Way-University Station East Entrance",
-    "stop_lat": 49.253543,
-    "stop_lon": -122.9183
+  "BQSEE": {
+    "stop_id": "BQSEE",
+    "stop_name": "Burquitlam Station East Entrance",
+    "stop_lat": 49.261455,
+    "stop_lon": -122.889633
+  },
+  "BQSWE": {
+    "stop_id": "BQSWE",
+    "stop_name": "Burquitlam Station West Entrance",
+    "stop_lat": 49.261528,
+    "stop_lon": -122.889767
+  },
+  "MCSET": {
+    "stop_id": "MCSET",
+    "stop_name": "Moody Centre Station Entrance",
+    "stop_lat": 49.277789,
+    "stop_lon": -122.845487
+  },
+  "ICSEE": {
+    "stop_id": "ICSEE",
+    "stop_name": "Inlet Centre Station East Concourse Entrance",
+    "stop_lat": 49.277052,
+    "stop_lon": -122.827207
+  },
+  "ICSWE": {
+    "stop_id": "ICSWE",
+    "stop_name": "Inlet Centre Station West Concourse Entrance",
+    "stop_lat": 49.277236,
+    "stop_lon": -122.828173
+  },
+  "CCSET": {
+    "stop_id": "CCSET",
+    "stop_name": "Coquitlam Central Station Entrance",
+    "stop_lat": 49.274732,
+    "stop_lon": -122.800253
+  },
+  "CCSWE": {
+    "stop_id": "CCSWE",
+    "stop_name": "Coquitlam Central Station WCE entrance",
+    "stop_lat": 49.273904,
+    "stop_lon": -122.799327
+  },
+  "LNSET": {
+    "stop_id": "LNSET",
+    "stop_name": "Lincoln Station Entrance",
+    "stop_lat": 49.280591,
+    "stop_lon": -122.793821
+  },
+  "LASEE": {
+    "stop_id": "LASEE",
+    "stop_name": "Lafarge Lake-Douglas Station East Entrance",
+    "stop_lat": 49.285186,
+    "stop_lon": -122.791747
+  },
+  "LASWE": {
+    "stop_id": "LASWE",
+    "stop_name": "Lafarge Lake-Douglas Station West Entrance",
+    "stop_lat": 49.285228,
+    "stop_lon": -122.791928
+  },
+  "BSSBS": {
+    "stop_id": "BSSBS",
+    "stop_name": "Burrard Station Burrard Street Entrance",
+    "stop_lat": 49.285431,
+    "stop_lon": -123.120045
+  },
+  "BSSMW": {
+    "stop_id": "BSSMW",
+    "stop_name": "Burrard Station Melville Street West Entrance",
+    "stop_lat": 49.285532,
+    "stop_lon": -123.120367
+  },
+  "BSSEE": {
+    "stop_id": "BSSEE",
+    "stop_name": "Burrard Station Elevator Entrance",
+    "stop_lat": 49.285581,
+    "stop_lon": -123.119804
+  },
+  "BSSMN": {
+    "stop_id": "BSSMN",
+    "stop_name": "Burrard Station Melville Street North Entrance",
+    "stop_lat": 49.285635,
+    "stop_lon": -123.120418
+  },
+  "BSSDS": {
+    "stop_id": "BSSDS",
+    "stop_name": "Burrard Station Dunsmuir Street Entrance",
+    "stop_lat": 49.285747,
+    "stop_lon": -123.120042
+  },
+  "GVSGS": {
+    "stop_id": "GVSGS",
+    "stop_name": "Granville Station Granville Street Entrance",
+    "stop_lat": 49.282982,
+    "stop_lon": -123.117147
+  },
+  "GVSDS": {
+    "stop_id": "GVSDS",
+    "stop_name": "Granville Station Dunsmuir Street Entrance",
+    "stop_lat": 49.283293,
+    "stop_lon": -123.116089
+  },
+  "GVSSS": {
+    "stop_id": "GVSSS",
+    "stop_name": "Granville Station Seymour Street Entrance",
+    "stop_lat": 49.282514,
+    "stop_lon": -123.116348
+  },
+  "STSEB": {
+    "stop_id": "STSEB",
+    "stop_name": "Stadium-Chinatown Station Expo Boulevard Entrance",
+    "stop_lat": 49.278828,
+    "stop_lon": -123.108406
+  },
+  "STSKP": {
+    "stop_id": "STSKP",
+    "stop_name": "Stadium-Chinatown Station Keefer Place Entrance",
+    "stop_lat": 49.27975,
+    "stop_lon": -123.109661
+  },
+  "STSBS": {
+    "stop_id": "STSBS",
+    "stop_name": "Stadium-Chinatown Station Beatty Street Entrance",
+    "stop_lat": 49.279865,
+    "stop_lon": -123.110065
+  },
+  "MNSES": {
+    "stop_id": "MNSES",
+    "stop_name": "Main Street-Science World Station East Concourse South Entrance",
+    "stop_lat": 49.272886,
+    "stop_lon": -123.099296
+  },
+  "MNSEN": {
+    "stop_id": "MNSEN",
+    "stop_name": "Main Street-Science World Station East Concourse North Entrance",
+    "stop_lat": 49.273072,
+    "stop_lon": -123.099487
+  },
+  "MNSWE": {
+    "stop_id": "MNSWE",
+    "stop_name": "Main Street-Science World Station West Concourse East Entrance",
+    "stop_lat": 49.273128,
+    "stop_lon": -123.100286
+  },
+  "MNSWS": {
+    "stop_id": "MNSWS",
+    "stop_name": "Main Street-Science World Station West Concourse South Entrance",
+    "stop_lat": 49.273129,
+    "stop_lon": -123.100868
+  },
+  "NASET": {
+    "stop_id": "NASET",
+    "stop_name": "Nanaimo Station Entrance",
+    "stop_lat": 49.248394,
+    "stop_lon": -123.056085
+  },
+  "TNSEE": {
+    "stop_id": "TNSEE",
+    "stop_name": "29th Avenue Station East Entrance",
+    "stop_lat": 49.24392,
+    "stop_lon": -123.045246
+  },
+  "TNSWS": {
+    "stop_id": "TNSWS",
+    "stop_name": "29th Avenue Station West Concourse South Entrance",
+    "stop_lat": 49.244267,
+    "stop_lon": -123.046314
+  },
+  "TNSWN": {
+    "stop_id": "TNSWN",
+    "stop_name": "29th Avenue Station West Concourse North Entrance",
+    "stop_lat": 49.244402,
+    "stop_lon": -123.046181
+  },
+  "JYSES": {
+    "stop_id": "JYSES",
+    "stop_name": "Joyce-Collingwood Station East Concourse South Entrance",
+    "stop_lat": 49.237957,
+    "stop_lon": -123.030912
+  },
+  "JYSEN": {
+    "stop_id": "JYSEN",
+    "stop_name": "Joyce-Collingwood Station East Concourse North Entrance",
+    "stop_lat": 49.238082,
+    "stop_lon": -123.030797
+  },
+  "JYSWS": {
+    "stop_id": "JYSWS",
+    "stop_name": "Joyce-Collingwood Station West Concourse South Entrance",
+    "stop_lat": 49.238499,
+    "stop_lon": -123.032242
+  },
+  "JYSWN": {
+    "stop_id": "JYSWN",
+    "stop_name": "Joyce-Collingwood Station West Concourse North Entrance",
+    "stop_lat": 49.238623,
+    "stop_lon": -123.032123
+  },
+  "PTSES": {
+    "stop_id": "PTSES",
+    "stop_name": "Patterson Station East Concourse South Entrance",
+    "stop_lat": 49.229519,
+    "stop_lon": -123.012298
+  },
+  "PTSEN": {
+    "stop_id": "PTSEN",
+    "stop_name": "Patterson Station East Concourse North Entrance",
+    "stop_lat": 49.22963,
+    "stop_lon": -123.012182
+  },
+  "PTSWS": {
+    "stop_id": "PTSWS",
+    "stop_name": "Patterson Station West Concourse South Entrance",
+    "stop_lat": 49.229928,
+    "stop_lon": -123.013221
+  },
+  "PTSWN": {
+    "stop_id": "PTSWN",
+    "stop_name": "Patterson Station West Concourse North Entrance",
+    "stop_lat": 49.230073,
+    "stop_lon": -123.013186
+  },
+  "MTSEE": {
+    "stop_id": "MTSEE",
+    "stop_name": "Metrotown Station East Concourse Entrance",
+    "stop_lat": 49.225314,
+    "stop_lon": -123.002799
+  },
+  "MTSCE": {
+    "stop_id": "MTSCE",
+    "stop_name": "Metrotown Station Central Concourse Entrance",
+    "stop_lat": 49.225746,
+    "stop_lon": -123.003739
+  },
+  "MTSWE": {
+    "stop_id": "MTSWE",
+    "stop_name": "Metrotown Station West Concourse Entrance",
+    "stop_lat": 49.226323,
+    "stop_lon": -123.004994
+  },
+  "ROSET": {
+    "stop_id": "ROSET",
+    "stop_name": "Royal Oak Station Entrance",
+    "stop_lat": 49.219942,
+    "stop_lon": -122.988131
+  },
+  "EDSSE": {
+    "stop_id": "EDSSE",
+    "stop_name": "Edmonds Station South Entrance",
+    "stop_lat": 49.212157,
+    "stop_lon": -122.958994
+  },
+  "EDSNE": {
+    "stop_id": "EDSNE",
+    "stop_name": "Edmonds Station North Entrance",
+    "stop_lat": 49.212279,
+    "stop_lon": -122.958934
+  },
+  "TSSET": {
+    "stop_id": "TSSET",
+    "stop_name": "22nd Street Station Entrance",
+    "stop_lat": 49.199963,
+    "stop_lon": -122.949326
+  },
+  "NWSQD": {
+    "stop_id": "NWSQD",
+    "stop_name": "New Westminster Station Quayside Drive Entrance",
+    "stop_lat": 49.200493,
+    "stop_lon": -122.914153
+  },
+  "NWSBL": {
+    "stop_id": "NWSBL",
+    "stop_name": "New Westminster Station Bus Loop Entrance",
+    "stop_lat": 49.201169,
+    "stop_lon": -122.913092
+  },
+  "NWSES": {
+    "stop_id": "NWSES",
+    "stop_name": "New Westminster Station Eighth Street Entrance",
+    "stop_lat": 49.201628,
+    "stop_lon": -122.912254
+  },
+  "NWSCS": {
+    "stop_id": "NWSCS",
+    "stop_name": "New Westminster Station Carnavon Street Entrance",
+    "stop_lat": 49.201798,
+    "stop_lon": -122.91295
   },
   "COSCL": {
     "stop_id": "COSCL",
@@ -53495,155 +53549,59 @@
     "stop_lat": 49.204681,
     "stop_lon": -122.906681
   },
-  "NASET": {
-    "stop_id": "NASET",
-    "stop_name": "Nanaimo Station Entrance",
-    "stop_lat": 49.248394,
-    "stop_lon": -123.056085
+  "COSFS": {
+    "stop_id": "COSFS",
+    "stop_name": "Columbia Station Fourth Street Entrance",
+    "stop_lat": 49.204949,
+    "stop_lon": -122.905893
   },
-  "MTSEE": {
-    "stop_id": "MTSEE",
-    "stop_name": "Metrotown Station East Concourse Entrance",
-    "stop_lat": 49.225314,
-    "stop_lon": -123.002799
+  "SASKS": {
+    "stop_id": "SASKS",
+    "stop_name": "Sapperton South Entrance",
+    "stop_lat": 49.22411,
+    "stop_lon": -122.890011
   },
-  "YVRDE": {
-    "stop_id": "YVRDE",
-    "stop_name": "YVR-Airport Station Domestic Terminal entrance",
-    "stop_lat": 49.194265,
-    "stop_lon": -123.180486
+  "SASSS": {
+    "stop_id": "SASSS",
+    "stop_name": "Sapperton Station Spruce Street Entrance",
+    "stop_lat": 49.225282,
+    "stop_lon": -122.890425
   },
-  "BSSCE": {
-    "stop_id": "BSSCE",
-    "stop_name": "Bridgeport Station Entrance from Casino to concourse",
-    "stop_lat": 49.195527,
-    "stop_lon": -123.126524
+  "BDSET": {
+    "stop_id": "BDSET",
+    "stop_name": "Braid Station Entrance",
+    "stop_lat": 49.232958,
+    "stop_lon": -122.882858
   },
-  "GVSDS": {
-    "stop_id": "GVSDS",
-    "stop_name": "Granville Station Dunsmuir Street Entrance",
-    "stop_lat": 49.283293,
-    "stop_lon": -123.116089
+  "SRSWS": {
+    "stop_id": "SRSWS",
+    "stop_name": "Scott Road Station West Concourse South Entrance",
+    "stop_lat": 49.204238,
+    "stop_lon": -122.875369
   },
-  "CSSME": {
-    "stop_id": "CSSME",
-    "stop_name": "Capstan Station main Entrance",
-    "stop_lat": 49.189298,
-    "stop_lon": -123.13177
+  "SRSWN": {
+    "stop_id": "SRSWN",
+    "stop_name": "Scott Road Station West Concourse North Entrance",
+    "stop_lat": 49.204333,
+    "stop_lon": -122.875397
   },
-  "TSSET": {
-    "stop_id": "TSSET",
-    "stop_name": "22nd Street Station Entrance",
-    "stop_lat": 49.199963,
-    "stop_lon": -122.949326
+  "SRSWE": {
+    "stop_id": "SRSWE",
+    "stop_name": "Scott Road Station West Concourse Elevator Entrance",
+    "stop_lat": 49.204285,
+    "stop_lon": -122.874668
   },
-  "BWSNE": {
-    "stop_id": "BWSNE",
-    "stop_name": "Commercial-Broadway Station North Entrance",
-    "stop_lat": 49.262162,
-    "stop_lon": -123.069051
+  "SRSES": {
+    "stop_id": "SRSES",
+    "stop_name": "Scott Road Station East Concourse South Entrance",
+    "stop_lat": 49.204435,
+    "stop_lon": -122.873558
   },
-  "MTSCE": {
-    "stop_id": "MTSCE",
-    "stop_name": "Metrotown Station Central Concourse Entrance",
-    "stop_lat": 49.225746,
-    "stop_lon": -123.003739
-  },
-  "BSSMW": {
-    "stop_id": "BSSMW",
-    "stop_name": "Burrard Station Melville Street West Entrance",
-    "stop_lat": 49.285532,
-    "stop_lon": -123.120367
-  },
-  "BSSMN": {
-    "stop_id": "BSSMN",
-    "stop_name": "Burrard Station Melville Street North Entrance",
-    "stop_lat": 49.285635,
-    "stop_lon": -123.120418
-  },
-  "BSSME": {
-    "stop_id": "BSSME",
-    "stop_name": "Bridgeport Station main Entrance from Bus Loop",
-    "stop_lat": 49.195347,
-    "stop_lon": -123.126529
-  },
-  "ICSEE": {
-    "stop_id": "ICSEE",
-    "stop_name": "Inlet Centre Station East Concourse Entrance",
-    "stop_lat": 49.277052,
-    "stop_lon": -122.827207
-  },
-  "WFSGE": {
-    "stop_id": "WFSGE",
-    "stop_name": "Waterfront Station Canada Line elevator entrance at Granville and Hastings",
-    "stop_lat": 49.28525,
-    "stop_lon": -123.114192
-  },
-  "ASSME": {
-    "stop_id": "ASSME",
-    "stop_name": "Aberdeen Station main Entrance",
-    "stop_lat": 49.184148,
-    "stop_lon": -123.136321
-  },
-  "BRSLN": {
-    "stop_id": "BRSLN",
-    "stop_name": "Brentwood Town Centre Station Lougheed Highway North Entrance",
-    "stop_lat": 49.266589,
-    "stop_lon": -123.001946
-  },
-  "BRSLS": {
-    "stop_id": "BRSLS",
-    "stop_name": "Brentwood Town Centre Station Lougheed Highway South Entrance",
-    "stop_lat": 49.266219,
-    "stop_lon": -123.00195
-  },
-  "RBSSE": {
-    "stop_id": "RBSSE",
-    "stop_name": "Richmond-Brighouse Station main entrance",
-    "stop_lat": 49.167945,
-    "stop_lon": -123.136256
-  },
-  "CMSWE": {
-    "stop_id": "CMSWE",
-    "stop_name": "Commercial-Broadway Station West Entrance",
-    "stop_lat": 49.262905,
-    "stop_lon": -123.069494
-  },
-  "BQSEE": {
-    "stop_id": "BQSEE",
-    "stop_name": "Burquitlam Station East Entrance",
-    "stop_lat": 49.261455,
-    "stop_lon": -122.889633
-  },
-  "SCSSE": {
-    "stop_id": "SCSSE",
-    "stop_name": "Surrey Central Station South Concourse Entrance",
-    "stop_lat": 49.188931,
-    "stop_lon": -122.848296
-  },
-  "MMSWE": {
-    "stop_id": "MMSWE",
-    "stop_name": "Maple Meadows Station WCE entrance",
-    "stop_lat": 49.216551,
-    "stop_lon": -122.666105
-  },
-  "STSKP": {
-    "stop_id": "STSKP",
-    "stop_name": "Stadium-Chinatown Station Keefer Place Entrance",
-    "stop_lat": 49.27975,
-    "stop_lon": -123.109661
-  },
-  "WFSCG": {
-    "stop_id": "WFSCG",
-    "stop_name": "Waterfront Station Canada Line access at Granville and Hastings",
-    "stop_lat": 49.285084,
-    "stop_lon": -123.114359
-  },
-  "WFSCS": {
-    "stop_id": "WFSCS",
-    "stop_name": "Waterfront Station West Cordova Street Entrance",
-    "stop_lat": 49.285635,
-    "stop_lon": -123.111961
+  "SRSEN": {
+    "stop_id": "SRSEN",
+    "stop_name": "Scott Road Station East Concourse North Entrance",
+    "stop_lat": 49.204553,
+    "stop_lon": -122.873653
   },
   "GWSEE": {
     "stop_id": "GWSEE",
@@ -53651,53 +53609,29 @@
     "stop_lat": 49.199214,
     "stop_lon": -122.850637
   },
-  "CMSSE": {
-    "stop_id": "CMSSE",
-    "stop_name": "Commercial-Broadway Station South Entrance",
-    "stop_lat": 49.262511,
-    "stop_lon": -123.069245
-  },
-  "STSEB": {
-    "stop_id": "STSEB",
-    "stop_name": "Stadium-Chinatown Station Expo Boulevard Entrance",
-    "stop_lat": 49.278828,
-    "stop_lon": -123.108406
-  },
   "GWSCE": {
     "stop_id": "GWSCE",
     "stop_name": "Gateway Station Concourse Entrance",
     "stop_lat": 49.199293,
     "stop_lon": -122.850523
   },
-  "O41SE": {
-    "stop_id": "O41SE",
-    "stop_name": "Oakridge-41st Avenue Station entrance",
-    "stop_lat": 49.23324,
-    "stop_lon": -123.116656
+  "SCSSE": {
+    "stop_id": "SCSSE",
+    "stop_name": "Surrey Central Station South Concourse Entrance",
+    "stop_lat": 49.188931,
+    "stop_lon": -122.848296
   },
-  "TSSSE": {
-    "stop_id": "TSSSE",
-    "stop_name": "Templetone Station South Entrance",
-    "stop_lat": 49.196485,
-    "stop_lon": -123.146494
+  "SCSCE": {
+    "stop_id": "SCSCE",
+    "stop_name": "Surrey Central Station Central Concourse Entrance",
+    "stop_lat": 49.18928,
+    "stop_lon": -122.84794
   },
-  "LQSBE": {
-    "stop_id": "LQSBE",
-    "stop_name": "Lonsdale Quay Station SeaBus entrance",
-    "stop_lat": 49.310199,
-    "stop_lon": -123.083267
-  },
-  "ASSEM": {
-    "stop_id": "ASSEM",
-    "stop_name": "Aberdeen Station entrance from mall to platform",
-    "stop_lat": 49.183804,
-    "stop_lon": -123.136149
-  },
-  "PCSWE": {
-    "stop_id": "PCSWE",
-    "stop_name": "Port Coquitlam Station WCE entrance",
-    "stop_lat": 49.261459,
-    "stop_lon": -122.774136
+  "SCSNE": {
+    "stop_id": "SCSNE",
+    "stop_name": "Surrey Central Station North Concourse Entrance",
+    "stop_lat": 49.189977,
+    "stop_lon": -122.84797
   },
   "KGSEE": {
     "stop_id": "KGSEE",
@@ -53705,34 +53639,58 @@
     "stop_lat": 49.182664,
     "stop_lon": -122.844423
   },
-  "NWSES": {
-    "stop_id": "NWSES",
-    "stop_name": "New Westminster Station Eighth Street Entrance",
-    "stop_lat": 49.201628,
-    "stop_lon": -122.912254
+  "KGSWE": {
+    "stop_id": "KGSWE",
+    "stop_name": "King George Station West Entrance",
+    "stop_lat": 49.182814,
+    "stop_lon": -122.844791
   },
-  "LSSEE": {
-    "stop_id": "LSSEE",
-    "stop_name": "Langra-49th Avenue Station elevator entrance",
-    "stop_lat": 49.226353,
-    "stop_lon": -123.11614
+  "PCSWE": {
+    "stop_id": "PCSWE",
+    "stop_name": "Port Coquitlam Station WCE entrance",
+    "stop_lat": 49.261459,
+    "stop_lon": -122.774136
   },
-  "LSSEM": {
-    "stop_id": "LSSEM",
-    "stop_name": "Langra-49th Avenue Station entrance",
-    "stop_lat": 49.226287,
-    "stop_lon": -123.116092
+  "PMSWE": {
+    "stop_id": "PMSWE",
+    "stop_name": "Pitt Meadows Station WCE entrance",
+    "stop_lat": 49.225754,
+    "stop_lon": -122.688413
   },
-  "VCCEE": {
-    "stop_id": "VCCEE",
-    "stop_name": "Vancouver City Centre Station Elevator Entrance",
-    "stop_lat": 49.282348,
-    "stop_lon": -123.118685
+  "MMSWE": {
+    "stop_id": "MMSWE",
+    "stop_name": "Maple Meadows Station WCE entrance",
+    "stop_lat": 49.216551,
+    "stop_lon": -122.666105
   },
   "PHSWE": {
     "stop_id": "PHSWE",
     "stop_name": "Port Haney Station WCE entrance",
     "stop_lat": 49.212271,
     "stop_lon": -122.605195
+  },
+  "PHWEA": {
+    "stop_id": "PHWEA",
+    "stop_name": "Port Haney Station WCE accesible entrance",
+    "stop_lat": 49.212435,
+    "stop_lon": -122.605882
+  },
+  "MCSWE": {
+    "stop_id": "MCSWE",
+    "stop_name": "Mission City Station WCE entrance",
+    "stop_lat": 49.133877,
+    "stop_lon": -122.304724
+  },
+  "MCWEA": {
+    "stop_id": "MCWEA",
+    "stop_name": "Mission City Station WCE accessible entrance",
+    "stop_lat": 49.133804,
+    "stop_lon": -122.303997
+  },
+  "LQSBE": {
+    "stop_id": "LQSBE",
+    "stop_name": "Lonsdale Quay Station SeaBus entrance",
+    "stop_lat": 49.310199,
+    "stop_lon": -123.083267
   }
 }
