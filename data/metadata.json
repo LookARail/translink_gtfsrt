@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-05-01T08:43:28.216Z",
+  "generated_at": "2026-05-02T02:25:22.877Z",
   "source_url": "https://gtfs-static.translink.ca/gtfs/google_transit.zip",
   "stats": {
     "routes": 242,
     "trips": 63250,
-    "stops": 8949,
+    "stops": 8940,
     "shapes": 1060,
     "stop_times_trips": 63249,
     "stop_times_route_files": 240
