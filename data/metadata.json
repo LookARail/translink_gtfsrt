@@ -1,6 +1,25 @@
 {
   "generated_at": "2026-05-03T08:34:55.987Z",
   "source_url": "https://gtfs-static.translink.ca/gtfs/google_transit.zip",
+  "current": {
+    "start_date": "2026-04-20",
+    "end_date": "2026-05-14",
+    "folder": "."
+  },
+  "versions": [
+    {
+      "start_date": "2026-04-20",
+      "end_date": "2026-05-14",
+      "folder": ".",
+      "added_at": "2026-05-03T08:34:55.987Z"
+    },
+    {
+      "start_date": "2026-01-15",
+      "end_date": "2026-04-19",
+      "folder": "archive/2026-01-15",
+      "added_at": "2026-01-15T00:00:00.000Z"
+    }
+  ],
   "stats": {
     "routes": 242,
     "trips": 63250,
