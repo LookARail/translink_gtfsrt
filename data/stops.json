@@ -24872,8 +24872,8 @@
   "5705": {
     "stop_id": "5705",
     "stop_name": "Westbound 68 Ave @ 134 St",
-    "stop_lat": 49.126389,
-    "stop_lon": -122.851511
+    "stop_lat": 49.126408,
+    "stop_lon": -122.852446
   },
   "5706": {
     "stop_id": "5706",
@@ -25060,6 +25060,12 @@
     "stop_name": "Eastbound 68 Ave @ 132 St",
     "stop_lat": 49.126318,
     "stop_lon": -122.855592
+  },
+  "5740": {
+    "stop_id": "5740",
+    "stop_name": "Eastbound 68 Ave @ 134 St",
+    "stop_lat": 49.126244,
+    "stop_lon": -122.850313
   },
   "5741": {
     "stop_id": "5741",
@@ -38513,12 +38519,6 @@
     "stop_lat": 49.032348,
     "stop_lon": -122.863485
   },
-  "9066": {
-    "stop_id": "9066",
-    "stop_name": "Eastbound Panorama Dr @ 2900 Block",
-    "stop_lat": 49.298739,
-    "stop_lon": -122.803963
-  },
   "9067": {
     "stop_id": "9067",
     "stop_name": "Southbound Main St @ E 5th Ave",
@@ -39194,8 +39194,8 @@
   "9291": {
     "stop_id": "9291",
     "stop_name": "Westbound 64 Ave @ 204 St",
-    "stop_lat": 49.118955,
-    "stop_lon": -122.654693
+    "stop_lat": 49.118972,
+    "stop_lon": -122.654713
   },
   "9292": {
     "stop_id": "9292",
@@ -44576,8 +44576,8 @@
   "11126": {
     "stop_id": "11126",
     "stop_name": "Southbound 204 St @ 64 Ave",
-    "stop_lat": 49.118384,
-    "stop_lon": -122.65476
+    "stop_lat": 49.118329,
+    "stop_lon": -122.65485
   },
   "11127": {
     "stop_id": "11127",
@@ -47477,6 +47477,12 @@
     "stop_lat": 49.268608,
     "stop_lon": -123.003388
   },
+  "11880": {
+    "stop_id": "11880",
+    "stop_name": "Eastbound 86 Ave @ 200 St",
+    "stop_lat": 49.159084,
+    "stop_lon": -122.666944
+  },
   "11881": {
     "stop_id": "11881",
     "stop_name": "Northbound Burrard St @ Comox St",
@@ -48662,68 +48668,68 @@
   "12190": {
     "stop_id": "12190",
     "stop_name": "Southbound 208 St @ 84 Ave",
-    "stop_lat": 49.154979,
-    "stop_lon": -122.645866
+    "stop_lat": 49.155056,
+    "stop_lon": -122.645942
   },
   "12191": {
     "stop_id": "12191",
     "stop_name": "Southbound 208 St @ 82 Ave",
-    "stop_lat": 49.151252,
-    "stop_lon": -122.645845
+    "stop_lat": 49.151146,
+    "stop_lon": -122.645964
   },
   "12192": {
     "stop_id": "12192",
     "stop_name": "Southbound 208 St @ 80 Ave",
-    "stop_lat": 49.147446,
-    "stop_lon": -122.645839
+    "stop_lat": 49.147568,
+    "stop_lon": -122.645934
   },
   "12193": {
     "stop_id": "12193",
     "stop_name": "Southbound 208 St @ Willoughby Town Centre Dr",
-    "stop_lat": 49.145238,
-    "stop_lon": -122.645895
+    "stop_lat": 49.145064,
+    "stop_lon": -122.645975
   },
   "12194": {
     "stop_id": "12194",
     "stop_name": "Southbound 208 St @ 76 Ave",
-    "stop_lat": 49.141328,
-    "stop_lon": -122.646017
+    "stop_lat": 49.140337,
+    "stop_lon": -122.646064
   },
   "12195": {
     "stop_id": "12195",
     "stop_name": "Southbound 208 St @ 70 Ave",
-    "stop_lat": 49.129378,
-    "stop_lon": -122.646025
+    "stop_lat": 49.12931,
+    "stop_lon": -122.64616
   },
   "12196": {
     "stop_id": "12196",
     "stop_name": "Northbound Willowbrook Connector @ Mufford Cres",
-    "stop_lat": 49.119085,
-    "stop_lon": -122.653523
+    "stop_lat": 49.119135,
+    "stop_lon": -122.653351
   },
   "12197": {
     "stop_id": "12197",
     "stop_name": "Northbound 208 St @ 70 Ave",
-    "stop_lat": 49.130247,
-    "stop_lon": -122.645844
+    "stop_lat": 49.130107,
+    "stop_lon": -122.645726
   },
   "12198": {
     "stop_id": "12198",
     "stop_name": "Northbound 208 St @ 76 Ave",
-    "stop_lat": 49.140955,
-    "stop_lon": -122.645763
+    "stop_lat": 49.141268,
+    "stop_lon": -122.64566
   },
   "12199": {
     "stop_id": "12199",
     "stop_name": "Northbound 208 St @ Willoughby Town Centre Dr",
-    "stop_lat": 49.145812,
-    "stop_lon": -122.645691
+    "stop_lat": 49.145802,
+    "stop_lon": -122.64559
   },
   "12200": {
     "stop_id": "12200",
     "stop_name": "Northbound 208 St @ 80 Ave",
-    "stop_lat": 49.148689,
-    "stop_lon": -122.645576
+    "stop_lat": 49.14854,
+    "stop_lon": -122.645561
   },
   "12201": {
     "stop_id": "12201",
@@ -51752,8 +51758,8 @@
   "12961": {
     "stop_id": "12961",
     "stop_name": "Southbound Willowbrook Connector @ 68 Ave",
-    "stop_lat": 49.125742,
-    "stop_lon": -122.646133
+    "stop_lat": 49.125661,
+    "stop_lon": -122.646143
   },
   "12963": {
     "stop_id": "12963",
@@ -51848,8 +51854,8 @@
   "12988": {
     "stop_id": "12988",
     "stop_name": "Northbound Willowbrook Connector @ 66A Ave",
-    "stop_lat": 49.123215,
-    "stop_lon": -122.648178
+    "stop_lat": 49.123308,
+    "stop_lon": -122.647902
   },
   "12989": {
     "stop_id": "12989",
@@ -52136,8 +52142,8 @@
   "13057": {
     "stop_id": "13057",
     "stop_name": "Southbound Willowbrook Connector @ 66A Ave",
-    "stop_lat": 49.122691,
-    "stop_lon": -122.649148
+    "stop_lat": 49.122657,
+    "stop_lon": -122.649188
   },
   "13058": {
     "stop_id": "13058",
@@ -52220,8 +52226,8 @@
   "13076": {
     "stop_id": "13076",
     "stop_name": "Northbound 208 St @ 68 Ave",
-    "stop_lat": 49.126734,
-    "stop_lon": -122.645827
+    "stop_lat": 49.126468,
+    "stop_lon": -122.645815
   },
   "13077": {
     "stop_id": "13077",
@@ -52366,6 +52372,18 @@
     "stop_name": "Eastbound River Rd @ 8600 Blk",
     "stop_lat": 49.152011,
     "stop_lon": -122.985391
+  },
+  "13113": {
+    "stop_id": "13113",
+    "stop_name": "Southbound 208 St @ 72 Ave",
+    "stop_lat": 49.132937,
+    "stop_lon": -122.646156
+  },
+  "13114": {
+    "stop_id": "13114",
+    "stop_name": "Northbound 208 St @ 72 Ave",
+    "stop_lat": 49.134055,
+    "stop_lon": -122.645726
   },
   "13115": {
     "stop_id": "13115",
@@ -52522,6 +52540,12 @@
     "stop_name": "Eastbound W 41 Ave @ Maple St",
     "stop_lat": 49.234451,
     "stop_lon": -123.152442
+  },
+  "13152": {
+    "stop_id": "13152",
+    "stop_name": "Southbound 188 St @ 72 Ave",
+    "stop_lat": 49.133243,
+    "stop_lon": -122.70177
   },
   "99901": {
     "stop_id": "99901",
