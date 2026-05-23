@@ -793,7 +793,7 @@
   "6749": {
     "route_id": "6749",
     "route_short_name": "701",
-    "route_long_name": "Haney/Maple Ridge East/Coquitlam Station",
+    "route_long_name": "Coquitlam Central Station/Haney Place/Maple Ridge E",
     "route_type": 3,
     "route_color": ""
   },
@@ -1164,7 +1164,7 @@
   "11201": {
     "route_id": "11201",
     "route_short_name": "033",
-    "route_long_name": "16 & 33rd Avenue",
+    "route_long_name": "16th & 33rd Avenue",
     "route_type": 3,
     "route_color": ""
   },
@@ -1493,7 +1493,7 @@
   "31822": {
     "route_id": "31822",
     "route_short_name": "741",
-    "route_long_name": "Rock Ridge/Haney Place",
+    "route_long_name": "Anderson Creek/Haney Place",
     "route_type": 3,
     "route_color": ""
   },
@@ -1683,6 +1683,34 @@
     "route_id": "48855",
     "route_short_name": "338",
     "route_long_name": "East Fraser Heights/Guildford",
+    "route_type": 3,
+    "route_color": ""
+  },
+  "53124": {
+    "route_id": "53124",
+    "route_short_name": "001",
+    "route_long_name": "Downtown South Circulator",
+    "route_type": 3,
+    "route_color": ""
+  },
+  "53125": {
+    "route_id": "53125",
+    "route_short_name": "011",
+    "route_long_name": "29th Avenue Station/FIFA Fan Festival",
+    "route_type": 3,
+    "route_color": "5948AD"
+  },
+  "53126": {
+    "route_id": "53126",
+    "route_short_name": "736",
+    "route_long_name": "Haney Place/Golden Ears",
+    "route_type": 3,
+    "route_color": ""
+  },
+  "53127": {
+    "route_id": "53127",
+    "route_short_name": "566",
+    "route_long_name": "Campbell Valley/Langley Centre",
     "route_type": 3,
     "route_color": ""
   },
