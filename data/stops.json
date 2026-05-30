@@ -317,6 +317,12 @@
     "stop_lat": 49.270753,
     "stop_lon": -123.168323
   },
+  "108": {
+    "stop_id": "108",
+    "stop_name": "Southbound Macdonald St @ W 3rd Ave",
+    "stop_lat": 49.268877,
+    "stop_lon": -123.168389
+  },
   "109": {
     "stop_id": "109",
     "stop_name": "Southbound Macdonald St @ W 6th Ave",
@@ -3803,6 +3809,12 @@
     "stop_lat": 49.231163,
     "stop_lon": -123.155603
   },
+  "1030": {
+    "stop_id": "1030",
+    "stop_name": "Northbound West Blvd @ W 43 Ave",
+    "stop_lat": 49.232961,
+    "stop_lon": -123.155537
+  },
   "1032": {
     "stop_id": "1032",
     "stop_name": "Northbound West Blvd @ W 39 Ave",
@@ -5483,12 +5495,6 @@
     "stop_lat": 49.280427,
     "stop_lon": -123.097706
   },
-  "1379": {
-    "stop_id": "1379",
-    "stop_name": "Southbound Macdonald St @ W 4th Ave",
-    "stop_lat": 49.268064,
-    "stop_lon": -123.168411
-  },
   "1382": {
     "stop_id": "1382",
     "stop_name": "Eastbound W Pender St @ Nicola St",
@@ -5944,6 +5950,12 @@
     "stop_name": "Westbound Canada Way @ Willingdon Ave",
     "stop_lat": 49.254741,
     "stop_lon": -123.002423
+  },
+  "1470": {
+    "stop_id": "1470",
+    "stop_name": "Northbound Willingdon Ave @ Juneau St",
+    "stop_lat": 49.263385,
+    "stop_lon": -123.003062
   },
   "1472": {
     "stop_id": "1472",
@@ -8003,6 +8015,12 @@
     "stop_lat": 49.225896,
     "stop_lon": -123.112498
   },
+  "1986": {
+    "stop_id": "1986",
+    "stop_name": "Eastbound W 49 Ave @ Manitoba St",
+    "stop_lat": 49.22573,
+    "stop_lon": -123.107863
+  },
   "1987": {
     "stop_id": "1987",
     "stop_name": "Eastbound E 49 Ave @ Quebec St",
@@ -8278,6 +8296,12 @@
     "stop_name": "Westbound E 49 Ave @ Main St",
     "stop_lat": 49.225733,
     "stop_lon": -123.102131
+  },
+  "2051": {
+    "stop_id": "2051",
+    "stop_name": "Langara-49th Station @ Bay 2",
+    "stop_lat": 49.226178,
+    "stop_lon": -123.116035
   },
   "2052": {
     "stop_id": "2052",
@@ -8747,24 +8771,6 @@
     "stop_lat": 49.204776,
     "stop_lon": -122.971589
   },
-  "2176": {
-    "stop_id": "2176",
-    "stop_name": "Eastbound Marine Dr @ 14 Ave",
-    "stop_lat": 49.203253,
-    "stop_lon": -122.964955
-  },
-  "2177": {
-    "stop_id": "2177",
-    "stop_name": "Eastbound Marine Dr @ 6400 Block",
-    "stop_lat": 49.200219,
-    "stop_lon": -122.959752
-  },
-  "2178": {
-    "stop_id": "2178",
-    "stop_name": "Eastbound Marine Dr @ Trapp Rd",
-    "stop_lat": 49.198147,
-    "stop_lon": -122.954626
-  },
   "2179": {
     "stop_id": "2179",
     "stop_name": "Southbound Willard St @ 14 Ave",
@@ -8800,6 +8806,12 @@
     "stop_name": "Eastbound Trapp Rd @ Marine Dr",
     "stop_lat": 49.19795,
     "stop_lon": -122.953331
+  },
+  "2187": {
+    "stop_id": "2187",
+    "stop_name": "Eastbound 6th Ave @ 16 St",
+    "stop_lat": 49.204261,
+    "stop_lon": -122.936668
   },
   "2189": {
     "stop_id": "2189",
@@ -8843,29 +8855,17 @@
     "stop_lat": 49.200396,
     "stop_lon": -122.919036
   },
+  "2202": {
+    "stop_id": "2202",
+    "stop_name": "Westbound Marine Way @ 20 St",
+    "stop_lat": 49.199966,
+    "stop_lon": -122.946299
+  },
   "2203": {
     "stop_id": "2203",
     "stop_name": "22nd Street Station @ Bay 8",
     "stop_lat": 49.199522,
     "stop_lon": -122.950167
-  },
-  "2204": {
-    "stop_id": "2204",
-    "stop_name": "Westbound Marine Dr @ 7th Ave",
-    "stop_lat": 49.198195,
-    "stop_lon": -122.95361
-  },
-  "2205": {
-    "stop_id": "2205",
-    "stop_name": "Westbound Marine Dr @ 10 Ave",
-    "stop_lat": 49.201118,
-    "stop_lon": -122.960458
-  },
-  "2206": {
-    "stop_id": "2206",
-    "stop_name": "Westbound Marine Dr @ 14 Ave",
-    "stop_lat": 49.20329,
-    "stop_lon": -122.964735
   },
   "2207": {
     "stop_id": "2207",
@@ -15058,6 +15058,24 @@
     "stop_name": "Westbound 6th Ave @ 10 St",
     "stop_lat": 49.209492,
     "stop_lon": -122.927228
+  },
+  "3624": {
+    "stop_id": "3624",
+    "stop_name": "Westbound 6th Ave @ 12 St",
+    "stop_lat": 49.207443,
+    "stop_lon": -122.931048
+  },
+  "3626": {
+    "stop_id": "3626",
+    "stop_name": "Westbound 6th Ave @ 16 St",
+    "stop_lat": 49.203973,
+    "stop_lon": -122.937477
+  },
+  "3627": {
+    "stop_id": "3627",
+    "stop_name": "Westbound 6th Ave @ 18 St",
+    "stop_lat": 49.202436,
+    "stop_lon": -122.940325
   },
   "3628": {
     "stop_id": "3628",
@@ -25055,12 +25073,6 @@
     "stop_lat": 49.152151,
     "stop_lon": -122.856941
   },
-  "5733": {
-    "stop_id": "5733",
-    "stop_name": "Southbound 132 St @ 81 Ave",
-    "stop_lat": 49.149732,
-    "stop_lon": -122.856931
-  },
   "5734": {
     "stop_id": "5734",
     "stop_name": "Southbound 132 St @ 80 Ave",
@@ -25360,6 +25372,12 @@
     "stop_name": "Southbound 140 St @ 8300 Block",
     "stop_lat": 49.153486,
     "stop_lon": -122.834726
+  },
+  "5786": {
+    "stop_id": "5786",
+    "stop_name": "Southbound 140 St @ Bear Creek Dr",
+    "stop_lat": 49.150585,
+    "stop_lon": -122.834691
   },
   "5787": {
     "stop_id": "5787",
@@ -26021,6 +26039,12 @@
     "stop_lat": 49.19892,
     "stop_lon": -122.834564
   },
+  "5905": {
+    "stop_id": "5905",
+    "stop_name": "Westbound 108 Ave @ Whalley Blvd",
+    "stop_lat": 49.198936,
+    "stop_lon": -122.840815
+  },
   "5907": {
     "stop_id": "5907",
     "stop_name": "Southbound University Dr @ 105A Ave",
@@ -26566,6 +26590,12 @@
     "stop_name": "Southbound 144 St @ 64 Ave",
     "stop_lat": 49.118506,
     "stop_lon": -122.823407
+  },
+  "6020": {
+    "stop_id": "6020",
+    "stop_name": "Southbound 144 St @ 60 Ave",
+    "stop_lat": 49.111368,
+    "stop_lon": -122.823478
   },
   "6021": {
     "stop_id": "6021",
@@ -29254,12 +29284,6 @@
     "stop_name": "Eastbound Sea Island Way @ No. 3 Rd",
     "stop_lat": 49.190896,
     "stop_lon": -123.132234
-  },
-  "6622": {
-    "stop_id": "6622",
-    "stop_name": "Eastbound Capstan Way @ Garden City Rd",
-    "stop_lat": 49.187719,
-    "stop_lon": -123.125279
   },
   "6623": {
     "stop_id": "6623",
@@ -41393,6 +41417,12 @@
     "stop_lat": 49.118876,
     "stop_lon": -122.735903
   },
+  "10151": {
+    "stop_id": "10151",
+    "stop_name": "Eastbound 6th Ave @ 18 St",
+    "stop_lat": 49.202286,
+    "stop_lon": -122.940342
+  },
   "10159": {
     "stop_id": "10159",
     "stop_name": "Westbound 112 Ave @ 136 St",
@@ -46186,6 +46216,12 @@
     "stop_name": "Northbound Seymour St @ Dunsmuir St",
     "stop_lat": 49.282782,
     "stop_lon": -123.115596
+  },
+  "11537": {
+    "stop_id": "11537",
+    "stop_name": "Westbound W 49 Ave @ Manitoba St",
+    "stop_lat": 49.225913,
+    "stop_lon": -123.109025
   },
   "11538": {
     "stop_id": "11538",
@@ -51863,12 +51899,6 @@
     "stop_lat": 49.248879,
     "stop_lon": -123.109515
   },
-  "12990": {
-    "stop_id": "12990",
-    "stop_name": "Southbound 144 St @ 60 Ave",
-    "stop_lat": 49.112549,
-    "stop_lon": -122.823463
-  },
   "12991": {
     "stop_id": "12991",
     "stop_name": "Southbound Dragonfly Dr @ Cormorant Dr",
@@ -52487,29 +52517,11 @@
     "stop_lat": 49.281218,
     "stop_lon": -123.035862
   },
-  "13138": {
-    "stop_id": "13138",
-    "stop_name": "Northbound West Blvd @ W 42 Ave",
-    "stop_lat": 49.233431,
-    "stop_lon": -123.155538
-  },
   "13139": {
     "stop_id": "13139",
     "stop_name": "Northbound Golden Ears Parkway @ Golden Ears Beach",
     "stop_lat": 49.289663,
     "stop_lon": -122.491339
-  },
-  "13140": {
-    "stop_id": "13140",
-    "stop_name": "Westbound E 49th Ave @ Quebec St",
-    "stop_lat": 49.225771,
-    "stop_lon": -123.10345
-  },
-  "13141": {
-    "stop_id": "13141",
-    "stop_name": "Westbound W 49 Ave @ Cambie St",
-    "stop_lat": 49.226222,
-    "stop_lon": -123.117145
   },
   "13142": {
     "stop_id": "13142",
@@ -52594,6 +52606,12 @@
     "stop_name": "Westbound Fraser Hwy @ 188 St",
     "stop_lat": 49.123547,
     "stop_lon": -122.701139
+  },
+  "13158": {
+    "stop_id": "13158",
+    "stop_name": "Westbound E Broadway @ Nootka St",
+    "stop_lat": 49.262008,
+    "stop_lon": -123.040647
   },
   "99901": {
     "stop_id": "99901",

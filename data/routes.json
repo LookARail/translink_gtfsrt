@@ -1691,7 +1691,7 @@
     "route_short_name": "001",
     "route_long_name": "Downtown South Circulator",
     "route_type": 3,
-    "route_color": ""
+    "route_color": "5948AD"
   },
   "53125": {
     "route_id": "53125",
