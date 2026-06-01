@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-31T09:03:25.804Z",
+  "generated_at": "2026-06-01T09:50:32.517Z",
   "source_url": "https://gtfs-static.translink.ca/gtfs/google_transit.zip",
   "current": {
     "start_date": "2026-04-20",
@@ -186,6 +186,12 @@
       "end_date": "2026-09-06",
       "folder": ".",
       "added_at": "2026-05-31T09:03:25.785Z"
+    },
+    {
+      "start_date": "2026-04-20",
+      "end_date": "2026-09-06",
+      "folder": ".",
+      "added_at": "2026-06-01T09:50:32.255Z"
     }
   ],
   "stats": {
@@ -195,7 +201,7 @@
     "shapes": 2146,
     "stop_times_trips": 134675,
     "stop_times_route_files": 245,
-    "total_versions": 30
+    "total_versions": 31
   },
   "stop_times_files": {
     "6612": "stop-times-route-6612.json",
