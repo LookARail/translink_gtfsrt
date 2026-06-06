@@ -629,12 +629,6 @@
     "stop_lat": 49.281944,
     "stop_lon": -123.115253
   },
-  "193": {
-    "stop_id": "193",
-    "stop_name": "Westbound Robson St @ Granville St",
-    "stop_lat": 49.28128,
-    "stop_lon": -123.119551
-  },
   "195": {
     "stop_id": "195",
     "stop_name": "Westbound W 41 Ave @ Oak St",
@@ -707,11 +701,11 @@
     "stop_lat": 49.253467,
     "stop_lon": -123.138804
   },
-  "213": {
-    "stop_id": "213",
-    "stop_name": "Northbound Granville St @ W 16 Ave",
-    "stop_lat": 49.257367,
-    "stop_lon": -123.138663
+  "215": {
+    "stop_id": "215",
+    "stop_name": "Northbound Granville St @ W 12 Ave",
+    "stop_lat": 49.261157,
+    "stop_lon": -123.13852
   },
   "218": {
     "stop_id": "218",
@@ -1865,11 +1859,11 @@
     "stop_lat": 49.263732,
     "stop_lon": -123.140158
   },
-  "548": {
-    "stop_id": "548",
-    "stop_name": "Southbound Granville St @ W 13 Ave",
-    "stop_lat": 49.259524,
-    "stop_lon": -123.138834
+  "549": {
+    "stop_id": "549",
+    "stop_name": "Southbound Granville St @ W 15 Ave",
+    "stop_lat": 49.257667,
+    "stop_lon": -123.138899
   },
   "550": {
     "stop_id": "550",
@@ -3557,12 +3551,6 @@
     "stop_lat": 49.281035,
     "stop_lon": -123.046243
   },
-  "959": {
-    "stop_id": "959",
-    "stop_name": "Eastbound E Hastings St @ Renfrew St",
-    "stop_lat": 49.281012,
-    "stop_lon": -123.043299
-  },
   "960": {
     "stop_id": "960",
     "stop_name": "Eastbound E Hastings St @ Lillooet St",
@@ -3604,12 +3592,6 @@
     "stop_name": "Westbound E Hastings St @ Windermere St",
     "stop_lat": 49.281219,
     "stop_lon": -123.036936
-  },
-  "968": {
-    "stop_id": "968",
-    "stop_name": "Westbound E Hastings St @ Renfrew St",
-    "stop_lat": 49.281229,
-    "stop_lon": -123.044631
   },
   "969": {
     "stop_id": "969",
@@ -3869,12 +3851,6 @@
     "stop_lat": 49.257604,
     "stop_lon": -123.152846
   },
-  "1046": {
-    "stop_id": "1046",
-    "stop_name": "Southbound Renfrew St @ E Hastings St",
-    "stop_lat": 49.280776,
-    "stop_lon": -123.044219
-  },
   "1047": {
     "stop_id": "1047",
     "stop_name": "Southbound Renfrew St @ E Georgia St",
@@ -3917,11 +3893,11 @@
     "stop_lat": 49.265468,
     "stop_lon": -123.044419
   },
-  "1054": {
-    "stop_id": "1054",
-    "stop_name": "Southbound Renfrew St @ E 8th Ave",
-    "stop_lat": 49.262644,
-    "stop_lon": -123.044459
+  "1055": {
+    "stop_id": "1055",
+    "stop_name": "Southbound Renfrew St @ E Broadway",
+    "stop_lat": 49.261461,
+    "stop_lon": -123.04446
   },
   "1057": {
     "stop_id": "1057",
@@ -4546,6 +4522,12 @@
     "stop_name": "Westbound Kingsway @ Inman Ave",
     "stop_lat": 49.232908,
     "stop_lon": -123.016178
+  },
+  "1180": {
+    "stop_id": "1180",
+    "stop_name": "Westbound Kingsway @ Boundary Rd",
+    "stop_lat": 49.232527,
+    "stop_lon": -123.022197
   },
   "1181": {
     "stop_id": "1181",
@@ -6167,6 +6149,12 @@
     "stop_lat": 49.248992,
     "stop_lon": -123.121874
   },
+  "1525": {
+    "stop_id": "1525",
+    "stop_name": "King Edward Station @ Bay 3 -",
+    "stop_lat": 49.248866,
+    "stop_lon": -123.114707
+  },
   "1530": {
     "stop_id": "1530",
     "stop_name": "Eastbound E King Edward Ave @ Main St",
@@ -7241,12 +7229,6 @@
     "stop_lat": 49.276981,
     "stop_lon": -123.023311
   },
-  "1760": {
-    "stop_id": "1760",
-    "stop_name": "Northbound Cassiar Connector @ 100 Block",
-    "stop_lat": 49.283253,
-    "stop_lon": -123.031278
-  },
   "1763": {
     "stop_id": "1763",
     "stop_name": "Northbound Mountain Hwy @ Crown St",
@@ -7522,12 +7504,6 @@
     "stop_name": "Northbound Clarendon St @ E 37 Ave",
     "stop_lat": 49.237621,
     "stop_lon": -123.055365
-  },
-  "1831": {
-    "stop_id": "1831",
-    "stop_name": "Eastbound E 29 Ave @ Slocan St",
-    "stop_lat": 49.244554,
-    "stop_lon": -123.04908
   },
   "1832": {
     "stop_id": "1832",
@@ -7829,12 +7805,6 @@
     "stop_lat": 49.234701,
     "stop_lon": -123.190529
   },
-  "1904": {
-    "stop_id": "1904",
-    "stop_name": "Eastbound W 41 Ave @ Highbury St",
-    "stop_lat": 49.234704,
-    "stop_lon": -123.187956
-  },
   "1906": {
     "stop_id": "1906",
     "stop_name": "Westbound E 41 Ave @ Wales St",
@@ -7846,12 +7816,6 @@
     "stop_name": "Dunbar Loop @ Bay 5",
     "stop_lat": 49.234831,
     "stop_lon": -123.185966
-  },
-  "1908": {
-    "stop_id": "1908",
-    "stop_name": "Westbound W 41 Ave @ Olympic St",
-    "stop_lat": 49.234831,
-    "stop_lon": -123.190048
   },
   "1909": {
     "stop_id": "1909",
@@ -7901,12 +7865,6 @@
     "stop_lat": 49.268549,
     "stop_lon": -123.145798
   },
-  "1961": {
-    "stop_id": "1961",
-    "stop_name": "Southbound Dunbar St @ W 43 Ave",
-    "stop_lat": 49.232611,
-    "stop_lon": -123.18547
-  },
   "1962": {
     "stop_id": "1962",
     "stop_name": "Southbound Dunbar St @ SW Marine Dr",
@@ -7937,12 +7895,6 @@
     "stop_lat": 49.227223,
     "stop_lon": -123.164688
   },
-  "1969": {
-    "stop_id": "1969",
-    "stop_name": "Eastbound W 49 Ave @ Balsam St",
-    "stop_lat": 49.227171,
-    "stop_lon": -123.160812
-  },
   "1970": {
     "stop_id": "1970",
     "stop_name": "Eastbound W 49 Ave @ Yew St",
@@ -7955,35 +7907,11 @@
     "stop_lat": 49.227103,
     "stop_lon": -123.15547
   },
-  "1972": {
-    "stop_id": "1972",
-    "stop_name": "Eastbound W 49 Ave @ East Blvd",
-    "stop_lat": 49.227085,
-    "stop_lon": -123.153974
-  },
   "1973": {
     "stop_id": "1973",
     "stop_name": "Eastbound W 49 Ave @ Maple St",
     "stop_lat": 49.227063,
     "stop_lon": -123.151905
-  },
-  "1974": {
-    "stop_id": "1974",
-    "stop_name": "Eastbound W 49 Ave @ Angus Dr",
-    "stop_lat": 49.22701,
-    "stop_lon": -123.147554
-  },
-  "1975": {
-    "stop_id": "1975",
-    "stop_name": "Eastbound W 49 Ave @ Marguerite St",
-    "stop_lat": 49.226972,
-    "stop_lon": -123.144546
-  },
-  "1976": {
-    "stop_id": "1976",
-    "stop_name": "Eastbound W 49 Ave @ Churchill St",
-    "stop_lat": 49.22692,
-    "stop_lon": -123.141217
   },
   "1977": {
     "stop_id": "1977",
@@ -8051,12 +7979,6 @@
     "stop_lat": 49.225406,
     "stop_lon": -123.090264
   },
-  "1993": {
-    "stop_id": "1993",
-    "stop_name": "Eastbound E 49 Ave @ Prince Albert St",
-    "stop_lat": 49.225373,
-    "stop_lon": -123.08761
-  },
   "1994": {
     "stop_id": "1994",
     "stop_name": "Eastbound E 49 Ave @ Windsor St",
@@ -8075,35 +7997,17 @@
     "stop_lat": 49.225208,
     "stop_lon": -123.076725
   },
-  "1997": {
-    "stop_id": "1997",
-    "stop_name": "Eastbound E 49 Ave @ Dumfries St",
-    "stop_lat": 49.225193,
-    "stop_lon": -123.074083
-  },
   "1998": {
     "stop_id": "1998",
     "stop_name": "Eastbound E 49 Ave @ Argyle St",
     "stop_lat": 49.225164,
     "stop_lon": -123.071276
   },
-  "1999": {
-    "stop_id": "1999",
-    "stop_name": "Eastbound E 49 Ave @ Commercial St",
-    "stop_lat": 49.22514,
-    "stop_lon": -123.068504
-  },
   "2000": {
     "stop_id": "2000",
     "stop_name": "Eastbound E 49 Ave @ Victoria Dr",
     "stop_lat": 49.225106,
     "stop_lon": -123.065263
-  },
-  "2001": {
-    "stop_id": "2001",
-    "stop_name": "Eastbound E 49 Ave @ Gladstone St",
-    "stop_lat": 49.225035,
-    "stop_lon": -123.061875
   },
   "2002": {
     "stop_id": "2002",
@@ -8219,23 +8123,11 @@
     "stop_lat": 49.225118,
     "stop_lon": -123.05961
   },
-  "2034": {
-    "stop_id": "2034",
-    "stop_name": "Westbound E 49 Ave @ Gladstone St",
-    "stop_lat": 49.225187,
-    "stop_lon": -123.06295
-  },
   "2035": {
     "stop_id": "2035",
     "stop_name": "Westbound E 49 Ave @ Victoria Dr",
     "stop_lat": 49.225238,
     "stop_lon": -123.065364
-  },
-  "2036": {
-    "stop_id": "2036",
-    "stop_name": "Westbound E 49 Ave @ Beatrice St",
-    "stop_lat": 49.225263,
-    "stop_lon": -123.067538
   },
   "2037": {
     "stop_id": "2037",
@@ -8260,12 +8152,6 @@
     "stop_name": "Westbound E 49 Ave @ Inverness St",
     "stop_lat": 49.225407,
     "stop_lon": -123.080565
-  },
-  "2041": {
-    "stop_id": "2041",
-    "stop_name": "Westbound E 49 Ave @ Elgin St",
-    "stop_lat": 49.225453,
-    "stop_lon": -123.083275
   },
   "2042": {
     "stop_id": "2042",
@@ -8339,12 +8225,6 @@
     "stop_lat": 49.226981,
     "stop_lon": -123.138278
   },
-  "2059": {
-    "stop_id": "2059",
-    "stop_name": "Westbound W 49 Ave @ Adera St",
-    "stop_lat": 49.227081,
-    "stop_lon": -123.144091
-  },
   "2060": {
     "stop_id": "2060",
     "stop_name": "Westbound W 49 Ave @ Wiltshire St",
@@ -8392,12 +8272,6 @@
     "stop_name": "Northbound Dunbar St @ SW Marine Dr",
     "stop_lat": 49.231041,
     "stop_lon": -123.185323
-  },
-  "2071": {
-    "stop_id": "2071",
-    "stop_name": "Northbound Dunbar St @ W 43 Ave",
-    "stop_lat": 49.233182,
-    "stop_lon": -123.18528
   },
   "2074": {
     "stop_id": "2074",
@@ -8591,18 +8465,6 @@
     "stop_lat": 49.192064,
     "stop_lon": -123.153009
   },
-  "2134": {
-    "stop_id": "2134",
-    "stop_name": "Eastbound Miller Rd @ Templeton St",
-    "stop_lat": 49.192044,
-    "stop_lon": -123.148208
-  },
-  "2135": {
-    "stop_id": "2135",
-    "stop_name": "Eastbound Miller Rd @ 7000 Block",
-    "stop_lat": 49.192028,
-    "stop_lon": -123.145729
-  },
   "2137": {
     "stop_id": "2137",
     "stop_name": "Northbound Granville St @ W 71 Ave",
@@ -8752,12 +8614,6 @@
     "stop_name": "Eastbound Marine Dr @ Royal Oak Ave",
     "stop_lat": 49.206681,
     "stop_lon": -122.988226
-  },
-  "2173": {
-    "stop_id": "2173",
-    "stop_name": "Eastbound Marine Dr @ 5500 Block",
-    "stop_lat": 49.206193,
-    "stop_lon": -122.983643
   },
   "2174": {
     "stop_id": "2174",
@@ -11230,12 +11086,6 @@
     "stop_name": "Kootenay Loop @ Bay 7",
     "stop_lat": 49.281204,
     "stop_lon": -123.025393
-  },
-  "2743": {
-    "stop_id": "2743",
-    "stop_name": "Westbound E Hastings St @ Renfrew St",
-    "stop_lat": 49.281222,
-    "stop_lon": -123.043342
   },
   "2744": {
     "stop_id": "2744",
@@ -39518,8 +39368,8 @@
   "9359": {
     "stop_id": "9359",
     "stop_name": "Bus Stop @ Pne Coliseum Loop",
-    "stop_lat": 49.285674,
-    "stop_lon": -123.043632
+    "stop_lat": 49.285844,
+    "stop_lon": -123.043725
   },
   "9360": {
     "stop_id": "9360",
@@ -45911,24 +45761,6 @@
     "stop_lat": 49.263948,
     "stop_lon": -123.154464
   },
-  "11426": {
-    "stop_id": "11426",
-    "stop_name": "Northbound Granville St @ Drake St",
-    "stop_lat": 49.276487,
-    "stop_lon": -123.127092
-  },
-  "11427": {
-    "stop_id": "11427",
-    "stop_name": "Southbound Granville St @ Davie St",
-    "stop_lat": 49.276786,
-    "stop_lon": -123.126905
-  },
-  "11429": {
-    "stop_id": "11429",
-    "stop_name": "Northbound Granville St @ Davie St",
-    "stop_lat": 49.277584,
-    "stop_lon": -123.125372
-  },
   "11431": {
     "stop_id": "11431",
     "stop_name": "Southbound Bonson Rd @ Aljumaili Ave",
@@ -46012,18 +45844,6 @@
     "stop_name": "Northbound Burrard St @ W 3rd Ave",
     "stop_lat": 49.269179,
     "stop_lon": -123.145428
-  },
-  "11474": {
-    "stop_id": "11474",
-    "stop_name": "Southbound Granville St @ Nelson St",
-    "stop_lat": 49.278877,
-    "stop_lon": -123.123712
-  },
-  "11475": {
-    "stop_id": "11475",
-    "stop_name": "Southbound Granville St @ Drake St",
-    "stop_lat": 49.275854,
-    "stop_lon": -123.128375
   },
   "11477": {
     "stop_id": "11477",
@@ -46157,24 +45977,6 @@
     "stop_lat": 49.215947,
     "stop_lon": -123.090881
   },
-  "11522": {
-    "stop_id": "11522",
-    "stop_name": "Southbound Granville St @ Robson St",
-    "stop_lat": 49.28172,
-    "stop_lon": -123.119373
-  },
-  "11523": {
-    "stop_id": "11523",
-    "stop_name": "Northbound Granville St @ W Georgia St",
-    "stop_lat": 49.282317,
-    "stop_lon": -123.118291
-  },
-  "11524": {
-    "stop_id": "11524",
-    "stop_name": "Southbound Granville St @ W Georgia St",
-    "stop_lat": 49.28266,
-    "stop_lon": -123.117951
-  },
   "11525": {
     "stop_id": "11525",
     "stop_name": "Northbound Granville St @ Dunsmuir St",
@@ -46187,23 +45989,11 @@
     "stop_lat": 49.284039,
     "stop_lon": -123.115939
   },
-  "11527": {
-    "stop_id": "11527",
-    "stop_name": "Northbound Granville St @ W Hastings St",
-    "stop_lat": 49.285553,
-    "stop_lon": -123.11335
-  },
   "11529": {
     "stop_id": "11529",
     "stop_name": "Westbound E Pender St @ Main St",
     "stop_lat": 49.280462,
     "stop_lon": -123.100263
-  },
-  "11532": {
-    "stop_id": "11532",
-    "stop_name": "Northbound Granville St @ Smithe St",
-    "stop_lat": 49.280784,
-    "stop_lon": -123.120537
   },
   "11534": {
     "stop_id": "11534",
@@ -46570,12 +46360,6 @@
     "stop_name": "Westbound Canada Way @ Smith Ave",
     "stop_lat": 49.254781,
     "stop_lon": -123.021521
-  },
-  "11616": {
-    "stop_id": "11616",
-    "stop_name": "Northbound Granville St @ W Pender St",
-    "stop_lat": 49.284493,
-    "stop_lon": -123.114994
   },
   "11618": {
     "stop_id": "11618",
@@ -48587,18 +48371,6 @@
     "stop_lat": 49.055535,
     "stop_lon": -122.485973
   },
-  "12151": {
-    "stop_id": "12151",
-    "stop_name": "Eastbound 72 Ave @ 146 St",
-    "stop_lat": 49.133677,
-    "stop_lon": -122.817341
-  },
-  "12152": {
-    "stop_id": "12152",
-    "stop_name": "Westbound 72 Ave @ 146 St",
-    "stop_lat": 49.133818,
-    "stop_lon": -122.818323
-  },
   "12153": {
     "stop_id": "12153",
     "stop_name": "Eastbound Westminster Hwy @ McMillan Way",
@@ -49012,6 +48784,12 @@
     "stop_name": "Inlet Centre Station @ Bay 1",
     "stop_lat": 49.277967,
     "stop_lon": -122.827449
+  },
+  "12242": {
+    "stop_id": "12242",
+    "stop_name": "Inlet Centre Station @ Bay 2",
+    "stop_lat": 49.278102,
+    "stop_lon": -122.827095
   },
   "12243": {
     "stop_id": "12243",
@@ -49666,12 +49444,6 @@
     "stop_name": "Westbound 32 Ave @ 156A St",
     "stop_lat": 49.060184,
     "stop_lon": -122.790767
-  },
-  "12392": {
-    "stop_id": "12392",
-    "stop_name": "Westbound Elmbridge Way @ Gilbert Rd",
-    "stop_lat": 49.172872,
-    "stop_lon": -123.147329
   },
   "12393": {
     "stop_id": "12393",
@@ -51425,18 +51197,6 @@
     "stop_lat": 49.281161,
     "stop_lon": -123.094737
   },
-  "12866": {
-    "stop_id": "12866",
-    "stop_name": "King Edward Station @ Bay 3",
-    "stop_lat": 49.248902,
-    "stop_lon": -123.11671
-  },
-  "12867": {
-    "stop_id": "12867",
-    "stop_name": "Northbound Renfrew St @ E Pender St",
-    "stop_lat": 49.280062,
-    "stop_lon": -123.04396
-  },
   "12868": {
     "stop_id": "12868",
     "stop_name": "Westbound E 22 Ave @ Cassiar St",
@@ -51839,12 +51599,6 @@
     "stop_lat": 49.234819,
     "stop_lon": -123.115931
   },
-  "12976": {
-    "stop_id": "12976",
-    "stop_name": "Northbound Granville St @ W 13th Ave",
-    "stop_lat": 49.260169,
-    "stop_lon": -123.138574
-  },
   "12977": {
     "stop_id": "12977",
     "stop_name": "Southbound Oak St @ W 37 Ave",
@@ -51958,6 +51712,18 @@
     "stop_name": "Westbound Blue Heron Way @ Swan Rd",
     "stop_lat": 49.037751,
     "stop_lon": -123.09534
+  },
+  "13002": {
+    "stop_id": "13002",
+    "stop_name": "Southbound Granville St @ W 12 Ave",
+    "stop_lat": 49.260427,
+    "stop_lon": -123.138826
+  },
+  "13003": {
+    "stop_id": "13003",
+    "stop_name": "Northbound Granville St @ W 15 Ave",
+    "stop_lat": 49.258305,
+    "stop_lon": -123.138643
   },
   "13004": {
     "stop_id": "13004",
@@ -52403,12 +52169,6 @@
     "stop_lat": 49.134055,
     "stop_lon": -122.645726
   },
-  "13115": {
-    "stop_id": "13115",
-    "stop_name": "Southbound Granville St @ W 16th Ave",
-    "stop_lat": 49.256727,
-    "stop_lon": -123.138963
-  },
   "13116": {
     "stop_id": "13116",
     "stop_name": "Eastbound Murray St @ Electronic Ave",
@@ -52568,8 +52328,8 @@
   "13150": {
     "stop_id": "13150",
     "stop_name": "Eastbound E Hastings St @ Kaslo St",
-    "stop_lat": 49.281216,
-    "stop_lon": -123.02709
+    "stop_lat": 49.281028,
+    "stop_lon": -123.045582
   },
   "13151": {
     "stop_id": "13151",
@@ -52612,6 +52372,30 @@
     "stop_name": "Westbound E Broadway @ Nootka St",
     "stop_lat": 49.262008,
     "stop_lon": -123.040647
+  },
+  "13161": {
+    "stop_id": "13161",
+    "stop_name": "Eastbound W 49th Ave @ Wiltshire St",
+    "stop_lat": 49.226993,
+    "stop_lon": -123.145738
+  },
+  "13162": {
+    "stop_id": "13162",
+    "stop_name": "Renfrew Station @ Bay 5",
+    "stop_lat": 49.259875,
+    "stop_lon": -123.044121
+  },
+  "13163": {
+    "stop_id": "13163",
+    "stop_name": "Westbound Marine Drive @ Macpherson Ave",
+    "stop_lat": 49.206571,
+    "stop_lon": -122.986146
+  },
+  "13164": {
+    "stop_id": "13164",
+    "stop_name": "Eastbound Marine Dr @ Royal Oak Ave",
+    "stop_lat": 49.206362,
+    "stop_lon": -122.985274
   },
   "99901": {
     "stop_id": "99901",
