@@ -1,14 +1,7 @@
 {
-  "generated_at": "2026-06-17T09:37:15.916Z",
+  "generated_at": "2026-06-18T09:31:00.685Z",
   "source_url": "https://gtfs-static.translink.ca/gtfs/google_transit.zip",
   "versions": [
-    {
-      "start_date": "2026-01-15",
-      "end_date": "2026-04-19",
-      "folder": "archive/2026-01-15",
-      "added_at": "2026-01-15T00:00:00.000Z",
-      "feed_version": null
-    },
     {
       "start_date": "2026-04-20",
       "end_date": "2026-06-07",
@@ -39,14 +32,21 @@
     },
     {
       "start_date": "2026-06-17",
+      "end_date": "2026-06-17",
+      "folder": "archive/2026-06-17__26JUN_20260615",
+      "added_at": "2026-06-17T09:37:15.908Z",
+      "feed_version": "26JUN_20260615"
+    },
+    {
+      "start_date": "2026-06-18",
       "end_date": "2026-09-06",
       "folder": ".",
-      "added_at": "2026-06-17T09:37:15.908Z",
+      "added_at": "2026-06-18T09:31:00.674Z",
       "feed_version": "26JUN_20260615"
     }
   ],
   "current": {
-    "start_date": "2026-06-17",
+    "start_date": "2026-06-18",
     "end_date": "2026-09-06",
     "folder": ".",
     "feed_version": "26JUN_20260615"
