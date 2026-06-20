@@ -3559,13 +3559,13 @@
   },
   "960": {
     "stop_id": "960",
-    "stop_name": "Eastbound E Hastings St @ Lillooet St",
+    "stop_name": "Eastbound E Hastings St @ Lillooet St Bay 5",
     "stop_lat": 49.281041,
     "stop_lon": -123.038301
   },
   "961": {
     "stop_id": "961",
-    "stop_name": "Eastbound E Hastings St @ Windermere St",
+    "stop_name": "Eastbound E Hastings St @ Windermere St Bay 4",
     "stop_lat": 49.281027,
     "stop_lon": -123.035464
   },
@@ -3595,7 +3595,7 @@
   },
   "967": {
     "stop_id": "967",
-    "stop_name": "Westbound E Hastings St @ Windermere St",
+    "stop_name": "Westbound E Hastings St @ Windermere St Bay 2",
     "stop_lat": 49.281219,
     "stop_lon": -123.036936
   },
@@ -4172,8 +4172,8 @@
   "1105": {
     "stop_id": "1105",
     "stop_name": "Southbound Arbutus St @ W 16 Ave",
-    "stop_lat": 49.256461,
-    "stop_lon": -123.153044
+    "stop_lat": 49.257003,
+    "stop_lon": -123.153073
   },
   "1106": {
     "stop_id": "1106",
@@ -7258,12 +7258,6 @@
     "stop_name": "Northbound Lillooet Rd @ 1000 Block",
     "stop_lat": 49.315778,
     "stop_lon": -123.023902
-  },
-  "1767": {
-    "stop_id": "1767",
-    "stop_name": "Eastbound Purcell Way @ Lillooet Rd",
-    "stop_lat": 49.317472,
-    "stop_lon": -123.023477
   },
   "1769": {
     "stop_id": "1769",
@@ -18749,12 +18743,6 @@
     "stop_lat": 49.313087,
     "stop_lon": -123.024687
   },
-  "4473": {
-    "stop_id": "4473",
-    "stop_name": "Purcell Way @ Capilano University",
-    "stop_lat": 49.317678,
-    "stop_lon": -123.020749
-  },
   "4476": {
     "stop_id": "4476",
     "stop_name": "Northbound Chesterfield Ave @ W 1st St",
@@ -24335,6 +24323,12 @@
     "stop_lat": 49.129721,
     "stop_lon": -122.867682
   },
+  "5627": {
+    "stop_id": "5627",
+    "stop_name": "Northbound 128 St @ 7100 Block",
+    "stop_lat": 49.132255,
+    "stop_lon": -122.867696
+  },
   "5628": {
     "stop_id": "5628",
     "stop_name": "Northbound 128 St @ 72 Ave",
@@ -28642,18 +28636,6 @@
     "stop_name": "Eastbound Westminster Hwy @ Lynas Lane",
     "stop_lat": 49.170035,
     "stop_lon": -123.163971
-  },
-  "6505": {
-    "stop_id": "6505",
-    "stop_name": "Eastbound Westminster Hwy @ No. 2 Rd",
-    "stop_lat": 49.170023,
-    "stop_lon": -123.158091
-  },
-  "6506": {
-    "stop_id": "6506",
-    "stop_name": "Eastbound Westminster Hwy @ 6300 Block",
-    "stop_lat": 49.170032,
-    "stop_lon": -123.156096
   },
   "6507": {
     "stop_id": "6507",
@@ -44585,12 +44567,6 @@
     "stop_lat": 49.119321,
     "stop_lon": -122.87962
   },
-  "11144": {
-    "stop_id": "11144",
-    "stop_name": "Southbound Tsawwassen Dr N @ 1900 Block",
-    "stop_lat": 49.039498,
-    "stop_lon": -123.098063
-  },
   "11145": {
     "stop_id": "11145",
     "stop_name": "Eastbound 64 Ave @ 148 St",
@@ -44632,12 +44608,6 @@
     "stop_name": "Eastbound 64 Ave @ 138 St",
     "stop_lat": 49.118962,
     "stop_lon": -122.839451
-  },
-  "11154": {
-    "stop_id": "11154",
-    "stop_name": "Northbound Tsawwassen Dr N @ 1900 Block",
-    "stop_lat": 49.039553,
-    "stop_lon": -123.097914
   },
   "11155": {
     "stop_id": "11155",
@@ -47164,6 +47134,12 @@
     "stop_name": "Westbound 56 Ave @ 128 St",
     "stop_lat": 49.104514,
     "stop_lon": -122.867495
+  },
+  "11839": {
+    "stop_id": "11839",
+    "stop_name": "Northbound 192 St @ 28 Ave",
+    "stop_lat": 49.053205,
+    "stop_lon": -122.691408
   },
   "11840": {
     "stop_id": "11840",
@@ -51113,12 +51089,6 @@
     "stop_lat": 49.279237,
     "stop_lon": -123.113568
   },
-  "12837": {
-    "stop_id": "12837",
-    "stop_name": "Westbound Purcell Way @ Skeena Rd",
-    "stop_lat": 49.317665,
-    "stop_lon": -123.021073
-  },
   "12838": {
     "stop_id": "12838",
     "stop_name": "Westbound Broadway @ Camrose Dr",
@@ -51238,6 +51208,12 @@
     "stop_name": "Westbound SE Marine Dr @ Knight St",
     "stop_lat": 49.211235,
     "stop_lon": -123.077603
+  },
+  "12877": {
+    "stop_id": "12877",
+    "stop_name": "Eastbound W Broadway @ Manitoba St",
+    "stop_lat": 49.262959,
+    "stop_lon": -123.106429
   },
   "12878": {
     "stop_id": "12878",
@@ -52297,7 +52273,7 @@
   },
   "13137": {
     "stop_id": "13137",
-    "stop_name": "Westbound E Hastings St @ Windermere St",
+    "stop_name": "Westbound E Hastings St @ Windermere St Bay 3",
     "stop_lat": 49.281218,
     "stop_lon": -123.035862
   },
@@ -52327,7 +52303,7 @@
   },
   "13148": {
     "stop_id": "13148",
-    "stop_name": "Westbound E Hastings St @ Lillooet St",
+    "stop_name": "Westbound E Hastings St @ Lillooet St Bay1",
     "stop_lat": 49.281228,
     "stop_lon": -123.03863
   },
@@ -52414,6 +52390,12 @@
     "stop_name": "Eastbound W 41st Ave @ Angus Dr",
     "stop_lat": 49.234375,
     "stop_lon": -123.147318
+  },
+  "13167": {
+    "stop_id": "13167",
+    "stop_name": "Southbound 200 St @ 24 Ave",
+    "stop_lat": 49.046062,
+    "stop_lon": -122.669506
   },
   "99901": {
     "stop_id": "99901",
