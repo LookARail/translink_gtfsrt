@@ -1496,8 +1496,8 @@
   "419": {
     "stop_id": "419",
     "stop_name": "Southbound Cambie St @ W 16 Ave",
-    "stop_lat": 49.256555,
-    "stop_lon": -123.115252
+    "stop_lat": 49.25653,
+    "stop_lon": -123.115226
   },
   "420": {
     "stop_id": "420",
@@ -1960,12 +1960,6 @@
     "stop_name": "Westbound W 10 Ave @ Wallace St",
     "stop_lat": 49.263644,
     "stop_lon": -123.191417
-  },
-  "577": {
-    "stop_id": "577",
-    "stop_name": "Westbound W 10 Ave @ Crown St",
-    "stop_lat": 49.263683,
-    "stop_lon": -123.194468
   },
   "578": {
     "stop_id": "578",
@@ -3526,6 +3520,12 @@
     "stop_name": "Eastbound E Hastings St @ Victoria Dr",
     "stop_lat": 49.28108,
     "stop_lon": -123.064979
+  },
+  "953": {
+    "stop_id": "953",
+    "stop_name": "Eastbound E Hastings St @ Lakewood Dr",
+    "stop_lat": 49.281063,
+    "stop_lon": -123.061265
   },
   "954": {
     "stop_id": "954",
@@ -22193,18 +22193,6 @@
     "stop_lat": 49.201973,
     "stop_lon": -122.812702
   },
-  "5176": {
-    "stop_id": "5176",
-    "stop_name": "Eastbound 108 Ave @ 148 St",
-    "stop_lat": 49.198633,
-    "stop_lon": -122.811885
-  },
-  "5177": {
-    "stop_id": "5177",
-    "stop_name": "Eastbound 108 Ave @ Oriole Dr",
-    "stop_lat": 49.198663,
-    "stop_lon": -122.80821
-  },
   "5178": {
     "stop_id": "5178",
     "stop_name": "Southbound 150 St @ 107A Ave",
@@ -35417,17 +35405,17 @@
     "stop_lat": 49.176661,
     "stop_lon": -122.443681
   },
-  "7927": {
-    "stop_id": "7927",
-    "stop_name": "(Westbound Lougheed Hwy In 27500-Block Area) (Flag)",
-    "stop_lat": 49.174357,
-    "stop_lon": -122.455018
+  "7926": {
+    "stop_id": "7926",
+    "stop_name": "Southbound 280 St @ Lougheed Hwy",
+    "stop_lat": 49.174293,
+    "stop_lon": -122.444274
   },
-  "7928": {
-    "stop_id": "7928",
-    "stop_name": "(Westbound Lougheed Hwy In 27300-Block Area) (Flag)",
-    "stop_lat": 49.174256,
-    "stop_lon": -122.46567
+  "7929": {
+    "stop_id": "7929",
+    "stop_name": "Eastbound River Rd @ 27000 Blk",
+    "stop_lat": 49.173732,
+    "stop_lon": -122.474227
   },
   "7930": {
     "stop_id": "7930",
@@ -51209,12 +51197,6 @@
     "stop_lat": 49.211235,
     "stop_lon": -123.077603
   },
-  "12877": {
-    "stop_id": "12877",
-    "stop_name": "Eastbound W Broadway @ Manitoba St",
-    "stop_lat": 49.262959,
-    "stop_lon": -123.106429
-  },
   "12878": {
     "stop_id": "12878",
     "stop_name": "Eastbound Queens Ave @ 2500 Block",
@@ -52396,6 +52378,18 @@
     "stop_name": "Southbound 200 St @ 24 Ave",
     "stop_lat": 49.046062,
     "stop_lon": -122.669506
+  },
+  "13168": {
+    "stop_id": "13168",
+    "stop_name": "Eastbound W Broadway @ Manitoba St",
+    "stop_lat": 49.262968,
+    "stop_lon": -123.10637
+  },
+  "13169": {
+    "stop_id": "13169",
+    "stop_name": "Eastbound Keith Rd @ 3rd St",
+    "stop_lat": 49.331303,
+    "stop_lon": -123.121844
   },
   "99901": {
     "stop_id": "99901",
