@@ -1502,8 +1502,8 @@
   "420": {
     "stop_id": "420",
     "stop_name": "Southbound Cambie St @ W 18 Ave",
-    "stop_lat": 49.254674,
-    "stop_lon": -123.115282
+    "stop_lat": 49.254595,
+    "stop_lon": -123.115271
   },
   "422": {
     "stop_id": "422",
@@ -19133,18 +19133,6 @@
     "stop_lat": 49.327044,
     "stop_lon": -123.089561
   },
-  "4566": {
-    "stop_id": "4566",
-    "stop_name": "Southbound Bewicke Ave @ Larson Rd",
-    "stop_lat": 49.323806,
-    "stop_lon": -123.091252
-  },
-  "4567": {
-    "stop_id": "4567",
-    "stop_name": "Southbound Bewicke Ave @ W 14 St",
-    "stop_lat": 49.320882,
-    "stop_lon": -123.091428
-  },
   "4568": {
     "stop_id": "4568",
     "stop_name": "Lonsdale Quay @ Bay 8",
@@ -21143,6 +21131,12 @@
     "stop_lat": 49.177055,
     "stop_lon": -122.906137
   },
+  "4960": {
+    "stop_id": "4960",
+    "stop_name": "Eastbound 96 Ave @ 118 St",
+    "stop_lat": 49.177071,
+    "stop_lon": -122.895023
+  },
   "4961": {
     "stop_id": "4961",
     "stop_name": "Eastbound 96 Ave @ Scott Rd",
@@ -21196,6 +21190,18 @@
     "stop_name": "Southbound Scott Rd @ 99 Ave",
     "stop_lat": 49.181778,
     "stop_lon": -122.890406
+  },
+  "4972": {
+    "stop_id": "4972",
+    "stop_name": "Westbound 96 Ave @ Scott Rd",
+    "stop_lat": 49.177231,
+    "stop_lon": -122.890965
+  },
+  "4973": {
+    "stop_id": "4973",
+    "stop_name": "Westbound 96 Ave @ 117B St",
+    "stop_lat": 49.177194,
+    "stop_lon": -122.896846
   },
   "4974": {
     "stop_id": "4974",
@@ -21304,12 +21310,6 @@
     "stop_name": "Northbound 122 St @ 7300 Block",
     "stop_lat": 49.135461,
     "stop_lon": -122.884518
-  },
-  "4997": {
-    "stop_id": "4997",
-    "stop_name": "Westbound Grace Rd @ 117 St",
-    "stop_lat": 49.185497,
-    "stop_lon": -122.899756
   },
   "5000": {
     "stop_id": "5000",
@@ -21766,18 +21766,6 @@
     "stop_name": "Eastbound River Rd @ Knudson Rd",
     "stop_lat": 49.176518,
     "stop_lon": -122.913647
-  },
-  "5089": {
-    "stop_id": "5089",
-    "stop_name": "Eastbound River Rd @ Regal Dr",
-    "stop_lat": 49.179002,
-    "stop_lon": -122.910786
-  },
-  "5090": {
-    "stop_id": "5090",
-    "stop_name": "Eastbound River Rd @ Millar Rd",
-    "stop_lat": 49.18249,
-    "stop_lon": -122.906627
   },
   "5093": {
     "stop_id": "5093",
@@ -32045,6 +32033,12 @@
     "stop_lat": 49.106169,
     "stop_lon": -122.654028
   },
+  "7209": {
+    "stop_id": "7209",
+    "stop_name": "Westbound Fraser Hwy @ 195A St",
+    "stop_lat": 49.11457,
+    "stop_lon": -122.681102
+  },
   "7210": {
     "stop_id": "7210",
     "stop_name": "Westbound Fraser Hwy @ 194 St",
@@ -34507,9 +34501,9 @@
   },
   "7721": {
     "stop_id": "7721",
-    "stop_name": "Westbound Dewdney Trunk Rd @ 207 St",
-    "stop_lat": 49.220592,
-    "stop_lon": -122.648351
+    "stop_name": "Westbound Dewdney Trunk Rd @ 206B St",
+    "stop_lat": 49.220591,
+    "stop_lon": -122.649362
   },
   "7722": {
     "stop_id": "7722",
@@ -34897,7 +34891,7 @@
   },
   "7801": {
     "stop_id": "7801",
-    "stop_name": "Northbound 203 St @ Hammond Rd",
+    "stop_name": "Northbound 203 St @ Maple Cres",
     "stop_lat": 49.212636,
     "stop_lon": -122.658437
   },
@@ -38206,12 +38200,6 @@
     "stop_name": "Eastbound Fraser Hwy @ Fleetwood Way",
     "stop_lat": 49.164444,
     "stop_lon": -122.797527
-  },
-  "9020": {
-    "stop_id": "9020",
-    "stop_name": "Westbound Fraser Hwy @ 196A St",
-    "stop_lat": 49.112799,
-    "stop_lon": -122.67703
   },
   "9021": {
     "stop_id": "9021",
@@ -43595,24 +43583,6 @@
     "stop_lat": 49.189504,
     "stop_lon": -122.890486
   },
-  "10897": {
-    "stop_id": "10897",
-    "stop_name": "Westbound 103A Ave @ Scott Rd",
-    "stop_lat": 49.190713,
-    "stop_lon": -122.891384
-  },
-  "10898": {
-    "stop_id": "10898",
-    "stop_name": "Eastbound 103A Ave @ Grace Rd",
-    "stop_lat": 49.190547,
-    "stop_lon": -122.892576
-  },
-  "10899": {
-    "stop_id": "10899",
-    "stop_name": "Westbound Grace Rd @ 103A Ave",
-    "stop_lat": 49.190228,
-    "stop_lon": -122.893989
-  },
   "10901": {
     "stop_id": "10901",
     "stop_name": "Southbound Cranley Dr @ Suffolk Rd",
@@ -43648,12 +43618,6 @@
     "stop_name": "Eastbound Anderson Rd @ Buswell St",
     "stop_lat": 49.163406,
     "stop_lon": -123.134015
-  },
-  "10918": {
-    "stop_id": "10918",
-    "stop_name": "Eastbound Grace Rd @ 10200 Block",
-    "stop_lat": 49.188663,
-    "stop_lon": -122.895558
   },
   "10921": {
     "stop_id": "10921",
@@ -44368,12 +44332,6 @@
     "stop_name": "Eastbound Government St @ Halston Court",
     "stop_lat": 49.247775,
     "stop_lon": -122.906818
-  },
-  "11107": {
-    "stop_id": "11107",
-    "stop_name": "Westbound Grace Rd @ 10200 Block",
-    "stop_lat": 49.188432,
-    "stop_lon": -122.896174
   },
   "11108": {
     "stop_id": "11108",
@@ -47387,12 +47345,6 @@
     "stop_lat": 49.216205,
     "stop_lon": -122.923443
   },
-  "11910": {
-    "stop_id": "11910",
-    "stop_name": "Westbound 72 Ave @ 148 St",
-    "stop_lat": 49.133833,
-    "stop_lon": -122.812711
-  },
   "11911": {
     "stop_id": "11911",
     "stop_name": "Eastbound 8th Ave @ 8th St",
@@ -47974,12 +47926,6 @@
     "stop_name": "Eastbound Cornwall Ave @ Trafalgar St",
     "stop_lat": 49.272658,
     "stop_lon": -123.163937
-  },
-  "12041": {
-    "stop_id": "12041",
-    "stop_name": "Westbound River Rd @ Millar Rd",
-    "stop_lat": 49.182283,
-    "stop_lon": -122.907299
   },
   "12043": {
     "stop_id": "12043",
@@ -50063,12 +50009,6 @@
     "stop_lat": 49.177158,
     "stop_lon": -123.118934
   },
-  "12534": {
-    "stop_id": "12534",
-    "stop_name": "Eastbound Grace Rd @ 117 St",
-    "stop_lat": 49.186221,
-    "stop_lon": -122.898602
-  },
   "12535": {
     "stop_id": "12535",
     "stop_name": "Northbound Seymour St @ Robson St",
@@ -50914,12 +50854,6 @@
     "stop_name": "Southbound Scott Rd @ 96 Ave",
     "stop_lat": 49.176272,
     "stop_lon": -122.890321
-  },
-  "12795": {
-    "stop_id": "12795",
-    "stop_name": "Eastbound 92 Ave @ 116 St",
-    "stop_lat": 49.170503,
-    "stop_lon": -122.900402
   },
   "12798": {
     "stop_id": "12798",
@@ -52285,9 +52219,9 @@
   },
   "13148": {
     "stop_id": "13148",
-    "stop_name": "Westbound E Hastings St @ Lillooet St Bay1",
-    "stop_lat": 49.281228,
-    "stop_lon": -123.03863
+    "stop_name": "Westbound E Hastings St @ Lillooet St Bay 1",
+    "stop_lat": 49.281234,
+    "stop_lon": -123.040983
   },
   "13149": {
     "stop_id": "13149",
