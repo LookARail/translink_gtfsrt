@@ -8669,6 +8669,12 @@
     "stop_lat": 49.204261,
     "stop_lon": -122.936668
   },
+  "2188": {
+    "stop_id": "2188",
+    "stop_name": "Eastbound 6th Ave @ 14 St",
+    "stop_lat": 49.206089,
+    "stop_lon": -122.933296
+  },
   "2189": {
     "stop_id": "2189",
     "stop_name": "Southbound 12 St @ 6th Ave",
@@ -8963,36 +8969,6 @@
     "stop_lat": 49.219331,
     "stop_lon": -122.927943
   },
-  "2269": {
-    "stop_id": "2269",
-    "stop_name": "Northbound 6th St @ 12 Ave",
-    "stop_lat": 49.220388,
-    "stop_lon": -122.92926
-  },
-  "2270": {
-    "stop_id": "2270",
-    "stop_name": "Eastbound 12 Ave @ 4th St",
-    "stop_lat": 49.222137,
-    "stop_lon": -122.926344
-  },
-  "2273": {
-    "stop_id": "2273",
-    "stop_name": "Northbound 1st St @ 12 Ave",
-    "stop_lat": 49.225189,
-    "stop_lon": -122.921643
-  },
-  "2274": {
-    "stop_id": "2274",
-    "stop_name": "Northbound 1st St @ 14 Ave",
-    "stop_lat": 49.226684,
-    "stop_lon": -122.923529
-  },
-  "2275": {
-    "stop_id": "2275",
-    "stop_name": "Northbound 1st St @ 16 Ave",
-    "stop_lat": 49.227758,
-    "stop_lon": -122.92489
-  },
   "2276": {
     "stop_id": "2276",
     "stop_name": "Eastbound 16 Ave @ Newcombe St",
@@ -9160,30 +9136,6 @@
     "stop_name": "Westbound 16 Ave @ Newcombe St",
     "stop_lat": 49.229189,
     "stop_lon": -122.923124
-  },
-  "2315": {
-    "stop_id": "2315",
-    "stop_name": "Southbound 1st St @ 16 Ave",
-    "stop_lat": 49.227572,
-    "stop_lon": -122.924862
-  },
-  "2316": {
-    "stop_id": "2316",
-    "stop_name": "Southbound 1st St @ 14 Ave",
-    "stop_lat": 49.226146,
-    "stop_lon": -122.923065
-  },
-  "2318": {
-    "stop_id": "2318",
-    "stop_name": "Westbound 12 Ave @ 2nd St",
-    "stop_lat": 49.223714,
-    "stop_lon": -122.923659
-  },
-  "2319": {
-    "stop_id": "2319",
-    "stop_name": "Westbound 12 Ave @ 4th St",
-    "stop_lat": 49.221906,
-    "stop_lon": -122.927
   },
   "2320": {
     "stop_id": "2320",
@@ -9506,8 +9458,8 @@
   "2399": {
     "stop_id": "2399",
     "stop_name": "Eastbound Ewen Ave @ Howes St",
-    "stop_lat": 49.186414,
-    "stop_lon": -122.946218
+    "stop_lat": 49.186416,
+    "stop_lon": -122.94608
   },
   "2400": {
     "stop_id": "2400",
@@ -11399,12 +11351,6 @@
     "stop_lat": 49.269681,
     "stop_lon": -123.01408
   },
-  "2828": {
-    "stop_id": "2828",
-    "stop_name": "Northbound Gilmore Ave @ Kitchener St",
-    "stop_lat": 49.272367,
-    "stop_lon": -123.014164
-  },
   "2829": {
     "stop_id": "2829",
     "stop_name": "Northbound Gilmore Ave @ William St",
@@ -12542,14 +12488,14 @@
   "3068": {
     "stop_id": "3068",
     "stop_name": "Westbound Dewdney Trunk Rd @ Lougheed Hwy",
-    "stop_lat": 49.269433,
-    "stop_lon": -122.799514
+    "stop_lat": 49.269802,
+    "stop_lon": -122.799989
   },
   "3069": {
     "stop_id": "3069",
     "stop_name": "Westbound Dewdney Trunk Rd @ Norman Ave",
-    "stop_lat": 49.27171,
-    "stop_lon": -122.802424
+    "stop_lat": 49.271261,
+    "stop_lon": -122.801819
   },
   "3070": {
     "stop_id": "3070",
@@ -12584,8 +12530,8 @@
   "3075": {
     "stop_id": "3075",
     "stop_name": "Southbound Mariner Way @ 2900 Block",
-    "stop_lat": 49.26599,
-    "stop_lon": -122.814324
+    "stop_lat": 49.266018,
+    "stop_lon": -122.814309
   },
   "3076": {
     "stop_id": "3076",
@@ -14914,6 +14860,12 @@
     "stop_name": "Westbound 6th Ave @ 12 St",
     "stop_lat": 49.207443,
     "stop_lon": -122.931048
+  },
+  "3625": {
+    "stop_id": "3625",
+    "stop_name": "Westbound 6th Ave @ 14 St",
+    "stop_lat": 49.205881,
+    "stop_lon": -122.933942
   },
   "3626": {
     "stop_id": "3626",
@@ -22919,6 +22871,12 @@
     "stop_lat": 49.116898,
     "stop_lon": -122.677645
   },
+  "5337": {
+    "stop_id": "5337",
+    "stop_name": "Southbound Willowbrook Dr @ 19600 Block",
+    "stop_lat": 49.115186,
+    "stop_lon": -122.678809
+  },
   "5338": {
     "stop_id": "5338",
     "stop_name": "Eastbound Fraser Hwy @ Langley Bypass",
@@ -23140,6 +23098,12 @@
     "stop_name": "Westbound Fraser Hwy @ Langley Bypass",
     "stop_lat": 49.111568,
     "stop_lon": -122.674447
+  },
+  "5379": {
+    "stop_id": "5379",
+    "stop_name": "Northbound Willowbrook Dr @ 19600 Block",
+    "stop_lat": 49.11512,
+    "stop_lon": -122.678529
   },
   "5380": {
     "stop_id": "5380",
@@ -31601,6 +31565,12 @@
     "stop_lat": 49.116703,
     "stop_lon": -122.676459
   },
+  "7101": {
+    "stop_id": "7101",
+    "stop_name": "Eastbound Willowbrook Dr @ 198 St",
+    "stop_lat": 49.116678,
+    "stop_lon": -122.672775
+  },
   "7102": {
     "stop_id": "7102",
     "stop_name": "Northbound 200 St @ 64 Ave",
@@ -31786,6 +31756,18 @@
     "stop_name": "Southbound 200 St @ Willoughby Way",
     "stop_lat": 49.122272,
     "stop_lon": -122.668694
+  },
+  "7144": {
+    "stop_id": "7144",
+    "stop_name": "Westbound Willowbrook Dr @ 200 St",
+    "stop_lat": 49.116843,
+    "stop_lon": -122.67023
+  },
+  "7145": {
+    "stop_id": "7145",
+    "stop_name": "Westbound Willowbrook Dr @ 198 St",
+    "stop_lat": 49.116872,
+    "stop_lon": -122.673698
   },
   "7146": {
     "stop_id": "7146",
@@ -38243,12 +38225,6 @@
     "stop_lat": 49.162894,
     "stop_lon": -122.902251
   },
-  "9028": {
-    "stop_id": "9028",
-    "stop_name": "Westbound 12 Ave @ 1st St",
-    "stop_lat": 49.2247,
-    "stop_lon": -122.921822
-  },
   "9029": {
     "stop_id": "9029",
     "stop_name": "Westbound Cliveden Ave @ Carleton Court",
@@ -42269,11 +42245,29 @@
     "stop_lat": 49.271678,
     "stop_lon": -123.248276
   },
+  "10467": {
+    "stop_id": "10467",
+    "stop_name": "Eastbound Pacific Blvd @ Marinaside Cres",
+    "stop_lat": 49.274253,
+    "stop_lon": -123.114389
+  },
   "10468": {
     "stop_id": "10468",
     "stop_name": "Yaletown-Roundhouse Station @ Bay 4",
     "stop_lat": 49.274071,
     "stop_lon": -123.12074
+  },
+  "10470": {
+    "stop_id": "10470",
+    "stop_name": "Eastbound Keefer Place @ Taylor St",
+    "stop_lat": 49.27934,
+    "stop_lon": -123.1057
+  },
+  "10478": {
+    "stop_id": "10478",
+    "stop_name": "Eastbound National Ave @ Quebec St",
+    "stop_lat": 49.27487,
+    "stop_lon": -123.101464
   },
   "10479": {
     "stop_id": "10479",
@@ -42281,11 +42275,23 @@
     "stop_lat": 49.204888,
     "stop_lon": -122.95922
   },
+  "10480": {
+    "stop_id": "10480",
+    "stop_name": "Northbound Quebec St @ Terminal Ave",
+    "stop_lat": 49.273368,
+    "stop_lon": -123.101534
+  },
   "10481": {
     "stop_id": "10481",
     "stop_name": "Westbound W 4th Ave @ Blanca St",
     "stop_lat": 49.269195,
     "stop_lon": -123.215565
+  },
+  "10482": {
+    "stop_id": "10482",
+    "stop_name": "Northbound Quebec St @ National Ave",
+    "stop_lat": 49.275246,
+    "stop_lon": -123.101804
   },
   "10483": {
     "stop_id": "10483",
@@ -42322,6 +42328,18 @@
     "stop_name": "Eastbound 24 Ave @ 196 St",
     "stop_lat": 49.045605,
     "stop_lon": -122.679872
+  },
+  "10492": {
+    "stop_id": "10492",
+    "stop_name": "Northbound Pat Quinn Way @ Expo Blvd",
+    "stop_lat": 49.278392,
+    "stop_lon": -123.107518
+  },
+  "10513": {
+    "stop_id": "10513",
+    "stop_name": "Westbound Expo Blvd @ Nelson St",
+    "stop_lat": 49.274744,
+    "stop_lon": -123.11631
   },
   "10514": {
     "stop_id": "10514",
@@ -42484,12 +42502,6 @@
     "stop_name": "Eastbound 64 Ave @ 173A St",
     "stop_lat": 49.118718,
     "stop_lon": -122.741828
-  },
-  "10589": {
-    "stop_id": "10589",
-    "stop_name": "Northbound Cambie St @ W Georgia St",
-    "stop_lat": 49.279637,
-    "stop_lon": -123.112669
   },
   "10591": {
     "stop_id": "10591",
@@ -43958,8 +43970,8 @@
   "11023": {
     "stop_id": "11023",
     "stop_name": "Westbound W 16 Ave @ Arbutus St",
-    "stop_lat": 49.257372,
-    "stop_lon": -123.153431
+    "stop_lat": 49.257374,
+    "stop_lon": -123.153372
   },
   "11025": {
     "stop_id": "11025",
@@ -45857,6 +45869,12 @@
     "stop_lat": 49.202113,
     "stop_lon": -122.789933
   },
+  "11495": {
+    "stop_id": "11495",
+    "stop_name": "Westbound Expo Blvd @ Abbott St",
+    "stop_lat": 49.278791,
+    "stop_lon": -123.108015
+  },
   "11496": {
     "stop_id": "11496",
     "stop_name": "Eastbound Churchill St @ Athabaska St",
@@ -46709,12 +46727,6 @@
     "stop_lat": 49.008379,
     "stop_lon": -123.042847
   },
-  "11732": {
-    "stop_id": "11732",
-    "stop_name": "Eastbound 12 Ave @ 6th St",
-    "stop_lat": 49.220672,
-    "stop_lon": -122.929105
-  },
   "11734": {
     "stop_id": "11734",
     "stop_name": "Eastbound 24 Ave @ 154 St",
@@ -47327,12 +47339,6 @@
     "stop_lat": 49.215907,
     "stop_lon": -122.924286
   },
-  "11907": {
-    "stop_id": "11907",
-    "stop_name": "Eastbound 72 Ave @ 144 St",
-    "stop_lat": 49.133659,
-    "stop_lon": -122.822719
-  },
   "11908": {
     "stop_id": "11908",
     "stop_name": "Eastbound 72 Ave @ 148 St",
@@ -47362,12 +47368,6 @@
     "stop_name": "Northbound King George Blvd @ 58A Ave",
     "stop_lat": 49.108819,
     "stop_lon": -122.836312
-  },
-  "11919": {
-    "stop_id": "11919",
-    "stop_name": "Eastbound 12 Ave @ 2nd St",
-    "stop_lat": 49.223902,
-    "stop_lon": -122.92304
   },
   "11920": {
     "stop_id": "11920",
@@ -49373,6 +49373,12 @@
     "stop_lat": 49.060184,
     "stop_lon": -122.790767
   },
+  "12392": {
+    "stop_id": "12392",
+    "stop_name": "Westbound Elmbridge Way @ Gilbert Rd",
+    "stop_lat": 49.172872,
+    "stop_lon": -123.147329
+  },
   "12393": {
     "stop_id": "12393",
     "stop_name": "29th Avenue Station @ Bay 4",
@@ -50975,6 +50981,12 @@
     "stop_lat": 49.281141,
     "stop_lon": -123.115843
   },
+  "12824": {
+    "stop_id": "12824",
+    "stop_name": "Westbound 16 Ave @ 1st St",
+    "stop_lat": 49.227807,
+    "stop_lon": -122.925644
+  },
   "12826": {
     "stop_id": "12826",
     "stop_name": "Westbound Hastings St @ Willingdon Ave-",
@@ -51881,6 +51893,12 @@
     "stop_lat": 49.286155,
     "stop_lon": -123.12731
   },
+  "13066": {
+    "stop_id": "13066",
+    "stop_name": "Northbound Expo Blvd @ Quebec St",
+    "stop_lat": 49.276942,
+    "stop_lon": -123.102462
+  },
   "13067": {
     "stop_id": "13067",
     "stop_name": "Westbound 64 Ave @ 180 St",
@@ -52036,6 +52054,12 @@
     "stop_name": "Keith Rd @ Horseshoe Bay Ferry Terminal",
     "stop_lat": 49.373958,
     "stop_lon": -123.272897
+  },
+  "13102": {
+    "stop_id": "13102",
+    "stop_name": "Eastbound Keefer St @ Quebec St",
+    "stop_lat": 49.279168,
+    "stop_lon": -123.102858
   },
   "13103": {
     "stop_id": "13103",
