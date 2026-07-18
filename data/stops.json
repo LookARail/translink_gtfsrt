@@ -1001,6 +1001,12 @@
     "stop_lat": 49.234633,
     "stop_lon": -123.152449
   },
+  "292": {
+    "stop_id": "292",
+    "stop_name": "Westbound W 41 Ave @ West Blvd",
+    "stop_lat": 49.234649,
+    "stop_lon": -123.156193
+  },
   "293": {
     "stop_id": "293",
     "stop_name": "Westbound W 41 Ave @ Vine St",
@@ -3425,12 +3431,6 @@
     "stop_lat": 49.263212,
     "stop_lon": -123.109868
   },
-  "932": {
-    "stop_id": "932",
-    "stop_name": "Westbound W Broadway @ Ash St",
-    "stop_lat": 49.26336,
-    "stop_lon": -123.118098
-  },
   "933": {
     "stop_id": "933",
     "stop_name": "Westbound W Broadway @ Heather St",
@@ -3557,6 +3557,12 @@
     "stop_lat": 49.281035,
     "stop_lon": -123.046243
   },
+  "959": {
+    "stop_id": "959",
+    "stop_name": "Eastbound E Hastings St @ Renfrew St",
+    "stop_lat": 49.281012,
+    "stop_lon": -123.043299
+  },
   "960": {
     "stop_id": "960",
     "stop_name": "Eastbound E Hastings St @ Lillooet St Bay 5",
@@ -3598,6 +3604,12 @@
     "stop_name": "Westbound E Hastings St @ Windermere St Bay 2",
     "stop_lat": 49.281219,
     "stop_lon": -123.036936
+  },
+  "968": {
+    "stop_id": "968",
+    "stop_name": "Westbound E Hastings St @ Renfrew St",
+    "stop_lat": 49.281229,
+    "stop_lon": -123.044631
   },
   "969": {
     "stop_id": "969",
@@ -7247,6 +7259,12 @@
     "stop_lat": 49.276981,
     "stop_lon": -123.023311
   },
+  "1760": {
+    "stop_id": "1760",
+    "stop_name": "Northbound Cassiar Connector @ 100 Block",
+    "stop_lat": 49.283253,
+    "stop_lon": -123.031278
+  },
   "1763": {
     "stop_id": "1763",
     "stop_name": "Northbound Mountain Hwy @ Crown St",
@@ -7516,6 +7534,12 @@
     "stop_name": "Northbound Clarendon St @ E 37 Ave",
     "stop_lat": 49.237621,
     "stop_lon": -123.055365
+  },
+  "1831": {
+    "stop_id": "1831",
+    "stop_name": "Eastbound E 29 Ave @ Slocan St",
+    "stop_lat": 49.244554,
+    "stop_lon": -123.04908
   },
   "1832": {
     "stop_id": "1832",
@@ -8071,9 +8095,9 @@
   },
   "2015": {
     "stop_id": "2015",
-    "stop_name": "Northbound Willingdon Ave @ Mayberry St",
-    "stop_lat": 49.225697,
-    "stop_lon": -123.009541
+    "stop_name": "Northbound Willingdon Ave @ Maywood St",
+    "stop_lat": 49.224864,
+    "stop_lon": -123.010411
   },
   "2016": {
     "stop_id": "2016",
@@ -8968,24 +8992,6 @@
     "stop_name": "Northbound 6th St @ 10 Ave",
     "stop_lat": 49.219331,
     "stop_lon": -122.927943
-  },
-  "2276": {
-    "stop_id": "2276",
-    "stop_name": "Eastbound 16 Ave @ Newcombe St",
-    "stop_lat": 49.229404,
-    "stop_lon": -122.922439
-  },
-  "2277": {
-    "stop_id": "2277",
-    "stop_name": "Eastbound 16 Ave @ Wright St",
-    "stop_lat": 49.230667,
-    "stop_lon": -122.920126
-  },
-  "2278": {
-    "stop_id": "2278",
-    "stop_name": "Southbound Cumberland St @ 16 Ave",
-    "stop_lat": 49.231484,
-    "stop_lon": -122.917431
   },
   "2280": {
     "stop_id": "2280",
@@ -11038,6 +11044,12 @@
     "stop_name": "Kootenay Loop @ Bay 7",
     "stop_lat": 49.281204,
     "stop_lon": -123.025393
+  },
+  "2743": {
+    "stop_id": "2743",
+    "stop_name": "Westbound E Hastings St @ Renfrew St",
+    "stop_lat": 49.281222,
+    "stop_lon": -123.043342
   },
   "2744": {
     "stop_id": "2744",
@@ -15466,12 +15478,6 @@
     "stop_name": "Eastbound Wilson Ave @ Bury Ave",
     "stop_lat": 49.260801,
     "stop_lon": -122.784366
-  },
-  "3779": {
-    "stop_id": "3779",
-    "stop_name": "Port Coquitlam Station @ Bay 4",
-    "stop_lat": 49.261234,
-    "stop_lon": -122.774173
   },
   "3780": {
     "stop_id": "3780",
@@ -23639,12 +23645,6 @@
     "stop_lat": 49.140079,
     "stop_lon": -122.845817
   },
-  "5506": {
-    "stop_id": "5506",
-    "stop_name": "Southbound King George Blvd @ 73A Ave",
-    "stop_lat": 49.136796,
-    "stop_lon": -122.845797
-  },
   "5507": {
     "stop_id": "5507",
     "stop_name": "Eastbound 72 Ave @ King George Blvd",
@@ -28421,12 +28421,6 @@
     "stop_lat": 49.165047,
     "stop_lon": -122.798497
   },
-  "6478": {
-    "stop_id": "6478",
-    "stop_name": "Westbound Fraser Hwy @ 152 St",
-    "stop_lat": 49.166722,
-    "stop_lon": -122.802808
-  },
   "6479": {
     "stop_id": "6479",
     "stop_name": "Westbound Fraser Hwy @ 148 St",
@@ -29986,12 +29980,6 @@
     "stop_name": "Westbound Westminster Hwy @ 10500 Block",
     "stop_lat": 49.170264,
     "stop_lon": -123.107225
-  },
-  "6795": {
-    "stop_id": "6795",
-    "stop_name": "Westbound Westminster Hwy @ No. 4 Rd",
-    "stop_lat": 49.170277,
-    "stop_lon": -123.114676
   },
   "6796": {
     "stop_id": "6796",
@@ -34597,7 +34585,7 @@
   },
   "7748": {
     "stop_id": "7748",
-    "stop_name": "Eastbound Maple Cres @ 203 St",
+    "stop_name": "Eastbound Maple Cres @ 113B Ave",
     "stop_lat": 49.211514,
     "stop_lon": -122.658192
   },
@@ -35371,7 +35359,7 @@
   },
   "7922": {
     "stop_id": "7922",
-    "stop_name": "(Southbound 280 St In 9800-Block Area) (Flag)",
+    "stop_name": "Southbound 280 St @ 9800 Block",
     "stop_lat": 49.179936,
     "stop_lon": -122.444645
   },
@@ -44087,12 +44075,6 @@
     "stop_lat": 49.239843,
     "stop_lon": -123.059192
   },
-  "11049": {
-    "stop_id": "11049",
-    "stop_name": "Eastbound E 33 Ave @ Ontario St",
-    "stop_lat": 49.240505,
-    "stop_lon": -123.104966
-  },
   "11051": {
     "stop_id": "11051",
     "stop_name": "Eastbound E 33 Ave @ Nanaimo St",
@@ -44260,6 +44242,12 @@
     "stop_name": "Northbound 227 St @ 122 Ave",
     "stop_lat": 49.225156,
     "stop_lon": -122.593812
+  },
+  "11087": {
+    "stop_id": "11087",
+    "stop_name": "Westbound W Broadway @ Ash St",
+    "stop_lat": 49.263352,
+    "stop_lon": -123.116965
   },
   "11088": {
     "stop_id": "11088",
@@ -45497,23 +45485,11 @@
     "stop_lat": 49.226473,
     "stop_lon": -123.116241
   },
-  "11352": {
-    "stop_id": "11352",
-    "stop_name": "Broadway-City Hall Station @ Bay 2",
-    "stop_lat": 49.262826,
-    "stop_lon": -123.11464
-  },
   "11354": {
     "stop_id": "11354",
     "stop_name": "Oakridge-41st Ave Station  @ Bay 4",
     "stop_lat": 49.233712,
     "stop_lon": -123.117599
-  },
-  "11357": {
-    "stop_id": "11357",
-    "stop_name": "Broadway-City Hall Station @ Bay 1",
-    "stop_lat": 49.263107,
-    "stop_lon": -123.114283
   },
   "11361": {
     "stop_id": "11361",
@@ -46774,12 +46750,6 @@
     "stop_name": "Westbound 24 Ave @ 164 St",
     "stop_lat": 49.045695,
     "stop_lon": -122.768899
-  },
-  "11742": {
-    "stop_id": "11742",
-    "stop_name": "Westbound 24 Ave @ 168 St",
-    "stop_lat": 49.045761,
-    "stop_lon": -122.757816
   },
   "11743": {
     "stop_id": "11743",
@@ -49025,12 +48995,6 @@
     "stop_lat": 49.045638,
     "stop_lon": -122.745605
   },
-  "12307": {
-    "stop_id": "12307",
-    "stop_name": "Westbound 24 Ave @ 172 St",
-    "stop_lat": 49.045745,
-    "stop_lon": -122.746741
-  },
   "12308": {
     "stop_id": "12308",
     "stop_name": "Eastbound Dominion Ave @ Fremont St",
@@ -50063,6 +50027,12 @@
     "stop_lat": 49.145639,
     "stop_lon": -122.756474
   },
+  "12551": {
+    "stop_id": "12551",
+    "stop_name": "Westbound Fraser Hwy @ 150 St",
+    "stop_lat": 49.168408,
+    "stop_lon": -122.807134
+  },
   "12552": {
     "stop_id": "12552",
     "stop_name": "Westbound 84 Ave @ Venture Way",
@@ -50284,12 +50254,6 @@
     "stop_name": "Eastbound W 41 Ave @ East Blvd",
     "stop_lat": 49.234486,
     "stop_lon": -123.154256
-  },
-  "12632": {
-    "stop_id": "12632",
-    "stop_name": "Westbound W 41 Ave @ East Blvd",
-    "stop_lat": 49.234672,
-    "stop_lon": -123.15479
   },
   "12634": {
     "stop_id": "12634",
@@ -50756,8 +50720,8 @@
   "12764": {
     "stop_id": "12764",
     "stop_name": "Eastbound W Broadway @ Ash St",
-    "stop_lat": 49.263125,
-    "stop_lon": -123.11569
+    "stop_lat": 49.263142,
+    "stop_lon": -123.116546
   },
   "12766": {
     "stop_id": "12766",
@@ -51131,6 +51095,12 @@
     "stop_lat": 49.281161,
     "stop_lon": -123.094737
   },
+  "12867": {
+    "stop_id": "12867",
+    "stop_name": "Northbound Renfrew St @ E Pender St",
+    "stop_lat": 49.280062,
+    "stop_lon": -123.04396
+  },
   "12868": {
     "stop_id": "12868",
     "stop_name": "Westbound E 22 Ave @ Cassiar St",
@@ -51490,6 +51460,12 @@
     "stop_name": "Southbound Macdonald St @ W 16th Ave",
     "stop_lat": 49.258001,
     "stop_lon": -123.168503
+  },
+  "12960": {
+    "stop_id": "12960",
+    "stop_name": "Broadway-City Hall Station @ Bay 2",
+    "stop_lat": 49.261959,
+    "stop_lon": -123.114784
   },
   "12961": {
     "stop_id": "12961",
@@ -52211,12 +52187,6 @@
     "stop_lat": 49.259388,
     "stop_lon": -123.044475
   },
-  "13137": {
-    "stop_id": "13137",
-    "stop_name": "Westbound E Hastings St @ Windermere St Bay 3",
-    "stop_lat": 49.281218,
-    "stop_lon": -123.035862
-  },
   "13139": {
     "stop_id": "13139",
     "stop_name": "Northbound Golden Ears Parkway @ Golden Ears Beach",
@@ -52240,24 +52210,6 @@
     "stop_name": "Eastbound Curtis St @ Kensington Ave",
     "stop_lat": 49.275171,
     "stop_lon": -122.971545
-  },
-  "13148": {
-    "stop_id": "13148",
-    "stop_name": "Westbound E Hastings St @ Lillooet St Bay 1",
-    "stop_lat": 49.281234,
-    "stop_lon": -123.040983
-  },
-  "13149": {
-    "stop_id": "13149",
-    "stop_name": "Westbound E Hastings St @ Renfrew St",
-    "stop_lat": 49.281232,
-    "stop_lon": -123.045593
-  },
-  "13150": {
-    "stop_id": "13150",
-    "stop_name": "Eastbound E Hastings St @ Kaslo St",
-    "stop_lat": 49.281028,
-    "stop_lon": -123.045582
   },
   "13152": {
     "stop_id": "13152",
@@ -52295,17 +52247,17 @@
     "stop_lat": 49.262008,
     "stop_lon": -123.040647
   },
+  "13159": {
+    "stop_id": "13159",
+    "stop_name": "Southbound Renfrew St @ E Pender St",
+    "stop_lat": 49.280419,
+    "stop_lon": -123.044231
+  },
   "13161": {
     "stop_id": "13161",
     "stop_name": "Eastbound W 49th Ave @ Wiltshire St",
     "stop_lat": 49.226993,
     "stop_lon": -123.145738
-  },
-  "13162": {
-    "stop_id": "13162",
-    "stop_name": "Renfrew Station @ Bay 5",
-    "stop_lat": 49.259875,
-    "stop_lon": -123.044121
   },
   "13163": {
     "stop_id": "13163",
@@ -52348,6 +52300,12 @@
     "stop_name": "Eastbound Keith Rd @ 3rd St",
     "stop_lat": 49.331303,
     "stop_lon": -123.121844
+  },
+  "13170": {
+    "stop_id": "13170",
+    "stop_name": "Westbound E Royal Ave @ Ross Dr",
+    "stop_lat": 49.213945,
+    "stop_lon": -122.898516
   },
   "99901": {
     "stop_id": "99901",
