@@ -3565,13 +3565,13 @@
   },
   "960": {
     "stop_id": "960",
-    "stop_name": "Eastbound E Hastings St @ Lillooet St Bay 5",
+    "stop_name": "Eastbound E Hastings St @ Lillooet St",
     "stop_lat": 49.281041,
     "stop_lon": -123.038301
   },
   "961": {
     "stop_id": "961",
-    "stop_name": "Eastbound E Hastings St @ Windermere St Bay 4",
+    "stop_name": "Eastbound E Hastings St @ Windermere St",
     "stop_lat": 49.281027,
     "stop_lon": -123.035464
   },
@@ -3601,7 +3601,7 @@
   },
   "967": {
     "stop_id": "967",
-    "stop_name": "Westbound E Hastings St @ Windermere St Bay 2",
+    "stop_name": "Westbound E Hastings St @ Windermere St",
     "stop_lat": 49.281219,
     "stop_lon": -123.036936
   },
@@ -3616,6 +3616,12 @@
     "stop_name": "Westbound E Hastings St @ Kaslo St",
     "stop_lat": 49.281226,
     "stop_lon": -123.047423
+  },
+  "970": {
+    "stop_id": "970",
+    "stop_name": "Westbound E Hastings St @ Penticton St",
+    "stop_lat": 49.281239,
+    "stop_lon": -123.052386
   },
   "972": {
     "stop_id": "972",
@@ -16271,12 +16277,6 @@
     "stop_lat": 49.297416,
     "stop_lon": -122.813092
   },
-  "3965": {
-    "stop_id": "3965",
-    "stop_name": "Eastbound Panorama Dr @ Parkway Blvd",
-    "stop_lat": 49.297486,
-    "stop_lon": -122.808979
-  },
   "3968": {
     "stop_id": "3968",
     "stop_name": "Southbound Johnson St @ Parkway Blvd",
@@ -24737,6 +24737,12 @@
     "stop_lat": 49.148507,
     "stop_lon": -122.856704
   },
+  "5711": {
+    "stop_id": "5711",
+    "stop_name": "Northbound 132 St @ 81A Ave",
+    "stop_lat": 49.151125,
+    "stop_lon": -122.856702
+  },
   "5712": {
     "stop_id": "5712",
     "stop_name": "Northbound 132 St @ 82A Ave",
@@ -24862,6 +24868,12 @@
     "stop_name": "Southbound 132 St @ 82A Ave",
     "stop_lat": 49.152151,
     "stop_lon": -122.856941
+  },
+  "5733": {
+    "stop_id": "5733",
+    "stop_name": "Southbound 132 St @ 81 Ave",
+    "stop_lat": 49.149732,
+    "stop_lon": -122.856931
   },
   "5734": {
     "stop_id": "5734",
@@ -29044,12 +29056,6 @@
     "stop_name": "Eastbound Cambie Rd @ Brown Rd",
     "stop_lat": 49.184616,
     "stop_lon": -123.130404
-  },
-  "6616": {
-    "stop_id": "6616",
-    "stop_name": "Eastbound Capstan Way @ Sexsmith Rd",
-    "stop_lat": 49.187724,
-    "stop_lon": -123.127644
   },
   "6621": {
     "stop_id": "6621",
@@ -38453,12 +38459,6 @@
     "stop_lat": 49.211133,
     "stop_lon": -123.092844
   },
-  "9104": {
-    "stop_id": "9104",
-    "stop_name": "Westbound E Hastings St @ Lakewood Dr",
-    "stop_lat": 49.28127,
-    "stop_lon": -123.062205
-  },
   "9105": {
     "stop_id": "9105",
     "stop_name": "Westbound Stanley Park Dr @ Pipeline Rd",
@@ -39136,12 +39136,6 @@
     "stop_name": "Westbound Panorama Dr @ Johnson St",
     "stop_lat": 49.299379,
     "stop_lon": -122.802263
-  },
-  "9311": {
-    "stop_id": "9311",
-    "stop_name": "Westbound Panorama Dr @ Parkway Blvd",
-    "stop_lat": 49.297586,
-    "stop_lon": -122.809782
   },
   "9312": {
     "stop_id": "9312",
@@ -46769,6 +46763,12 @@
     "stop_lat": 49.045753,
     "stop_lon": -122.692166
   },
+  "11746": {
+    "stop_id": "11746",
+    "stop_name": "Northbound 192 St @ 26 Ave",
+    "stop_lat": 49.04959,
+    "stop_lon": -122.691368
+  },
   "11747": {
     "stop_id": "11747",
     "stop_name": "Southbound 192 St @ 26 Ave",
@@ -47321,6 +47321,12 @@
     "stop_lat": 49.216205,
     "stop_lon": -122.923443
   },
+  "11910": {
+    "stop_id": "11910",
+    "stop_name": "Westbound 72 Ave @ 148 St",
+    "stop_lat": 49.133833,
+    "stop_lon": -122.812711
+  },
   "11911": {
     "stop_id": "11911",
     "stop_name": "Eastbound 8th Ave @ 8th St",
@@ -47330,8 +47336,8 @@
   "11912": {
     "stop_id": "11912",
     "stop_name": "Eastbound United Blvd @ King Edward St",
-    "stop_lat": 49.230419,
-    "stop_lon": -122.859689
+    "stop_lat": 49.230404,
+    "stop_lon": -122.859221
   },
   "11913": {
     "stop_id": "11913",
@@ -47384,8 +47390,8 @@
   "11929": {
     "stop_id": "11929",
     "stop_name": "Eastbound W 3rd St @ Bewicke Ave",
-    "stop_lat": 49.320065,
-    "stop_lon": -123.091862
+    "stop_lat": 49.3204,
+    "stop_lon": -123.092847
   },
   "11931": {
     "stop_id": "11931",
@@ -48017,12 +48023,6 @@
     "stop_lat": 49.283161,
     "stop_lon": -123.076463
   },
-  "12075": {
-    "stop_id": "12075",
-    "stop_name": "Northbound N Renfrew St @ Pne Coliseum Loop",
-    "stop_lat": 49.285006,
-    "stop_lon": -123.043938
-  },
   "12076": {
     "stop_id": "12076",
     "stop_name": "Westbound Boyd St @ Gifford St",
@@ -48268,6 +48268,12 @@
     "stop_name": "Westbound 29 Ave @ 266B St",
     "stop_lat": 49.055535,
     "stop_lon": -122.485973
+  },
+  "12152": {
+    "stop_id": "12152",
+    "stop_name": "Westbound 72 Ave @ 146 St",
+    "stop_lat": 49.133818,
+    "stop_lon": -122.818323
   },
   "12153": {
     "stop_id": "12153",
@@ -48701,12 +48707,6 @@
     "stop_lat": 49.256811,
     "stop_lon": -122.887308
   },
-  "12245": {
-    "stop_id": "12245",
-    "stop_name": "Eastbound Foster Ave @ Aspen St",
-    "stop_lat": 49.256704,
-    "stop_lon": -122.886632
-  },
   "12246": {
     "stop_id": "12246",
     "stop_name": "Eastbound Foster Ave @ Fairview St",
@@ -49114,12 +49114,6 @@
     "stop_name": "Westbound Lincoln Ave @ Oxford St",
     "stop_lat": 49.278432,
     "stop_lon": -122.767721
-  },
-  "12334": {
-    "stop_id": "12334",
-    "stop_name": "Eastbound Davie St @ Richards St",
-    "stop_lat": 49.275982,
-    "stop_lon": -123.124529
   },
   "12335": {
     "stop_id": "12335",
@@ -49669,7 +49663,7 @@
   },
   "12454": {
     "stop_id": "12454",
-    "stop_name": "Westbound 130 Ave @ 239B St",
+    "stop_name": "Southbound 130 Ave @ 239B St",
     "stop_lat": 49.240176,
     "stop_lon": -122.559001
   },
@@ -50807,12 +50801,6 @@
     "stop_lat": 49.263652,
     "stop_lon": -123.134884
   },
-  "12792": {
-    "stop_id": "12792",
-    "stop_name": "29th Avenue Station @ Unloading",
-    "stop_lat": 49.244542,
-    "stop_lon": -123.046502
-  },
   "12793": {
     "stop_id": "12793",
     "stop_name": "Haney Place @ Bay 10",
@@ -51665,12 +51653,6 @@
     "stop_lat": 49.158054,
     "stop_lon": -123.147932
   },
-  "13011": {
-    "stop_id": "13011",
-    "stop_name": "Westbound E Hastings St @ Penticton St",
-    "stop_lat": 49.281245,
-    "stop_lon": -123.051351
-  },
   "13013": {
     "stop_id": "13013",
     "stop_name": "White Rock Centre @ Bay 10",
@@ -52181,12 +52163,6 @@
     "stop_lat": 49.234843,
     "stop_lon": -123.178062
   },
-  "13136": {
-    "stop_id": "13136",
-    "stop_name": "Renfrew Station @ Bay 4",
-    "stop_lat": 49.259388,
-    "stop_lon": -123.044475
-  },
   "13139": {
     "stop_id": "13139",
     "stop_name": "Northbound Golden Ears Parkway @ Golden Ears Beach",
@@ -52306,6 +52282,30 @@
     "stop_name": "Westbound E Royal Ave @ Ross Dr",
     "stop_lat": 49.213945,
     "stop_lon": -122.898516
+  },
+  "13182": {
+    "stop_id": "13182",
+    "stop_name": "Eastbound 10 Ave @ McBride Blvd",
+    "stop_lat": 49.224884,
+    "stop_lon": -122.916419
+  },
+  "13183": {
+    "stop_id": "13183",
+    "stop_name": "Eastbound 10 Ave @ 2nd St",
+    "stop_lat": 49.222159,
+    "stop_lon": -122.921533
+  },
+  "13184": {
+    "stop_id": "13184",
+    "stop_name": "Eastbound 10 Ave @ 5th St",
+    "stop_lat": 49.219381,
+    "stop_lon": -122.926672
+  },
+  "13185": {
+    "stop_id": "13185",
+    "stop_name": "Southbound Garden City Rd @ Capstan Way",
+    "stop_lat": 49.187308,
+    "stop_lon": -123.12497
   },
   "99901": {
     "stop_id": "99901",
