@@ -21011,12 +21011,6 @@
     "stop_lat": 49.142706,
     "stop_lon": -122.912523
   },
-  "4946": {
-    "stop_id": "4946",
-    "stop_name": "Northbound 112 St @ 78A Ave",
-    "stop_lat": 49.145667,
-    "stop_lon": -122.912483
-  },
   "4947": {
     "stop_id": "4947",
     "stop_name": "Northbound 112 St @ 80 Ave",
@@ -52306,6 +52300,12 @@
     "stop_name": "Southbound Garden City Rd @ Capstan Way",
     "stop_lat": 49.187308,
     "stop_lon": -123.12497
+  },
+  "13186": {
+    "stop_id": "13186",
+    "stop_name": "Westbound Larson Rd @ Bewicke Ave",
+    "stop_lat": 49.324188,
+    "stop_lon": -123.09148
   },
   "99901": {
     "stop_id": "99901",
