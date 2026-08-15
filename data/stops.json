@@ -7643,12 +7643,6 @@
     "stop_lat": 49.207592,
     "stop_lon": -123.047214
   },
-  "1851": {
-    "stop_id": "1851",
-    "stop_name": "Eastbound SE Marine Dr @ Kerr St",
-    "stop_lat": 49.207748,
-    "stop_lon": -123.044803
-  },
   "1852": {
     "stop_id": "1852",
     "stop_name": "Eastbound SE Marine Dr @ Fieldstone Ave",
@@ -12997,7 +12991,7 @@
   },
   "3167": {
     "stop_id": "3167",
-    "stop_name": "Eastbound Washington Dr @ 800 Block",
+    "stop_name": "Eastbound Washington Dr @ 830 Block",
     "stop_lat": 49.287802,
     "stop_lon": -122.873455
   },
@@ -13231,7 +13225,7 @@
   },
   "3229": {
     "stop_id": "3229",
-    "stop_name": "Westbound Washington Dr @ 800 Block",
+    "stop_name": "Westbound Washington Dr @ 830 Block",
     "stop_lat": 49.287851,
     "stop_lon": -122.873349
   },
@@ -21010,6 +21004,12 @@
     "stop_name": "Northbound 112 St @ Bridlington Dr",
     "stop_lat": 49.142706,
     "stop_lon": -122.912523
+  },
+  "4946": {
+    "stop_id": "4946",
+    "stop_name": "Northbound 112 St @ 78A Ave",
+    "stop_lat": 49.145667,
+    "stop_lon": -122.912483
   },
   "4947": {
     "stop_id": "4947",
@@ -38555,6 +38555,12 @@
     "stop_lat": 49.217588,
     "stop_lon": -122.590458
   },
+  "9134": {
+    "stop_id": "9134",
+    "stop_name": "Southbound Pipeline Rd @ Dayanee Springs Blvd",
+    "stop_lat": 49.29401,
+    "stop_lon": -122.780733
+  },
   "9135": {
     "stop_id": "9135",
     "stop_name": "Southbound Granville St @ W 70 Ave",
@@ -38836,6 +38842,12 @@
     "stop_name": "Northbound Pinetree Way @ Pinewood Ave",
     "stop_lat": 49.291226,
     "stop_lon": -122.789614
+  },
+  "9233": {
+    "stop_id": "9233",
+    "stop_name": "Northbound Pipeline Rd @ El Casa Court",
+    "stop_lat": 49.294697,
+    "stop_lon": -122.780129
   },
   "9235": {
     "stop_id": "9235",
@@ -40568,8 +40580,8 @@
   "9918": {
     "stop_id": "9918",
     "stop_name": "Southbound Bonsor Ave @ Bennett St",
-    "stop_lat": 49.224817,
-    "stop_lon": -122.997189
+    "stop_lat": 49.224834,
+    "stop_lon": -122.997214
   },
   "9923": {
     "stop_id": "9923",
@@ -42044,8 +42056,8 @@
   "10400": {
     "stop_id": "10400",
     "stop_name": "Southbound Howe St @ W Pender St",
-    "stop_lat": 49.285048,
-    "stop_lon": -123.116344
+    "stop_lat": 49.284811,
+    "stop_lon": -123.116738
   },
   "10401": {
     "stop_id": "10401",
@@ -52306,6 +52318,12 @@
     "stop_name": "Westbound Larson Rd @ Bewicke Ave",
     "stop_lat": 49.324188,
     "stop_lon": -123.09148
+  },
+  "13189": {
+    "stop_id": "13189",
+    "stop_name": "Eastbound SE Marine Dr @ Kerr St",
+    "stop_lat": 49.208067,
+    "stop_lon": -123.041373
   },
   "99901": {
     "stop_id": "99901",
