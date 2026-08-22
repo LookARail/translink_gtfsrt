@@ -706,13 +706,6 @@
     "route_type": 3,
     "route_color": ""
   },
-  "6730": {
-    "route_id": "6730",
-    "route_short_name": "430",
-    "route_long_name": "Metrotown Station/Brighouse Station",
-    "route_type": 3,
-    "route_color": ""
-  },
   "6737": {
     "route_id": "6737",
     "route_short_name": "501",
@@ -773,13 +766,6 @@
     "route_id": "6746",
     "route_short_name": "608",
     "route_long_name": "Ladner Ring",
-    "route_type": 3,
-    "route_color": ""
-  },
-  "6747": {
-    "route_id": "6747",
-    "route_short_name": "620",
-    "route_long_name": "Tsawwassen Ferry/Bridgeport Station Exp",
     "route_type": 3,
     "route_color": ""
   },
@@ -1700,11 +1686,46 @@
     "route_type": 3,
     "route_color": ""
   },
+  "53893": {
+    "route_id": "53893",
+    "route_short_name": "556",
+    "route_long_name": "Langley Centre/Gloucester",
+    "route_type": 3,
+    "route_color": ""
+  },
+  "6747_merged_15726064": {
+    "route_id": "6747_merged_15726064",
+    "route_short_name": "620",
+    "route_long_name": "Tsawwassen Ferry/Bridgeport Station Exp",
+    "route_type": 3,
+    "route_color": ""
+  },
+  "6747_merged_15726066": {
+    "route_id": "6747_merged_15726066",
+    "route_short_name": "620",
+    "route_long_name": "Tsaww Ferry/Bridgeport Station Exp",
+    "route_type": 3,
+    "route_color": ""
+  },
+  "6730_merged_15726065": {
+    "route_id": "6730_merged_15726065",
+    "route_short_name": "430",
+    "route_long_name": "Metrotown/Brighouse Station",
+    "route_type": 3,
+    "route_color": ""
+  },
   "HD": {
     "route_id": "HD",
     "route_short_name": "HD",
     "route_long_name": "HandyDART",
     "route_type": 715,
+    "route_color": ""
+  },
+  "6730_merged_15726063": {
+    "route_id": "6730_merged_15726063",
+    "route_short_name": "430",
+    "route_long_name": "Metrotown Station/Brighouse Station",
+    "route_type": 3,
     "route_color": ""
   }
 }

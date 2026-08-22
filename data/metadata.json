@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-15T08:19:04.300Z",
+  "generated_at": "2026-08-22T08:21:48.385Z",
   "source_url": "https://gtfs-static.translink.ca/gtfs/google_transit.zip",
   "versions": [
     {
@@ -32,17 +32,17 @@
     },
     {
       "start_date": "2026-06-08",
-      "end_date": "2026-09-06",
-      "folder": ".",
+      "end_date": "2026-08-21",
+      "folder": "archive/2026-06-08__26JUN_20260814",
       "added_at": "2026-08-15T08:19:04.272Z",
       "feed_version": "26JUN_20260814"
     },
     {
-      "start_date": "2026-06-16",
-      "end_date": "2026-06-19",
-      "folder": "archive/2026-06-16__26JUN_20260615",
-      "added_at": "2026-06-16T09:48:45.118Z",
-      "feed_version": "26JUN_20260615"
+      "start_date": "2026-06-08",
+      "end_date": "2027-01-03",
+      "folder": ".",
+      "added_at": "2026-08-22T08:21:48.335Z",
+      "feed_version": null
     },
     {
       "start_date": "2026-06-20",
@@ -68,17 +68,17 @@
   ],
   "current": {
     "start_date": "2026-06-08",
-    "end_date": "2026-09-06",
+    "end_date": "2027-01-03",
     "folder": ".",
-    "feed_version": "26JUN_20260814"
+    "feed_version": null
   },
   "stats": {
-    "routes": 244,
-    "trips": 65431,
-    "stops": 8907,
-    "shapes": 1041,
-    "stop_times_trips": 65430,
-    "stop_times_route_files": 243,
+    "routes": 247,
+    "trips": 128452,
+    "stops": 8940,
+    "shapes": 2105,
+    "stop_times_trips": 128450,
+    "stop_times_route_files": 246,
     "total_versions": 9
   },
   "stop_times_files": {
@@ -183,7 +183,6 @@
     "6726": "stop-times-route-6726.json",
     "6727": "stop-times-route-6727.json",
     "6728": "stop-times-route-6728.json",
-    "6730": "stop-times-route-6730.json",
     "6737": "stop-times-route-6737.json",
     "6738": "stop-times-route-6738.json",
     "6739": "stop-times-route-6739.json",
@@ -193,7 +192,6 @@
     "6744": "stop-times-route-6744.json",
     "6745": "stop-times-route-6745.json",
     "6746": "stop-times-route-6746.json",
-    "6747": "stop-times-route-6747.json",
     "6748": "stop-times-route-6748.json",
     "6749": "stop-times-route-6749.json",
     "6754": "stop-times-route-6754.json",
@@ -324,6 +322,11 @@
     "46604": "stop-times-route-46604.json",
     "48855": "stop-times-route-48855.json",
     "53126": "stop-times-route-53126.json",
-    "53127": "stop-times-route-53127.json"
+    "53127": "stop-times-route-53127.json",
+    "53893": "stop-times-route-53893.json",
+    "6730_merged_15726063": "stop-times-route-6730_merged_15726063.json",
+    "6747_merged_15726064": "stop-times-route-6747_merged_15726064.json",
+    "6730_merged_15726065": "stop-times-route-6730_merged_15726065.json",
+    "6747_merged_15726066": "stop-times-route-6747_merged_15726066.json"
   }
 }
