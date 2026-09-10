@@ -706,6 +706,13 @@
     "route_type": 3,
     "route_color": ""
   },
+  "6730": {
+    "route_id": "6730",
+    "route_short_name": "430",
+    "route_long_name": "Metrotown Station/Brighouse Station",
+    "route_type": 3,
+    "route_color": ""
+  },
   "6737": {
     "route_id": "6737",
     "route_short_name": "501",
@@ -766,6 +773,13 @@
     "route_id": "6746",
     "route_short_name": "608",
     "route_long_name": "Ladner Ring",
+    "route_type": 3,
+    "route_color": ""
+  },
+  "6747": {
+    "route_id": "6747",
+    "route_short_name": "620",
+    "route_long_name": "Tsawwassen Ferry/Bridgeport Station Exp",
     "route_type": 3,
     "route_color": ""
   },
@@ -1105,13 +1119,6 @@
     "route_type": 3,
     "route_color": ""
   },
-  "7509": {
-    "route_id": "7509",
-    "route_short_name": "150",
-    "route_long_name": "Coquitlam Central Station/White Pine Beach",
-    "route_type": 3,
-    "route_color": ""
-  },
   "8286": {
     "route_id": "8286",
     "route_short_name": "370",
@@ -1151,13 +1158,6 @@
     "route_id": "11201",
     "route_short_name": "033",
     "route_long_name": "16th & 33rd Avenue",
-    "route_type": 3,
-    "route_color": ""
-  },
-  "11202": {
-    "route_id": "11202",
-    "route_short_name": "042",
-    "route_long_name": "Alma/Spanish Banks",
     "route_type": 3,
     "route_color": ""
   },
@@ -1333,13 +1333,6 @@
     "route_id": "30041",
     "route_short_name": "175",
     "route_long_name": "Coquitlam Central Station/Meridian",
-    "route_type": 3,
-    "route_color": ""
-  },
-  "30042": {
-    "route_id": "30042",
-    "route_short_name": "179",
-    "route_long_name": "Coquitlam Central Station/Buntzen Lake",
     "route_type": 3,
     "route_color": ""
   },
@@ -1605,7 +1598,7 @@
   "38311": {
     "route_id": "38311",
     "route_short_name": "R2",
-    "route_long_name": "Marine Drive",
+    "route_long_name": "Marine-Willingdon",
     "route_type": 3,
     "route_color": "008522"
   },
@@ -1613,13 +1606,6 @@
     "route_id": "39304",
     "route_short_name": "031",
     "route_long_name": "Metrotown Station/River District",
-    "route_type": 3,
-    "route_color": ""
-  },
-  "39305": {
-    "route_id": "39305",
-    "route_short_name": "222",
-    "route_long_name": "Willingdon Express",
     "route_type": 3,
     "route_color": ""
   },
@@ -1672,45 +1658,10 @@
     "route_type": 3,
     "route_color": ""
   },
-  "53126": {
-    "route_id": "53126",
-    "route_short_name": "736",
-    "route_long_name": "Haney Place/Golden Ears",
-    "route_type": 3,
-    "route_color": ""
-  },
-  "53127": {
-    "route_id": "53127",
-    "route_short_name": "566",
-    "route_long_name": "Campbell Valley/Langley Centre",
-    "route_type": 3,
-    "route_color": ""
-  },
   "53893": {
     "route_id": "53893",
     "route_short_name": "556",
     "route_long_name": "Langley Centre/Gloucester",
-    "route_type": 3,
-    "route_color": ""
-  },
-  "6747_merged_15726064": {
-    "route_id": "6747_merged_15726064",
-    "route_short_name": "620",
-    "route_long_name": "Tsawwassen Ferry/Bridgeport Station Exp",
-    "route_type": 3,
-    "route_color": ""
-  },
-  "6747_merged_15726066": {
-    "route_id": "6747_merged_15726066",
-    "route_short_name": "620",
-    "route_long_name": "Tsaww Ferry/Bridgeport Station Exp",
-    "route_type": 3,
-    "route_color": ""
-  },
-  "6730_merged_15726065": {
-    "route_id": "6730_merged_15726065",
-    "route_short_name": "430",
-    "route_long_name": "Metrotown/Brighouse Station",
     "route_type": 3,
     "route_color": ""
   },
@@ -1719,13 +1670,6 @@
     "route_short_name": "HD",
     "route_long_name": "HandyDART",
     "route_type": 715,
-    "route_color": ""
-  },
-  "6730_merged_15726063": {
-    "route_id": "6730_merged_15726063",
-    "route_short_name": "430",
-    "route_long_name": "Metrotown Station/Brighouse Station",
-    "route_type": 3,
     "route_color": ""
   }
 }
