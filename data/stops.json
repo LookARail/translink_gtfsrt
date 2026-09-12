@@ -968,8 +968,8 @@
   "285": {
     "stop_id": "285",
     "stop_name": "Eastbound W 10 Ave @ Wallace St",
-    "stop_lat": 49.263472,
-    "stop_lon": -123.190678
+    "stop_lat": 49.26348,
+    "stop_lon": -123.190491
   },
   "286": {
     "stop_id": "286",
@@ -4507,7 +4507,7 @@
   },
   "1171": {
     "stop_id": "1171",
-    "stop_name": "Southbound Willingdon Ave @ Kemp St",
+    "stop_name": "Southbound Willingdon Ave @ Kingsway",
     "stop_lat": 49.229565,
     "stop_lon": -123.005715
   },
@@ -6220,12 +6220,6 @@
     "stop_name": "Eastbound E King Edward Ave @ Glen Dr",
     "stop_lat": 49.248473,
     "stop_lon": -123.081441
-  },
-  "1537": {
-    "stop_id": "1537",
-    "stop_name": "Eastbound E King Edward Ave @ Knight St",
-    "stop_lat": 49.248433,
-    "stop_lon": -123.075263
   },
   "1538": {
     "stop_id": "1538",
@@ -16762,6 +16756,12 @@
     "stop_name": "Eastbound Mt Seymour Parkway @ Berkley Rd",
     "stop_lat": 49.314142,
     "stop_lon": -123.003533
+  },
+  "4074": {
+    "stop_id": "4074",
+    "stop_name": "Eastbound Mt Seymour Parkway @ Lytton St",
+    "stop_lat": 49.315397,
+    "stop_lon": -123.00062
   },
   "4076": {
     "stop_id": "4076",
@@ -38657,12 +38657,6 @@
     "stop_lat": 49.222954,
     "stop_lon": -122.906699
   },
-  "9193": {
-    "stop_id": "9193",
-    "stop_name": "Westbound Cumberland St @ E 6th Ave",
-    "stop_lat": 49.221282,
-    "stop_lon": -122.904203
-  },
   "9194": {
     "stop_id": "9194",
     "stop_name": "Northbound Richmond St @ Miner St",
@@ -39628,6 +39622,12 @@
     "stop_name": "Southbound 2nd St @ Queens Ave",
     "stop_lat": 49.210702,
     "stop_lon": -122.906943
+  },
+  "9441": {
+    "stop_id": "9441",
+    "stop_name": "Westbound E 6th Ave @ Glenbrook Dr",
+    "stop_lat": 49.220463,
+    "stop_lon": -122.906923
   },
   "9445": {
     "stop_id": "9445",
