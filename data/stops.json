@@ -969,7 +969,7 @@
     "stop_id": "285",
     "stop_name": "Eastbound W 10 Ave @ Wallace St",
     "stop_lat": 49.26348,
-    "stop_lon": -123.190491
+    "stop_lon": -123.190448
   },
   "286": {
     "stop_id": "286",
@@ -1973,12 +1973,6 @@
     "stop_lat": 49.263725,
     "stop_lon": -123.197332
   },
-  "579": {
-    "stop_id": "579",
-    "stop_name": "Westbound W 10 Ave @ Courtenay St",
-    "stop_lat": 49.263781,
-    "stop_lon": -123.200725
-  },
   "580": {
     "stop_id": "580",
     "stop_name": "Westbound W 10 Ave @ Discovery St",
@@ -2288,8 +2282,8 @@
   "662": {
     "stop_id": "662",
     "stop_name": "Northbound Victoria Dr @ E 36 Ave",
-    "stop_lat": 49.237698,
-    "stop_lon": -123.065288
+    "stop_lat": 49.23775,
+    "stop_lon": -123.065285
   },
   "663": {
     "stop_id": "663",
@@ -2492,8 +2486,8 @@
   "707": {
     "stop_id": "707",
     "stop_name": "Southbound Victoria Dr @ E 36 Ave",
-    "stop_lat": 49.237254,
-    "stop_lon": -123.065531
+    "stop_lat": 49.237194,
+    "stop_lon": -123.065553
   },
   "709": {
     "stop_id": "709",
@@ -3145,9 +3139,9 @@
   },
   "855": {
     "stop_id": "855",
-    "stop_name": "Westbound E Broadway @ St. George St",
-    "stop_lat": 49.262614,
-    "stop_lon": -123.093971
+    "stop_name": "Westbound E Broadway @ Guelph St",
+    "stop_lat": 49.262606,
+    "stop_lon": -123.09356
   },
   "856": {
     "stop_id": "856",
@@ -8024,8 +8018,8 @@
   "1996": {
     "stop_id": "1996",
     "stop_name": "Eastbound E 49 Ave @ Knight St",
-    "stop_lat": 49.225208,
-    "stop_lon": -123.076725
+    "stop_lat": 49.225206,
+    "stop_lon": -123.076434
   },
   "1998": {
     "stop_id": "1998",
@@ -8488,6 +8482,18 @@
     "stop_name": "Eastbound Miller Rd @ Aylmer Rd",
     "stop_lat": 49.192064,
     "stop_lon": -123.153009
+  },
+  "2134": {
+    "stop_id": "2134",
+    "stop_name": "Eastbound Miller Rd @ Templeton St",
+    "stop_lat": 49.192044,
+    "stop_lon": -123.148208
+  },
+  "2135": {
+    "stop_id": "2135",
+    "stop_name": "Eastbound Miller Rd @ 7000 Block",
+    "stop_lat": 49.192028,
+    "stop_lon": -123.145729
   },
   "2137": {
     "stop_id": "2137",
@@ -13763,12 +13769,6 @@
     "stop_lat": 49.267485,
     "stop_lon": -122.790769
   },
-  "3383": {
-    "stop_id": "3383",
-    "stop_name": "Eastbound Kingsway Ave @ Burleigh Ave",
-    "stop_lat": 49.26532,
-    "stop_lon": -122.788479
-  },
   "3384": {
     "stop_id": "3384",
     "stop_name": "Eastbound Kingsway Ave @ Dixon St",
@@ -17456,8 +17456,8 @@
   "4218": {
     "stop_id": "4218",
     "stop_name": "Northbound Queensbury Ave @ E 7th St",
-    "stop_lat": 49.312736,
-    "stop_lon": -123.057031
+    "stop_lat": 49.312813,
+    "stop_lon": -123.057044
   },
   "4220": {
     "stop_id": "4220",
@@ -29471,18 +29471,6 @@
     "stop_lat": 49.133361,
     "stop_lon": -123.110616
   },
-  "6703": {
-    "stop_id": "6703",
-    "stop_name": "Eastbound Steveston Hwy @ Shell Rd",
-    "stop_lat": 49.133305,
-    "stop_lon": -123.102447
-  },
-  "6704": {
-    "stop_id": "6704",
-    "stop_name": "Eastbound Steveston Hwy @ Coppersmith Place",
-    "stop_lat": 49.133285,
-    "stop_lon": -123.096283
-  },
   "6706": {
     "stop_id": "6706",
     "stop_name": "Eastbound Steveston Hwy @ Hwy 99",
@@ -32254,12 +32242,6 @@
     "stop_name": "Southbound Trattle St @ Houston Ave",
     "stop_lat": 49.165035,
     "stop_lon": -122.58967
-  },
-  "7275": {
-    "stop_id": "7275",
-    "stop_name": "Westbound 88 Ave @ Trattle St",
-    "stop_lat": 49.162816,
-    "stop_lon": -122.59079
   },
   "7276": {
     "stop_id": "7276",
@@ -36100,12 +36082,6 @@
     "stop_name": "Westbound Steveston Hwy @ Seaward Gate",
     "stop_lat": 49.133464,
     "stop_lon": -123.100078
-  },
-  "8281": {
-    "stop_id": "8281",
-    "stop_name": "Eastbound Steveston Hwy @ Seaward Gate",
-    "stop_lat": 49.133327,
-    "stop_lon": -123.100556
   },
   "8282": {
     "stop_id": "8282",
@@ -44075,6 +44051,12 @@
     "stop_lat": 49.239843,
     "stop_lon": -123.059192
   },
+  "11049": {
+    "stop_id": "11049",
+    "stop_name": "Eastbound E 33 Ave @ Ontario St",
+    "stop_lat": 49.240505,
+    "stop_lon": -123.104966
+  },
   "11051": {
     "stop_id": "11051",
     "stop_name": "Eastbound E 33 Ave @ Nanaimo St",
@@ -50030,8 +50012,8 @@
   "12548": {
     "stop_id": "12548",
     "stop_name": "Broadway-City Hall Station @ Bay 3",
-    "stop_lat": 49.261914,
-    "stop_lon": -123.115138
+    "stop_lat": 49.262019,
+    "stop_lon": -123.115126
   },
   "12549": {
     "stop_id": "12549",
@@ -51223,7 +51205,7 @@
   },
   "12900": {
     "stop_id": "12900",
-    "stop_name": "Phibbs Exchange @ Bay 3",
+    "stop_name": "Main St @ Orwell St",
     "stop_lat": 49.304904,
     "stop_lon": -123.029461
   },
@@ -51238,12 +51220,6 @@
     "stop_name": "Phibbs Exchange @ Bay 5",
     "stop_lat": 49.305369,
     "stop_lon": -123.029619
-  },
-  "12911": {
-    "stop_id": "12911",
-    "stop_name": "Northbound Oak St @ W 67 Ave",
-    "stop_lat": 49.210429,
-    "stop_lon": -123.130057
   },
   "12916": {
     "stop_id": "12916",
@@ -51427,7 +51403,7 @@
   },
   "12950": {
     "stop_id": "12950",
-    "stop_name": "Phibbs Exchange @ Bay 6",
+    "stop_name": "Phibbs Exchange @",
     "stop_lat": 49.305155,
     "stop_lon": -123.029543
   },
@@ -52408,6 +52384,12 @@
     "stop_name": "Westbound Mary Hill Bypass @ Broadway St",
     "stop_lat": 49.24204,
     "stop_lon": -122.759724
+  },
+  "13193": {
+    "stop_id": "13193",
+    "stop_name": "Eastbound Steveston Hwy @ Shell Rd",
+    "stop_lat": 49.133346,
+    "stop_lon": -123.104515
   },
   "99901": {
     "stop_id": "99901",
