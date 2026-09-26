@@ -101,12 +101,6 @@
     "stop_lat": 49.280756,
     "stop_lon": -123.131638
   },
-  "50": {
-    "stop_id": "50",
-    "stop_name": "Westbound Davie St @ Bute St",
-    "stop_lat": 49.282009,
-    "stop_lon": -123.133574
-  },
   "51": {
     "stop_id": "51",
     "stop_name": "Westbound Davie St @ Jervis St",
@@ -2182,12 +2176,6 @@
     "stop_name": "Eastbound Davie St @ Nicola St",
     "stop_lat": 49.284219,
     "stop_lon": -123.13726
-  },
-  "642": {
-    "stop_id": "642",
-    "stop_name": "Eastbound Davie St @ Jervis St",
-    "stop_lat": 49.282579,
-    "stop_lon": -123.13477
   },
   "643": {
     "stop_id": "643",
@@ -21083,6 +21071,12 @@
     "stop_lat": 49.177055,
     "stop_lon": -122.906137
   },
+  "4959": {
+    "stop_id": "4959",
+    "stop_name": "Eastbound 96 Ave @ 116 St",
+    "stop_lat": 49.177061,
+    "stop_lon": -122.900724
+  },
   "4960": {
     "stop_id": "4960",
     "stop_name": "Eastbound 96 Ave @ 118 St",
@@ -28433,6 +28427,12 @@
     "stop_lat": 49.165047,
     "stop_lon": -122.798497
   },
+  "6478": {
+    "stop_id": "6478",
+    "stop_name": "Westbound Fraser Hwy @ 152 St",
+    "stop_lat": 49.166722,
+    "stop_lon": -122.802808
+  },
   "6479": {
     "stop_id": "6479",
     "stop_name": "Westbound Fraser Hwy @ 148 St",
@@ -28582,6 +28582,18 @@
     "stop_name": "Eastbound Westminster Hwy @ Lynas Lane",
     "stop_lat": 49.170035,
     "stop_lon": -123.163971
+  },
+  "6505": {
+    "stop_id": "6505",
+    "stop_name": "Eastbound Westminster Hwy @ No. 2 Rd",
+    "stop_lat": 49.170023,
+    "stop_lon": -123.158091
+  },
+  "6506": {
+    "stop_id": "6506",
+    "stop_name": "Eastbound Westminster Hwy @ 6300 Block",
+    "stop_lat": 49.170032,
+    "stop_lon": -123.156096
   },
   "6507": {
     "stop_id": "6507",
@@ -36077,12 +36089,6 @@
     "stop_lat": 49.281365,
     "stop_lon": -123.025918
   },
-  "8280": {
-    "stop_id": "8280",
-    "stop_name": "Westbound Steveston Hwy @ Seaward Gate",
-    "stop_lat": 49.133464,
-    "stop_lon": -123.100078
-  },
   "8282": {
     "stop_id": "8282",
     "stop_name": "Northbound Hwy 99 Offramp @ Steveston Hwy",
@@ -39509,12 +39515,6 @@
     "stop_lat": 49.103309,
     "stop_lon": -122.646674
   },
-  "9412": {
-    "stop_id": "9412",
-    "stop_name": "Eastbound 56 Ave @ Langley Bypass",
-    "stop_lat": 49.10456,
-    "stop_lon": -122.644104
-  },
   "9414": {
     "stop_id": "9414",
     "stop_name": "Eastbound Plateau Blvd @ Robson Dr",
@@ -40619,12 +40619,6 @@
     "stop_lat": 49.248665,
     "stop_lon": -122.815775
   },
-  "9948": {
-    "stop_id": "9948",
-    "stop_name": "Eastbound Carnarvon St @ Quayside Dr",
-    "stop_lat": 49.200769,
-    "stop_lon": -122.914936
-  },
   "9952": {
     "stop_id": "9952",
     "stop_name": "Production Station @ Bay 3",
@@ -40867,7 +40861,7 @@
   },
   "10034": {
     "stop_id": "10034",
-    "stop_name": "Westbound Lougheed Hwy @ Production Way",
+    "stop_name": "Production Station @ Bay 4",
     "stop_lat": 49.253225,
     "stop_lon": -122.917557
   },
@@ -42077,6 +42071,12 @@
     "stop_lat": 49.09569,
     "stop_lon": -122.623945
   },
+  "10415": {
+    "stop_id": "10415",
+    "stop_name": "Kootenay Loop @ Bay 1",
+    "stop_lat": 49.281496,
+    "stop_lon": -123.02638
+  },
   "10417": {
     "stop_id": "10417",
     "stop_name": "Northbound Mall Access Rd @ Meadowtown Centre",
@@ -42166,12 +42166,6 @@
     "stop_name": "Eastbound Ewen Ave @ McGillivray Place",
     "stop_lat": 49.18861,
     "stop_lon": -122.940844
-  },
-  "10450": {
-    "stop_id": "10450",
-    "stop_name": "Westbound Thunderbird Blvd @ Larkin Dr",
-    "stop_lat": 49.259061,
-    "stop_lon": -123.249148
   },
   "10451": {
     "stop_id": "10451",
@@ -42640,12 +42634,6 @@
     "stop_name": "Eastbound Fraser Hwy @ 168 St",
     "stop_lat": 49.147436,
     "stop_lon": -122.755697
-  },
-  "10643": {
-    "stop_id": "10643",
-    "stop_name": "Westbound Fraser Hwy @ 188 St",
-    "stop_lat": 49.12417,
-    "stop_lon": -122.702506
   },
   "10644": {
     "stop_id": "10644",
@@ -46601,11 +46589,11 @@
     "stop_lat": 49.32437,
     "stop_lon": -123.105025
   },
-  "11710": {
-    "stop_id": "11710",
-    "stop_name": "New Westminster Station @ Bay 10",
-    "stop_lat": 49.201085,
-    "stop_lon": -122.914339
+  "11711": {
+    "stop_id": "11711",
+    "stop_name": "New Westminster Station @ Bay 1",
+    "stop_lat": 49.201348,
+    "stop_lon": -122.911869
   },
   "11712": {
     "stop_id": "11712",
@@ -47771,18 +47759,6 @@
     "stop_lat": 49.225053,
     "stop_lon": -122.677101
   },
-  "12007": {
-    "stop_id": "12007",
-    "stop_name": "Eastbound Thunderbird Blvd @ Eagles Dr",
-    "stop_lat": 49.259395,
-    "stop_lon": -123.247674
-  },
-  "12008": {
-    "stop_id": "12008",
-    "stop_name": "Southbound East Mall @ Eagles Dr",
-    "stop_lat": 49.258079,
-    "stop_lon": -123.24443
-  },
   "12009": {
     "stop_id": "12009",
     "stop_name": "Eastbound Ross Dr @ Birney Ave",
@@ -47794,12 +47770,6 @@
     "stop_name": "Westbound Ross Dr @ Birney Ave",
     "stop_lat": 49.251694,
     "stop_lon": -123.237733
-  },
-  "12013": {
-    "stop_id": "12013",
-    "stop_name": "Northbound East Mall @ Eagles Dr",
-    "stop_lat": 49.25836,
-    "stop_lon": -123.244207
   },
   "12015": {
     "stop_id": "12015",
@@ -50027,12 +49997,6 @@
     "stop_lat": 49.145639,
     "stop_lon": -122.756474
   },
-  "12551": {
-    "stop_id": "12551",
-    "stop_name": "Westbound Fraser Hwy @ 150 St",
-    "stop_lat": 49.168408,
-    "stop_lon": -122.807134
-  },
   "12552": {
     "stop_id": "12552",
     "stop_name": "Westbound 84 Ave @ Venture Way",
@@ -52210,6 +52174,12 @@
     "stop_name": "Northbound 208 St @ 74B Ave",
     "stop_lat": 49.138737,
     "stop_lon": -122.645653
+  },
+  "13157": {
+    "stop_id": "13157",
+    "stop_name": "Westbound Fraser Hwy @ 188 St",
+    "stop_lat": 49.123547,
+    "stop_lon": -122.701139
   },
   "13158": {
     "stop_id": "13158",
