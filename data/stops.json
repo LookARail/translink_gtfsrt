@@ -3608,7 +3608,7 @@
   "973": {
     "stop_id": "973",
     "stop_name": "Southbound Commercial Dr @ E 12 Ave",
-    "stop_lat": 49.259217,
+    "stop_lat": 49.259192,
     "stop_lon": -123.069968
   },
   "974": {
@@ -8000,8 +8000,8 @@
   "1996": {
     "stop_id": "1996",
     "stop_name": "Eastbound E 49 Ave @ Knight St",
-    "stop_lat": 49.225206,
-    "stop_lon": -123.076434
+    "stop_lat": 49.22521,
+    "stop_lon": -123.076715
   },
   "1998": {
     "stop_id": "1998",
@@ -10616,8 +10616,8 @@
   "2655": {
     "stop_id": "2655",
     "stop_name": "Westbound 14 Ave @ 18 St",
-    "stop_lat": 49.212338,
-    "stop_lon": -122.951051
+    "stop_lat": 49.212313,
+    "stop_lon": -122.951076
   },
   "2656": {
     "stop_id": "2656",
@@ -11350,6 +11350,12 @@
     "stop_name": "Northbound Gilmore Ave @ 1st Ave",
     "stop_lat": 49.269681,
     "stop_lon": -123.01408
+  },
+  "2828": {
+    "stop_id": "2828",
+    "stop_name": "Northbound Gilmore Ave @ Kitchener St",
+    "stop_lat": 49.272367,
+    "stop_lon": -123.014164
   },
   "2829": {
     "stop_id": "2829",
@@ -21257,6 +21263,12 @@
     "stop_lat": 49.135461,
     "stop_lon": -122.884518
   },
+  "4997": {
+    "stop_id": "4997",
+    "stop_name": "Westbound Grace Rd @ 117 St",
+    "stop_lat": 49.185497,
+    "stop_lon": -122.899756
+  },
   "5000": {
     "stop_id": "5000",
     "stop_name": "Westbound River Rd @ 92A Ave",
@@ -21712,6 +21724,18 @@
     "stop_name": "Eastbound River Rd @ Knudson Rd",
     "stop_lat": 49.176518,
     "stop_lon": -122.913647
+  },
+  "5089": {
+    "stop_id": "5089",
+    "stop_name": "Eastbound River Rd @ Regal Dr",
+    "stop_lat": 49.179002,
+    "stop_lon": -122.910786
+  },
+  "5090": {
+    "stop_id": "5090",
+    "stop_name": "Eastbound River Rd @ Millar Rd",
+    "stop_lat": 49.18249,
+    "stop_lon": -122.906627
   },
   "5093": {
     "stop_id": "5093",
@@ -43559,6 +43583,24 @@
     "stop_lat": 49.189504,
     "stop_lon": -122.890486
   },
+  "10897": {
+    "stop_id": "10897",
+    "stop_name": "Westbound 103A Ave @ Scott Rd",
+    "stop_lat": 49.190713,
+    "stop_lon": -122.891384
+  },
+  "10898": {
+    "stop_id": "10898",
+    "stop_name": "Eastbound 103A Ave @ Grace Rd",
+    "stop_lat": 49.190547,
+    "stop_lon": -122.892576
+  },
+  "10899": {
+    "stop_id": "10899",
+    "stop_name": "Westbound Grace Rd @ 103A Ave",
+    "stop_lat": 49.190228,
+    "stop_lon": -122.893989
+  },
   "10901": {
     "stop_id": "10901",
     "stop_name": "Southbound Cranley Dr @ Suffolk Rd",
@@ -43594,6 +43636,12 @@
     "stop_name": "Eastbound Anderson Rd @ Buswell St",
     "stop_lat": 49.163406,
     "stop_lon": -123.134015
+  },
+  "10918": {
+    "stop_id": "10918",
+    "stop_name": "Eastbound Grace Rd @ 10200 Block",
+    "stop_lat": 49.188663,
+    "stop_lon": -122.895558
   },
   "10921": {
     "stop_id": "10921",
@@ -44254,6 +44302,12 @@
     "stop_name": "Eastbound Government St @ Halston Court",
     "stop_lat": 49.247775,
     "stop_lon": -122.906818
+  },
+  "11107": {
+    "stop_id": "11107",
+    "stop_name": "Westbound Grace Rd @ 10200 Block",
+    "stop_lat": 49.188432,
+    "stop_lon": -122.896174
   },
   "11108": {
     "stop_id": "11108",
@@ -47891,6 +47945,12 @@
     "stop_lat": 49.272658,
     "stop_lon": -123.163937
   },
+  "12041": {
+    "stop_id": "12041",
+    "stop_name": "Westbound River Rd @ Millar Rd",
+    "stop_lat": 49.182283,
+    "stop_lon": -122.907299
+  },
   "12043": {
     "stop_id": "12043",
     "stop_name": "Eastbound Oxford Connector @ Oxford St",
@@ -49960,6 +50020,12 @@
     "stop_name": "Eastbound Alderbridge Way @ May Dr",
     "stop_lat": 49.177158,
     "stop_lon": -123.118934
+  },
+  "12534": {
+    "stop_id": "12534",
+    "stop_name": "Eastbound Grace Rd @ 117 St",
+    "stop_lat": 49.186221,
+    "stop_lon": -122.898602
   },
   "12535": {
     "stop_id": "12535",
