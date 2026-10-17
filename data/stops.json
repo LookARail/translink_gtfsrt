@@ -227,12 +227,6 @@
     "stop_lat": 49.283753,
     "stop_lon": -123.113589
   },
-  "79": {
-    "stop_id": "79",
-    "stop_name": "Eastbound W Pender St @ Richards St",
-    "stop_lat": 49.283143,
-    "stop_lon": -123.112655
-  },
   "80": {
     "stop_id": "80",
     "stop_name": "Eastbound W Pender St @ Hamilton St",
@@ -761,12 +755,6 @@
     "stop_lat": 49.265849,
     "stop_lon": -123.100989
   },
-  "240": {
-    "stop_id": "240",
-    "stop_name": "Southbound Main St @ E Broadway",
-    "stop_lat": 49.262444,
-    "stop_lon": -123.101161
-  },
   "242": {
     "stop_id": "242",
     "stop_name": "Southbound Main St @ E 12 Ave",
@@ -994,12 +982,6 @@
     "stop_name": "Westbound W 41 Ave @ Maple St",
     "stop_lat": 49.234633,
     "stop_lon": -123.152449
-  },
-  "292": {
-    "stop_id": "292",
-    "stop_name": "Westbound W 41 Ave @ West Blvd",
-    "stop_lat": 49.234649,
-    "stop_lon": -123.156193
   },
   "293": {
     "stop_id": "293",
@@ -2662,6 +2644,12 @@
     "stop_name": "Northbound Oak St @ W 70 Ave",
     "stop_lat": 49.208777,
     "stop_lon": -123.13011
+  },
+  "750": {
+    "stop_id": "750",
+    "stop_name": "Northbound Oak St @ W 67 Ave",
+    "stop_lat": 49.211074,
+    "stop_lon": -123.130033
   },
   "752": {
     "stop_id": "752",
@@ -32873,12 +32861,6 @@
     "stop_lat": 49.104665,
     "stop_lon": -122.64122
   },
-  "7421": {
-    "stop_id": "7421",
-    "stop_name": "Westbound 56 Ave @ 208 St",
-    "stop_lat": 49.104743,
-    "stop_lon": -122.646304
-  },
   "7422": {
     "stop_id": "7422",
     "stop_name": "Westbound 1A Ave @ 67 St",
@@ -50297,6 +50279,12 @@
     "stop_lat": 49.234486,
     "stop_lon": -123.154256
   },
+  "12632": {
+    "stop_id": "12632",
+    "stop_name": "Westbound W 41 Ave @ East Blvd",
+    "stop_lat": 49.234672,
+    "stop_lon": -123.15479
+  },
   "12634": {
     "stop_id": "12634",
     "stop_name": "Northbound 202A St @ 76 Ave",
@@ -52205,6 +52193,12 @@
     "stop_lat": 49.045593,
     "stop_lon": -122.7179
   },
+  "13132": {
+    "stop_id": "13132",
+    "stop_name": "Southbound Main St @ E 10 Ave",
+    "stop_lat": 49.261727,
+    "stop_lon": -123.10122
+  },
   "13135": {
     "stop_id": "13135",
     "stop_name": "Westbound W 41 Ave @ Blenheim St",
@@ -52433,6 +52427,12 @@
     "stop_lat": 49.24204,
     "stop_lon": -122.759724
   },
+  "13192": {
+    "stop_id": "13192",
+    "stop_name": "Northbound Bonsor Ave @ Layover",
+    "stop_lat": 49.224795,
+    "stop_lon": -122.99702
+  },
   "13193": {
     "stop_id": "13193",
     "stop_name": "Eastbound Steveston Hwy @ Shell Rd",
@@ -52444,6 +52444,12 @@
     "stop_name": "Eastbound North Fraser Way @ Glenwood Dr",
     "stop_lat": 49.193824,
     "stop_lon": -122.970977
+  },
+  "13195": {
+    "stop_id": "13195",
+    "stop_name": "Westbound 56 Ave @ 208 St",
+    "stop_lat": 49.104768,
+    "stop_lon": -122.647371
   },
   "99901": {
     "stop_id": "99901",
