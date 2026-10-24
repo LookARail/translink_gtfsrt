@@ -6191,6 +6191,12 @@
     "stop_lat": 49.248473,
     "stop_lon": -123.081441
   },
+  "1537": {
+    "stop_id": "1537",
+    "stop_name": "Eastbound E King Edward Ave @ Knight St",
+    "stop_lat": 49.248433,
+    "stop_lon": -123.075263
+  },
   "1538": {
     "stop_id": "1538",
     "stop_name": "Northbound Nanaimo St @ Kingsway",
@@ -16714,6 +16720,12 @@
     "stop_name": "Southbound Queensbury Ave @ E 5th St",
     "stop_lat": 49.310294,
     "stop_lon": -123.057297
+  },
+  "4068": {
+    "stop_id": "4068",
+    "stop_name": "Eastbound Old Dollarton Rd @ Front St",
+    "stop_lat": 49.306496,
+    "stop_lon": -123.018117
   },
   "4070": {
     "stop_id": "4070",
@@ -46871,12 +46883,6 @@
     "stop_lat": 49.244392,
     "stop_lon": -123.044987
   },
-  "11763": {
-    "stop_id": "11763",
-    "stop_name": "Bridgeport Station @ Bay 13",
-    "stop_lat": 49.195649,
-    "stop_lon": -123.125757
-  },
   "11764": {
     "stop_id": "11764",
     "stop_name": "Surrey Central Station @ Bay 5A",
@@ -52927,13 +52933,13 @@
   },
   "LSSEM": {
     "stop_id": "LSSEM",
-    "stop_name": "Langra-49th Avenue Station entrance",
+    "stop_name": "Langara-49th Avenue Station entrance",
     "stop_lat": 49.226287,
     "stop_lon": -123.116092
   },
   "LSSEE": {
     "stop_id": "LSSEE",
-    "stop_name": "Langra-49th Avenue Station elevator entrance",
+    "stop_name": "Langara-49th Avenue Station elevator entrance",
     "stop_lat": 49.226353,
     "stop_lon": -123.11614
   },

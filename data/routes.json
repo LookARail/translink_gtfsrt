@@ -1623,13 +1623,6 @@
     "route_type": 3,
     "route_color": ""
   },
-  "44845": {
-    "route_id": "44845",
-    "route_short_name": "900",
-    "route_long_name": "Bike Bus",
-    "route_type": 3,
-    "route_color": ""
-  },
   "45596": {
     "route_id": "45596",
     "route_short_name": "080",
