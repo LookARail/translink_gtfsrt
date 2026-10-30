@@ -4097,12 +4097,6 @@
     "stop_lat": 49.259567,
     "stop_lon": -123.044122
   },
-  "1092": {
-    "stop_id": "1092",
-    "stop_name": "Northbound Renfrew St @ E Broadway",
-    "stop_lat": 49.26226,
-    "stop_lon": -123.044122
-  },
   "1093": {
     "stop_id": "1093",
     "stop_name": "Northbound Renfrew St @ E 7th Ave",
@@ -4522,12 +4516,6 @@
     "stop_name": "Westbound Kingsway @ Inman Ave",
     "stop_lat": 49.232908,
     "stop_lon": -123.016178
-  },
-  "1180": {
-    "stop_id": "1180",
-    "stop_name": "Westbound Kingsway @ Boundary Rd",
-    "stop_lat": 49.232527,
-    "stop_lon": -123.022197
   },
   "1181": {
     "stop_id": "1181",
@@ -8633,6 +8621,24 @@
     "stop_lat": 49.204776,
     "stop_lon": -122.971589
   },
+  "2176": {
+    "stop_id": "2176",
+    "stop_name": "Eastbound Marine Dr @ 14 Ave",
+    "stop_lat": 49.203253,
+    "stop_lon": -122.964955
+  },
+  "2177": {
+    "stop_id": "2177",
+    "stop_name": "Eastbound Marine Dr @ 6400 Block",
+    "stop_lat": 49.200219,
+    "stop_lon": -122.959752
+  },
+  "2178": {
+    "stop_id": "2178",
+    "stop_name": "Eastbound Marine Dr @ Trapp Rd",
+    "stop_lat": 49.198147,
+    "stop_lon": -122.954626
+  },
   "2179": {
     "stop_id": "2179",
     "stop_name": "Southbound Willard St @ 14 Ave",
@@ -8734,6 +8740,24 @@
     "stop_name": "22nd Street Station @ Bay 8",
     "stop_lat": 49.199522,
     "stop_lon": -122.950167
+  },
+  "2204": {
+    "stop_id": "2204",
+    "stop_name": "Westbound Marine Dr @ 7th Ave",
+    "stop_lat": 49.198195,
+    "stop_lon": -122.95361
+  },
+  "2205": {
+    "stop_id": "2205",
+    "stop_name": "Westbound Marine Dr @ 10 Ave",
+    "stop_lat": 49.201118,
+    "stop_lon": -122.960458
+  },
+  "2206": {
+    "stop_id": "2206",
+    "stop_name": "Westbound Marine Dr @ 14 Ave",
+    "stop_lat": 49.20329,
+    "stop_lon": -122.964735
   },
   "2207": {
     "stop_id": "2207",
@@ -18473,12 +18497,6 @@
     "stop_lat": 49.32151,
     "stop_lon": -123.095264
   },
-  "4430": {
-    "stop_id": "4430",
-    "stop_name": "Westbound Marine Dr @ Hanes Ave",
-    "stop_lat": 49.322273,
-    "stop_lon": -123.097423
-  },
   "4432": {
     "stop_id": "4432",
     "stop_name": "Northbound Mackay Ave @ Marine Dr",
@@ -21449,12 +21467,6 @@
     "stop_lat": 49.176992,
     "stop_lon": -122.850709
   },
-  "5039": {
-    "stop_id": "5039",
-    "stop_name": "Southbound King George Blvd @ 96 Ave",
-    "stop_lat": 49.176019,
-    "stop_lon": -122.846016
-  },
   "5040": {
     "stop_id": "5040",
     "stop_name": "Northbound King George Blvd @ 96 Ave",
@@ -23662,6 +23674,12 @@
     "stop_name": "Southbound King George Blvd @ 76 Ave",
     "stop_lat": 49.140079,
     "stop_lon": -122.845817
+  },
+  "5506": {
+    "stop_id": "5506",
+    "stop_name": "Southbound King George Blvd @ 73A Ave",
+    "stop_lat": 49.136796,
+    "stop_lon": -122.845797
   },
   "5507": {
     "stop_id": "5507",
@@ -50840,8 +50858,8 @@
   "12791": {
     "stop_id": "12791",
     "stop_name": "Westbound W Broadway @ Hemlock St",
-    "stop_lat": 49.263652,
-    "stop_lon": -123.134884
+    "stop_lat": 49.263634,
+    "stop_lon": -123.134472
   },
   "12793": {
     "stop_id": "12793",
@@ -52456,6 +52474,12 @@
     "stop_name": "Westbound 56 Ave @ 208 St",
     "stop_lat": 49.104768,
     "stop_lon": -122.647371
+  },
+  "13197": {
+    "stop_id": "13197",
+    "stop_name": "Northbound Renfrew St @ E Broadway",
+    "stop_lat": 49.261622,
+    "stop_lon": -123.044125
   },
   "99901": {
     "stop_id": "99901",
