@@ -1,17 +1,18 @@
 {
-  "generated_at": "2026-11-12T00:56:45.015248Z",
+  "generated_at": "2026-11-12T23:47:27.422455Z",
   "retention_days": 60,
   "cleanup_results": {
-    "deleted_count": 2,
-    "remaining_count": 56
+    "deleted_count": 0,
+    "remaining_count": 57
   },
   "available_recordings": {
-    "count": 56,
+    "count": 57,
     "date_range": {
-      "newest": "2026-11-10",
+      "newest": "2026-11-11",
       "oldest": "2026-09-14"
     },
     "by_date": {
+      "2026-11-11": "2026-11-11.json",
       "2026-11-10": "2026-11-10.json",
       "2026-11-09": "2026-11-09.json",
       "2026-11-07": "2026-11-07.json",
