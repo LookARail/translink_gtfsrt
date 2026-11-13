@@ -347,12 +347,6 @@
     "stop_lat": 49.257816,
     "stop_lon": -123.168896
   },
-  "115": {
-    "stop_id": "115",
-    "stop_name": "Westbound W 16 Ave @ Mackenzie St",
-    "stop_lat": 49.257845,
-    "stop_lon": -123.170847
-  },
   "116": {
     "stop_id": "116",
     "stop_name": "Westbound W 16 Ave @ Balaclava St",
@@ -3124,6 +3118,12 @@
     "stop_name": "Westbound E Broadway @ Prince Edward St",
     "stop_lat": 49.262835,
     "stop_lon": -123.096513
+  },
+  "857": {
+    "stop_id": "857",
+    "stop_name": "Westbound E Broadway @ Scotia St",
+    "stop_lat": 49.262926,
+    "stop_lon": -123.098697
   },
   "859": {
     "stop_id": "859",
@@ -8998,6 +8998,12 @@
     "stop_name": "Northbound 6th St @ 10 Ave",
     "stop_lat": 49.219331,
     "stop_lon": -122.927943
+  },
+  "2269": {
+    "stop_id": "2269",
+    "stop_name": "Northbound 6th St @ 12 Ave",
+    "stop_lat": 49.220388,
+    "stop_lon": -122.92926
   },
   "2280": {
     "stop_id": "2280",
@@ -22985,12 +22991,6 @@
     "stop_lat": 49.096885,
     "stop_lon": -122.646466
   },
-  "5350": {
-    "stop_id": "5350",
-    "stop_name": "Westbound 56 Ave @ Langley Bypass",
-    "stop_lat": 49.104714,
-    "stop_lon": -122.644327
-  },
   "5351": {
     "stop_id": "5351",
     "stop_name": "Westbound 56 Ave @ Logan Ave",
@@ -25085,18 +25085,6 @@
     "stop_lat": 49.174994,
     "stop_lon": -122.83439
   },
-  "5761": {
-    "stop_id": "5761",
-    "stop_name": "Northbound 140 St @ 96 Ave",
-    "stop_lat": 49.177363,
-    "stop_lon": -122.834395
-  },
-  "5762": {
-    "stop_id": "5762",
-    "stop_name": "Northbound 140 St @ Fraser Hwy",
-    "stop_lat": 49.180425,
-    "stop_lon": -122.834227
-  },
   "5765": {
     "stop_id": "5765",
     "stop_name": "Westbound 102 Ave @ 140 St",
@@ -25162,12 +25150,6 @@
     "stop_name": "Southbound 140 St @ Green Timbers Way",
     "stop_lat": 49.181282,
     "stop_lon": -122.834487
-  },
-  "5776": {
-    "stop_id": "5776",
-    "stop_name": "Southbound 140 St @ Fraser Hwy",
-    "stop_lat": 49.178386,
-    "stop_lon": -122.834633
   },
   "5777": {
     "stop_id": "5777",
@@ -28493,12 +28475,6 @@
     "stop_lat": 49.1707,
     "stop_lon": -122.813039
   },
-  "6481": {
-    "stop_id": "6481",
-    "stop_name": "Westbound Fraser Hwy @ Whalley Blvd",
-    "stop_lat": 49.180787,
-    "stop_lon": -122.842303
-  },
   "6482": {
     "stop_id": "6482",
     "stop_name": "Steveston Exchange @ Bay 2",
@@ -29810,8 +29786,8 @@
   "6755": {
     "stop_id": "6755",
     "stop_name": "Eastbound Westminster Hwy @ No. 4 Rd",
-    "stop_lat": 49.170021,
-    "stop_lon": -123.115306
+    "stop_lat": 49.170015,
+    "stop_lon": -123.11446
   },
   "6756": {
     "stop_id": "6756",
@@ -30040,6 +30016,12 @@
     "stop_name": "Westbound Westminster Hwy @ 10500 Block",
     "stop_lat": 49.170264,
     "stop_lon": -123.107225
+  },
+  "6795": {
+    "stop_id": "6795",
+    "stop_name": "Westbound Westminster Hwy @ No. 4 Rd",
+    "stop_lat": 49.170292,
+    "stop_lon": -123.114647
   },
   "6796": {
     "stop_id": "6796",
@@ -39557,6 +39539,12 @@
     "stop_lat": 49.103309,
     "stop_lon": -122.646674
   },
+  "9412": {
+    "stop_id": "9412",
+    "stop_name": "Eastbound 56 Ave @ Langley Bypass",
+    "stop_lat": 49.10456,
+    "stop_lon": -122.644104
+  },
   "9414": {
     "stop_id": "9414",
     "stop_name": "Eastbound Plateau Blvd @ Robson Dr",
@@ -48506,8 +48494,8 @@
   "12201": {
     "stop_id": "12201",
     "stop_name": "Northbound 208 St @ 83 Ave",
-    "stop_lat": 49.15328,
-    "stop_lon": -122.645605
+    "stop_lat": 49.152184,
+    "stop_lon": -122.645647
   },
   "12202": {
     "stop_id": "12202",
@@ -51716,8 +51704,8 @@
   "13013": {
     "stop_id": "13013",
     "stop_name": "White Rock Centre @ Bay 10",
-    "stop_lat": 49.034168,
-    "stop_lon": -122.801053
+    "stop_lat": 49.034252,
+    "stop_lon": -122.801063
   },
   "13016": {
     "stop_id": "13016",
@@ -51862,12 +51850,6 @@
     "stop_name": "Northbound Douglas Rd @ Still Creek Ave",
     "stop_lat": 49.261345,
     "stop_lon": -122.984994
-  },
-  "13052": {
-    "stop_id": "13052",
-    "stop_name": "Eastbound Fraser Hwy @ 140 St",
-    "stop_lat": 49.1794,
-    "stop_lon": -122.836332
   },
   "13054": {
     "stop_id": "13054",
