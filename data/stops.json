@@ -6281,12 +6281,6 @@
     "stop_lat": 49.254039,
     "stop_lon": -123.004529
   },
-  "1559": {
-    "stop_id": "1559",
-    "stop_name": "Southbound Willingdon Ave @ Sanderson Way",
-    "stop_lat": 49.247982,
-    "stop_lon": -123.004458
-  },
   "1560": {
     "stop_id": "1560",
     "stop_name": "Westbound Sanderson Way @ Gilmore Way",
@@ -46445,6 +46439,12 @@
     "stop_lat": 49.282004,
     "stop_lon": -123.10684
   },
+  "11651": {
+    "stop_id": "11651",
+    "stop_name": "Westbound Brunette Ave @ Marmont St",
+    "stop_lat": 49.23874,
+    "stop_lon": -122.862739
+  },
   "11653": {
     "stop_id": "11653",
     "stop_name": "Westbound Lougheed Hwy @ Old Dewdney Trunk Rd",
@@ -52462,6 +52462,18 @@
     "stop_name": "Northbound Renfrew St @ E Broadway",
     "stop_lat": 49.261622,
     "stop_lon": -123.044125
+  },
+  "13198": {
+    "stop_id": "13198",
+    "stop_name": "Southbound Willingdon Ave @ Sanderson Way",
+    "stop_lat": 49.247202,
+    "stop_lon": -123.003926
+  },
+  "13200": {
+    "stop_id": "13200",
+    "stop_name": "Westbound E Hastings St @ Kootenay Loop",
+    "stop_lat": 49.281216,
+    "stop_lon": -123.027088
   },
   "99901": {
     "stop_id": "99901",
