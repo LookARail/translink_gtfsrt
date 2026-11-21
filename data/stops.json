@@ -749,6 +749,12 @@
     "stop_lat": 49.265849,
     "stop_lon": -123.100989
   },
+  "240": {
+    "stop_id": "240",
+    "stop_name": "Southbound Main St @ E Broadway",
+    "stop_lat": 49.262444,
+    "stop_lon": -123.101161
+  },
   "242": {
     "stop_id": "242",
     "stop_name": "Southbound Main St @ E 12 Ave",
@@ -3383,12 +3389,6 @@
     "stop_lat": 49.262579,
     "stop_lon": -123.087643
   },
-  "928": {
-    "stop_id": "928",
-    "stop_name": "Westbound W Broadway @ Ontario St",
-    "stop_lat": 49.263101,
-    "stop_lon": -123.105291
-  },
   "929": {
     "stop_id": "929",
     "stop_name": "Westbound W Broadway @ Columbia St",
@@ -3616,12 +3616,6 @@
     "stop_name": "Southbound Victoria Dr @ Victoria Diversion",
     "stop_lat": 49.252727,
     "stop_lon": -123.066107
-  },
-  "980": {
-    "stop_id": "980",
-    "stop_name": "Southbound Victoria Dr @ E 26 Ave",
-    "stop_lat": 49.247318,
-    "stop_lon": -123.065204
   },
   "981": {
     "stop_id": "981",
@@ -13780,6 +13774,12 @@
     "stop_name": "Southbound Westwood St @ Dewdney Trunk Rd",
     "stop_lat": 49.267485,
     "stop_lon": -122.790769
+  },
+  "3383": {
+    "stop_id": "3383",
+    "stop_name": "Eastbound Kingsway Ave @ Burleigh Ave",
+    "stop_lat": 49.26532,
+    "stop_lon": -122.788479
   },
   "3384": {
     "stop_id": "3384",
@@ -32495,12 +32495,6 @@
     "stop_lat": 49.162372,
     "stop_lon": -122.639346
   },
-  "7311": {
-    "stop_id": "7311",
-    "stop_name": "Eastbound 88 Ave @ 212 St",
-    "stop_lat": 49.162127,
-    "stop_lon": -122.632424
-  },
   "7312": {
     "stop_id": "7312",
     "stop_name": "Eastbound 88 Ave @ 214B St",
@@ -40643,6 +40637,12 @@
     "stop_lat": 49.248665,
     "stop_lon": -122.815775
   },
+  "9948": {
+    "stop_id": "9948",
+    "stop_name": "Eastbound Carnarvon St @ Quayside Dr",
+    "stop_lat": 49.200769,
+    "stop_lon": -122.914936
+  },
   "9952": {
     "stop_id": "9952",
     "stop_name": "Production Station @ Bay 3",
@@ -42664,6 +42664,12 @@
     "stop_name": "Eastbound Fraser Hwy @ 188 St",
     "stop_lat": 49.123226,
     "stop_lon": -122.70099
+  },
+  "10645": {
+    "stop_id": "10645",
+    "stop_name": "Westbound Fraser Hwy @ 68 Ave",
+    "stop_lat": 49.126043,
+    "stop_lon": -122.706601
   },
   "10646": {
     "stop_id": "10646",
@@ -46643,11 +46649,11 @@
     "stop_lat": 49.32437,
     "stop_lon": -123.105025
   },
-  "11711": {
-    "stop_id": "11711",
-    "stop_name": "New Westminster Station @ Bay 1",
-    "stop_lat": 49.201348,
-    "stop_lon": -122.911869
+  "11710": {
+    "stop_id": "11710",
+    "stop_name": "New Westminster Station @ Bay 10",
+    "stop_lat": 49.201085,
+    "stop_lon": -122.914339
   },
   "11712": {
     "stop_id": "11712",
@@ -51761,6 +51767,12 @@
     "stop_lat": 49.184939,
     "stop_lon": -122.74607
   },
+  "13025": {
+    "stop_id": "13025",
+    "stop_name": "Westbound Barnston Dr W @ 170A St",
+    "stop_lat": 49.186069,
+    "stop_lon": -122.750468
+  },
   "13026": {
     "stop_id": "13026",
     "stop_name": "Westbound 104 Ave @ Fraserglen Dr",
@@ -52139,12 +52151,6 @@
     "stop_lat": 49.125244,
     "stop_lon": -123.179717
   },
-  "13121": {
-    "stop_id": "13121",
-    "stop_name": "Westbound E Broadway @ Brunswick St",
-    "stop_lat": 49.262916,
-    "stop_lon": -123.097845
-  },
   "13122": {
     "stop_id": "13122",
     "stop_name": "Westbound E Hastings St @ Commercial Dr",
@@ -52198,12 +52204,6 @@
     "stop_name": "Eastbound 24 Ave @ 182 St",
     "stop_lat": 49.045593,
     "stop_lon": -122.7179
-  },
-  "13132": {
-    "stop_id": "13132",
-    "stop_name": "Southbound Main St @ E 10 Ave",
-    "stop_lat": 49.261727,
-    "stop_lon": -123.10122
   },
   "13135": {
     "stop_id": "13135",
@@ -52469,11 +52469,23 @@
     "stop_lat": 49.247202,
     "stop_lon": -123.003926
   },
+  "13199": {
+    "stop_id": "13199",
+    "stop_name": "Eastbound 88 Ave @ 212 St",
+    "stop_lat": 49.162162,
+    "stop_lon": -122.633273
+  },
   "13200": {
     "stop_id": "13200",
     "stop_name": "Westbound E Hastings St @ Kootenay Loop",
     "stop_lat": 49.281216,
     "stop_lon": -123.027088
+  },
+  "13202": {
+    "stop_id": "13202",
+    "stop_name": "Westbound W Broadway @ Quebec St",
+    "stop_lat": 49.263072,
+    "stop_lon": -123.103772
   },
   "99901": {
     "stop_id": "99901",
