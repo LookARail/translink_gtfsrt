@@ -709,7 +709,7 @@
   "6730": {
     "route_id": "6730",
     "route_short_name": "430",
-    "route_long_name": "Metrotown Station/Brighouse Station",
+    "route_long_name": "Metrotown/Brighouse Station",
     "route_type": 3,
     "route_color": ""
   },
@@ -779,7 +779,7 @@
   "6747": {
     "route_id": "6747",
     "route_short_name": "620",
-    "route_long_name": "Tsawwassen Ferry/Bridgeport Station Exp",
+    "route_long_name": "Tsaww Ferry/Bridgeport Station Exp",
     "route_type": 3,
     "route_color": ""
   },
@@ -1598,7 +1598,7 @@
   "38311": {
     "route_id": "38311",
     "route_short_name": "R2",
-    "route_long_name": "Marine-Willingdon",
+    "route_long_name": "Marine Drive",
     "route_type": 3,
     "route_color": "008522"
   },

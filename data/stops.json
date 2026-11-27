@@ -6359,12 +6359,6 @@
     "stop_lat": 49.248604,
     "stop_lon": -123.080503
   },
-  "1578": {
-    "stop_id": "1578",
-    "stop_name": "Westbound E King Edward Ave @ Windsor St",
-    "stop_lat": 49.248642,
-    "stop_lon": -123.084376
-  },
   "1580": {
     "stop_id": "1580",
     "stop_name": "Westbound E King Edward Ave @ Fraser St",
@@ -46073,12 +46067,6 @@
     "stop_lat": 49.284791,
     "stop_lon": -123.116768
   },
-  "11554": {
-    "stop_id": "11554",
-    "stop_name": "Westbound W Pender St @ Hamilton St",
-    "stop_lat": 49.282056,
-    "stop_lon": -123.110698
-  },
   "11556": {
     "stop_id": "11556",
     "stop_name": "Eastbound David Ave @ Genest Way",
@@ -46402,6 +46390,12 @@
     "stop_name": "Northbound 6th St @ 4th Ave",
     "stop_lat": 49.210454,
     "stop_lon": -122.9168
+  },
+  "11638": {
+    "stop_id": "11638",
+    "stop_name": "Westbound W Pender St @ Hamilton St",
+    "stop_lat": 49.282472,
+    "stop_lon": -123.11137
   },
   "11639": {
     "stop_id": "11639",
@@ -48748,6 +48742,12 @@
     "stop_name": "Westbound Foster Ave @ Aspen St",
     "stop_lat": 49.256811,
     "stop_lon": -122.887308
+  },
+  "12245": {
+    "stop_id": "12245",
+    "stop_name": "Eastbound Foster Ave @ Aspen St",
+    "stop_lat": 49.256704,
+    "stop_lon": -122.886632
   },
   "12246": {
     "stop_id": "12246",
@@ -52480,6 +52480,12 @@
     "stop_name": "Westbound E Hastings St @ Kootenay Loop",
     "stop_lat": 49.281216,
     "stop_lon": -123.027088
+  },
+  "13201": {
+    "stop_id": "13201",
+    "stop_name": "Southbound Richards St @ W Hastings St",
+    "stop_lat": 49.284204,
+    "stop_lon": -123.111785
   },
   "13202": {
     "stop_id": "13202",
